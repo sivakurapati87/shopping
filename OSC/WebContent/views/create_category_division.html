@@ -1,0 +1,51 @@
+<div class="container-fluid" id="categoryDivisionControllerId" style="background: white; width: 100%;">
+<form ng-submit="saveOrUpdateAction()">
+<br><br>
+		<div class="row">
+			<div class="col-md-6 lblfont16px" style="text-align: end">
+				<label>Category Division Name :</label>
+			</div>
+			<div class="col-md-6">
+				<input type="text" class="form-control" required="required"
+					ng-model="categoryDivisionObj.name">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-6 lblfont16px" style="text-align: end">
+				<label>Category Name :</label>
+			</div>
+			<div class="col-md-6">
+				<div angucomplete-alt id="customerId" 
+																	pause="100"
+																	selected-object="selectedCategoryNameAction"
+																	local-data="categoryList"
+																	search-fields="name" title-field="name"
+																	minlength="2"  id="categoryNameId" initial-value="categoryObj"
+																	input-class="search-control height34 "
+																	match-class="highlight"></div>
+			</div>
+		</div>
+		
+		<br> <br>
+		<div class="row">
+			<div class="col-md-6">
+				<button type="submit" class="btn btn-success btnInfo align_right">SUBMIT</button>
+			</div>
+			<div class="col-md-6">
+				<button type="button" class="btn btn-warning btnInfo" ng-click="clear()">CLEAR</button>
+			</div>
+		</div>
+
+</form>
+
+<br>
+<!-- Table -->
+<div class="row">
+	<div class="col-md-12"  style="padding-left: 25px;">
+		<table id="categoryDivisionTableId"></table>
+
+	</div>
+</div>
+<!-- End Table -->
+</div>

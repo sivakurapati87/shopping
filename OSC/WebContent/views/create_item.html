@@ -1,0 +1,40 @@
+<div class="container-fluid" style="background: white; width: 100%;">
+	<div class="row">
+		<div class="col-md-12">
+			<input type='file' ng-model-instant
+				onchange="angular.element(this).scope().imageUpload(event)" multiple />
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div ng-repeat="step in stepsModel">
+			<img class="thumb" ng-src="{{step}}" />
+		</div>
+	</div>
+
+	<br>
+	<div class="row">
+		<div class="col-md-12">
+			<input type="file" img-cropper-fileread image="cropper.sourceImage" />
+		</div>
+	</div>
+
+	<div class="row" id="container">
+		<div>
+			<canvas width="500" height="300" id="canvas" image-cropper
+				image="cropper.sourceImage" cropped-image="cropper.croppedImage"
+				crop-width="400" crop-height="200" min-width="100" min-height="50"
+				keep-aspect="true" crop-area-bounds="bounds"></canvas>
+		</div>
+		<div>Cropped Image (Left: {{bounds.left}} Right:
+			{{bounds.right}} Top: {{bounds.top}} Bottom: {{bounds.bottom}})</div>
+		<div ng-show="cropper.croppedImage!=null">
+			<img ng-src="{{cropper.croppedImage}}" id="ELEMENT" />
+		</div>
+	</div>
+	<div class="row mychecking" ng-style="{'background-image': 'url(' + cropper.sourceImage + ')'}">
+	<div class="col-md-12" style="width: 100%">
+	<img class="mycheckingSelection" src="http://fillmurray.com/360/100">
+	</div>
+	</div>
+</div>

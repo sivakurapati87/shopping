@@ -1,0 +1,46 @@
+<div class="container-fluid" id="userControllerId"
+	style="background: white; width: 100%;">
+	<form ng-submit="loginAction()">
+		<br><br><br><br><br><br><br>
+		
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-8" style="background: #ceecd9;">
+			<br>
+			<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-8">
+						<label class="lblError" ng-if="displayError">Invalid User Name OR Password</label>
+					</div>
+				</div>
+			<br>
+				<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-8">
+						<input type="text" class="form-control" placeholder="User Name"
+							required="required" ng-model="userObj.userName">
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-8">
+						<input type="password" class="form-control" placeholder="Password"
+							required="required" ng-model="userObj.password">
+					</div>
+				</div>
+				<br> <br>
+				<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-8" style="padding-left: 75px;">
+						<button type="submit" class="btn btn-success btnInfo">LOGIN</button>
+					</div>
+				</div>
+				<br><br>
+			</div>
+		</div>
+		<div class="col-md-3"></div>
+	</form>
+
+	<br>
+</div>
