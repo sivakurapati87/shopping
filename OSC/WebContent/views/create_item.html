@@ -1,4 +1,204 @@
 <div class="container-fluid" style="background: white; width: 100%;">
+
+
+
+
+<script type="text/javascript">
+
+$("#imgInp").change(function(){
+	
+	$(".imgupld").hide();
+	$("#imageprew").show();
+	$(".changeimg").show();
+	
+});
+
+
+  
+  
+  
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        var jcrop_api;
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+            
+            
+            $('.crop').Jcrop({
+  
+              onSelect: updateCoords,
+			bgOpacity:   .4,
+            },function(){
+                jcrop_api = this;
+            });
+            
+            $('#delselect').click(function(e){
+                jcrop_api.release();
+                return false;
+              });
+            
+            
+            
+           
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#imgInp").change(function(){
+    console.log(this);
+    readURL(this);
+});
+
+function updateCoords(c)
+{
+	console.log(c);
+$('#x').val(c.x);
+$('#y').val(c.y);
+$('#w').val(c.w);
+$('#h').val(c.h);
+};
+
+
+
+
+function tony()
+{
+	var jcrop_api;
+	jcrop_api.release();
+	
+	
+}
+
+</script>
+
+
+
+
+
+
+
+
+	
+	
+	<br><br>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<div class="col-md-12">	
+<h4>Select an Image and create Mask</h4>
+<br>	
+</div>	
+	
+<div class="col-md-12 clearfix">	
+	
+
+<div class="col-md-9 orgnimg" id="imageprew">
+        <img id="blah" class="crop " src="#" alt="your image" />
+        	<input type="hidden" id="x" name="x" />
+			<input type="hidden" id="y" name="y" />
+			<input type="hidden" id="w" name="w" />
+			<input type="hidden" id="h" name="h" />
+		</div>
+		
+		
+		
+	    
+        <div class="col-md-3 nopad">
+        
+        
+        <div class="imgupld">
+        <input type='file' id="imgInp" />
+        </div>
+        <div class="changeimg nopad">
+        <button class="uploadedbtns changebtn" ng-click="reloadRoute()">Change Inage <i class="fa fa-retweet" aria-hidden="true"></i></button>
+        <button class="uploadedbtns savemaskbtn" ng-click="getmaskdtls()">Save Mask Area</button>
+        <input type="button" id="delselect" style="display:none;" value="asdf">
+        <div class="selectionerror">{{selection_err}}</div>
+        
+        
+        
+        <table class="table table-bordered">
+        	<thead>
+        		<tr>
+        			<th width="20%">Name</th>
+        			<th width="20%">X Pos</th>
+        			<th width="20%">Y Pos</th>
+        			<th width="20%">Width</th>
+        			<th width="20%">Height</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		<tr ng-repeat="pos in selectedPositions">
+        			<td>{{pos.name}}</td>
+        			<td>{{pos.left}}</td>
+        			<td>{{pos.top}}</td>
+        			<td>{{pos.width}}</td>
+        			<td>{{pos.height}}</td>
+        		</tr>
+        	</tbody>
+        </table>
+        
+
+        
+        </div>
+
+</div>
+
+</div>		
+					
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	
+	
+
+
+
+
+
+<!-- <br><br><br><br>
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	asdfsadf
+	
+	
+	
+	
+	
+	
+	
 	<div class="row">
 		<div class="col-md-12">
 			<input type='file' ng-model-instant
@@ -36,5 +236,29 @@
 	<div class="col-md-12" style="width: 100%">
 	<img class="mycheckingSelection" src="http://fillmurray.com/360/100">
 	</div>
-	</div>
+	</div> -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </div>
+
+
+
+
+
+
+
+
+
+
+

@@ -101,8 +101,9 @@ body {
     }
 }
 
-#wrapper {
+.nopad{
     padding-left: 0;
+    padding-right:0;
 }
 
 #page-wrapper {
@@ -342,4 +343,102 @@ ul.alert-dropdown {
     text-overflow: ellipsis;
     white-space: nowrap;
     background: #b3e8bf;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*--------------------------------------------------------------------------------------------------------*/
+
+.clearfix::after {
+    content: "";
+    clear: both;
+}
+
+.imgupld {
+    overflow: hidden;
+    position: relative;
+    width:158px;
+    height:37px;
+    display: block;
+    cursor: pointer;
+    cursor:hand;
+    background: url("../images/Upload.png") center no-repeat;
+}
+
+.imgupld [type=file] {
+    
+    filter: alpha(opacity=0);
+    opacity: 0;
+    width:158px;
+    height:37px;
+    display: block;
+    
+}
+
+#imageprew, .changeimg
+{
+	display:none;
+}
+.changeimg
+{
+	padding-left:0px;!important;
+}
+.uploadedbtns
+{
+	width:150px;
+    height:37px;
+    display: block;
+	color:#ffffff;
+	font-weight:bold;
+	border:0px solid #f6961b;
+	font-size:16px;
+	margin-bottom:10px;
+}
+
+.changebtn
+{
+	background-color:#444444;
+}
+.savemaskbtn
+{
+	background-color:#009100;
+}
+
+
+
+.orgnimg img
+{
+	
+	max-width:750px;
+}
+
+
+.red
+{
+	margin:0;
+	padding:0;
+	height:100px;
+	width:100px;
+	background-color:#ff0000;
+	display:block;
+}
+.selectionerror
+{
+	margin:0;
+	padding:10px;
+	font-weight:bold;
+	font-size:14px;
+	color:#ff0000;
 }

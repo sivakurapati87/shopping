@@ -5,6 +5,9 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state', functi
 	
 	$rootScope.current_state= $state.current.name;
 	
+	$scope.obj = {};
+	$scope.selectedPositions = [];
+	var i=1;
 	
 	$scope.onload = function(){
 		
@@ -20,7 +23,13 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state', functi
 	        
 	    
 	        
-		
+	        
+
+	        $('#uploadmainimg').change( function(event) {
+	    		var tmppath = URL.createObjectURL(event.target.files[0]);
+	    		    $("#target").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+	    		});
+	        
 	}
 	
 	$scope.getPosition = function(){
@@ -49,6 +58,55 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state', functi
 	
 	$scope.taskObj = {};
 	
+	
+	$scope.reloadRoute = function() {
+	    $state.reload();
+	};
+	
+	
+	$scope.getmaskdtls = function() {
+		$scope.selection_err = "";
+		$scope.obj = {left: $('#x').val(), top: $('#y').val(), width: $('#w').val(), height: $('#h').val(),name:"Image "+(i++)}
+		if(!$scope.obj.left)
+		{
+		$scope.selection_err = "Please select mask Area";
+		return;
+		}
+		
+		$scope.ltpos = parseInt($('#x').val()) + 15;
+		$scope.obj.left = $scope.ltpos;
+		
+		
+		var flag = false;
+		for(var j=0;j<$scope.selectedPositions.length;j++){
+			if(!flag && $scope.obj.left == $scope.selectedPositions[j].left && $scope.obj.top == $scope.selectedPositions[j].top
+					&& $scope.obj.width == $scope.selectedPositions[j].width && $scope.obj.height == $scope.selectedPositions[j].height){
+				flag = true;
+			}
+		}
+		
+		if(!flag)
+			{
+			
+			var newEle = angular.element("<div style='position:absolute;background-color:#ffff00;border:1px solid #000000;opacity:0.5;top:"+$scope.obj.top+"px;left:"+$scope.ltpos+"px;width:"+$scope.obj.width+"px;height:"+$scope.obj.height+"px;'></div>");
+		    var target = document.getElementById('imageprew');
+		    angular.element(target).append(newEle);
+		    $("#delselect").click();
+		    $scope.selectedPositions.push($scope.obj);
+			}else{
+				$scope.selection_err = "Selected Area is already Masked";
+			}
+		
+		
+	    
+
+	};
+	
+	
+	
+	
+	
+
 	
 	
 	
