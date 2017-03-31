@@ -36,7 +36,7 @@ App.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	        }
 	})
 	.state('create_item', {
-		url: "/create_task",
+		url: "/create_item",
 			views: {
 				'leftMenu':{
 					templateUrl: 'views/leftmenu.html',
@@ -45,6 +45,19 @@ App.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	            'content': {
 	            	templateUrl: 'views/create_item.html',
 	        		controller : "ItemController"
+	            }
+	        }
+	})
+	.state('item_field_name', {
+		url: "/item_field_name",
+			views: {
+				'leftMenu':{
+					templateUrl: 'views/leftmenu.html',
+	        		controller : "LeftMenuController"
+				},
+	            'content': {
+	            	templateUrl: 'views/itemFieldName.html',
+	        		controller : "ItemFieldNameController"
 	            }
 	        }
 	})

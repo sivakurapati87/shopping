@@ -6,20 +6,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ItemSpecificationFieldValues")
-public class ItemSpecificationFieldValues extends BaseEntity {
+@Table(name = "ItemFieldValue")
+public class ItemFieldValue extends BaseEntity {
 	private Integer itemFieldInfoId;
 	private String itemFieldValue;
 	private Integer itemId;
 	@ManyToOne
 	@JoinColumn(name = "itemFieldInfoId", insertable = false, updatable = false)
-	private ItemSpecificationFieldNames itemSpecificationFieldName;
+	private ItemFieldName itemSpecificationFieldName;
 
-	public ItemSpecificationFieldNames getItemSpecificationFieldName() {
+	public ItemFieldName getItemSpecificationFieldName() {
 		return itemSpecificationFieldName;
 	}
 
-	public void setItemSpecificationFieldName(ItemSpecificationFieldNames itemSpecificationFieldName) {
+	public void setItemSpecificationFieldName(ItemFieldName itemSpecificationFieldName) {
 		this.itemSpecificationFieldName = itemSpecificationFieldName;
 	}
 

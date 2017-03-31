@@ -4,10 +4,12 @@ import java.util.Date;
 
 import com.osc.entity.Category;
 import com.osc.entity.CategoryDivision;
+import com.osc.entity.ItemFieldName;
 import com.osc.entity.SubCategory;
 import com.osc.entity.User;
 import com.osc.json.CategoryDivisionJson;
 import com.osc.json.CategoryJson;
+import com.osc.json.ItemFieldNameJson;
 import com.osc.json.SubCategoryJson;
 import com.osc.json.UserJson;
 
@@ -37,7 +39,18 @@ public class TransformJsonToEntity {
 			category.setCreatedOn(new Date());
 		}
 	}
-
+	
+	
+	public static void getItemFieldName(ItemFieldNameJson itemFieldNameJson, ItemFieldName itemFieldName) {
+		itemFieldName.setFieldName(itemFieldNameJson.getFieldName());
+		if (itemFieldName.getId() != null) {
+			itemFieldName.setUpdatedBy(itemFieldNameJson.getUpdatedBy());
+			itemFieldName.setUpdatedOn(new Date());
+		} else {
+			itemFieldName.setCreatedBy(itemFieldNameJson.getCreatedBy());
+			itemFieldName.setCreatedOn(new Date());
+		}
+	}
 	public static void getCategoryDivision(CategoryDivisionJson categoryDivisionJson, CategoryDivision categoryDivision) {
 		categoryDivision.setName(categoryDivisionJson.getName());
 		categoryDivision.setCategoryId(categoryDivisionJson.getCategoryId());
@@ -75,7 +88,7 @@ public class TransformJsonToEntity {
 					user.setCreatedBy(userJson.getCreatedBy());
 				}
 				user.setIsAdmin(userJson.getIsAdmin());
-				user.setIsDeleted(Boolean.TRUE);
+				user.setIsDeleted(Boolean.FALSE);
 				user.setEmpType(userJson.getEmpType());
 				user.setEmail(userJson.getEmail());
 				user.setFullName(userJson.getFullName());

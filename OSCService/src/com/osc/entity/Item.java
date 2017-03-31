@@ -111,4 +111,12 @@ public class Item extends BaseEntity {
 		this.subCategory = subCategory;
 	}
 
+	public Integer getMinQuantityToPurchase() {
+		return minQuantityToPurchase;
+	}
+
+	public void setMinQuantityToPurchase(Integer minQuantityToPurchase) {
+		this.minQuantityToPurchase = minQuantityToPurchase;
+	}
+
 }

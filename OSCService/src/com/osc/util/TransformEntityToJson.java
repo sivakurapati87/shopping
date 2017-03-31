@@ -3,11 +3,13 @@ package com.osc.util;
 import com.osc.entity.BaseEntity;
 import com.osc.entity.Category;
 import com.osc.entity.CategoryDivision;
+import com.osc.entity.ItemFieldName;
 import com.osc.entity.SubCategory;
 import com.osc.entity.User;
 import com.osc.json.BaseJson;
 import com.osc.json.CategoryDivisionJson;
 import com.osc.json.CategoryJson;
+import com.osc.json.ItemFieldNameJson;
 import com.osc.json.SubCategoryJson;
 import com.osc.json.UserJson;
 
@@ -33,6 +35,11 @@ public class TransformEntityToJson {
 	public static void getCategoryJson(CategoryJson categoryJson, Category category) {
 		categoryJson.setName(category.getName());
 		getBaseJson(categoryJson, category);
+	}
+	
+	public static void getItemFieldNameJson(ItemFieldNameJson itemFieldNameJson,ItemFieldName itemFieldName) {
+		itemFieldNameJson.setFieldName(itemFieldName.getFieldName());
+		getBaseJson(itemFieldNameJson, itemFieldName);
 	}
 
 	public static void getCategoryDivisionJson(CategoryDivision categoryDivision, CategoryDivisionJson categoryDivisionJson) {
