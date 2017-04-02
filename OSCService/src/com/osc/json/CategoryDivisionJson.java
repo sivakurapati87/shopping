@@ -4,7 +4,7 @@ package com.osc.json;
 public class CategoryDivisionJson extends BaseJson {
 	private String name;
 	private String categoryName;
-	private Integer categoryId;
+	private Long categoryId;
 
 	public String getName() {
 		return name;
@@ -14,11 +14,11 @@ public class CategoryDivisionJson extends BaseJson {
 		this.name = name;
 	}
 
-	public Integer getCategoryId() {
+	public Long getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(Integer categoryId) {
+	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
 

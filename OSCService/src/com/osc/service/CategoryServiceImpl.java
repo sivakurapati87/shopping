@@ -63,7 +63,7 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryJsons;
 	}
 
-	public CategoryJson getCategoryById(Integer id) {
+	public CategoryJson getCategoryById(Long id) {
 		CategoryJson categoryJson = null;
 		try {
 			Category category = (Category) categoryDao.getById(Category.class, id);
@@ -79,7 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryJson;
 	}
 
-	public void deleteCategoryById(Integer id, Integer userId) {
+	public void deleteCategoryById(Long id, Long userId) {
 		try {
 			Category category = (Category) categoryDao.getById(Category.class, id);
 

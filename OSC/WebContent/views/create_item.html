@@ -1,4 +1,4 @@
-<div class="container-fluid" style="background: white; width: 100%;">
+<div class="container-fluid" style="background: white; width: 100%;" id="itemControllerId">
 
 
 
@@ -22,7 +22,7 @@ function readURL(input) {
         var reader = new FileReader();
         var jcrop_api;
         reader.onload = function (e) {
-            $('#blah').attr('src', e.target.result);
+            $('#uploadedImgId').attr('src', e.target.result);
             
             
             $('.crop').Jcrop({
@@ -88,164 +88,238 @@ function tony()
 	
 	
 	
-	
-	
-	
-	
-	
-<div class="col-md-12">	
-<h4>Select an Image and create Mask</h4>
-<br>	
-</div>	
-	
-<div class="col-md-12 clearfix">	
-	
+	<div class="row">
+	<div class="col-md-12" style="text-align: right;">
+	<button type="button" class="btn btn-info"
+											ng-click="onClickAddNew()">
+											<span class="glyphicon glyphicon-plus"></span>Add New {{displayGrid}}
+										</button>
+	</div>
+	</div>
 
-<div class="col-md-9 orgnimg" id="imageprew">
-        <img id="blah" class="crop " src="#" alt="your image" />
-        	<input type="hidden" id="x" name="x" />
-			<input type="hidden" id="y" name="y" />
-			<input type="hidden" id="w" name="w" />
-			<input type="hidden" id="h" name="h" />
+
+	<form ng-submit="saveOrUpdateAction()">
+		<div class="row" id="displayContentId" style="display: none;">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-12">
+						<label class="lblFont_new">Select an Image and create Mask
+							:</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 clearfix">
+
+
+						<div class="col-md-9 orgnimg" id="imageprew">
+							<img id="uploadedImgId" class="crop " src="#" alt="your image" />
+							<input type="hidden" id="x" name="x" /> <input type="hidden"
+								id="y" name="y" /> <input type="hidden" id="w" name="w" /> <input
+								type="hidden" id="h" name="h" />
+						</div>
+
+
+
+
+						<div class="col-md-3 nopad">
+
+
+							<div class="imgupld">
+								<input type='file' id="imgInp" />
+							</div>
+							<div class="changeimg nopad">
+								<button class="uploadedbtns changebtn" type="button"
+									ng-click="reloadRoute()">
+									Change Inage <i class="fa fa-retweet" aria-hidden="true"></i>
+								</button>
+								<button class="uploadedbtns savemaskbtn" type="button"
+									ng-click="getmaskdtls()">Save Mask Area</button>
+								<input type="button" id="delselect" style="display: none;"
+									value="asdf">
+								<div class="selectionerror">{{selection_err}}</div>
+
+
+
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th width="20%">Name</th>
+											<th width="20%">X Pos</th>
+											<th width="20%">Y Pos</th>
+											<th width="20%">Width</th>
+											<th width="20%">Height</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="pos in selectedPositions">
+											<td>{{pos.name}}</td>
+											<td>{{pos.left}}</td>
+											<td>{{pos.top}}</td>
+											<td>{{pos.width}}</td>
+											<td>{{pos.height}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-12">
+						<label class="lblFont_new">Add this item to below
+							SubCategories :</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-9" style="border: 1px solid #7df27d;">
+						<label ng-repeat="ch in checkBoxes"> <input
+							type="checkbox" ng-checked="subCategoryIds.indexOf(ch.id) != -1"
+							ng-click="chAction(ch.id)" ng-disabled="itemObj.id">{{ch.name}} &nbsp;&nbsp;
+						</label>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+				<br>
+				<div class="row" ng-click="isItemInfoBlockDisplay = !isItemInfoBlockDisplay">
+					<div class="col-md-12 bgModule">
+						<label class="lblFont_new"><i class="fa fa-expand" aria-hidden="true" title="Expand" ng-if="!isItemInfoBlockDisplay"></i>
+						<i class="fa fa-compress" aria-hidden="true" title="Compress" ng-if="isItemInfoBlockDisplay"></i>
+						  Item Info :</label>
+					</div>
+				</div>
+				<br>
+				<div class="row" ng-if="isItemInfoBlockDisplay">
+				<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-3">
+						<label class="lblFont_new"> Item Name :</label>
+					</div>
+					<div class="col-md-9">
+						<input type="text" style="width: 460px" ng-model="itemObj.name">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<label class="lblFont_new"> Min Quantity To Purchase :</label>
+					</div>
+					<div class="col-md-3">
+						<input type="text" ng-model="itemObj.minQuantityToPurchase">
+					</div>
+					<div class="col-md-3"><label class="lblFont_new"> Is the textbox Required :</label> </div>
+					<div class="col-md-3"><input type="checkbox" ng-model="itemObj.isNameFieldExists"> </div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<label class="lblFont_new"> MRP :</label>
+					</div>
+					<div class="col-md-3">
+						<input type="text" ng-model="itemObj.mrp">
+					</div>
+					<div class="col-md-3">
+						<label class="lblFont_new"> Discount On MRP :</label>
+					</div>
+					<div class="col-md-3">
+						<input type="text" ng-model="itemObj.discount">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<label class="lblFont_new"> Product Description :</label>
+					</div>
+					<div class="col-md-9">
+						<textarea ng-model="itemObj.description" rows="6" cols="120"></textarea>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-3">
+						<label class="lblFont_new"> Product Info For Admin :</label>
+					</div>
+					<div class="col-md-9">
+						<textarea ng-model="itemObj.adminItemInfo" rows="7" cols="80"></textarea>
+					</div>
+				</div>
+				</div>
+				</div>
+
+				<br>
+				<div class="row" ng-click="isSpecificationDisplay = !isSpecificationDisplay">
+					<div class="col-md-12 bgModule">
+						<label class="lblFont_new"><i class="fa fa-expand" aria-hidden="true" title="Expand" ng-if="!isSpecificationDisplay"></i>
+						<i class="fa fa-compress" aria-hidden="true" title="Compress" ng-if="isSpecificationDisplay"></i>
+						  Add Specifications :</label>
+					</div>
+				</div>
+				<br>
+				<div class="row" ng-if="isSpecificationDisplay">
+					<div class="col-md-7">
+						<div class="row" ng-repeat="specification in specificationList"
+							style="padding-bottom: 10px">
+							<div class="col-md-6" style="text-align: right;">
+								<select ng-model="specification.itemFieldNameId"
+									ng-options="fieldName.id as fieldName.fieldName for fieldName in fieldNameList">
+									<option value="" disabled selected>Select
+										Specification</option>
+								</select>
+							</div>
+							<div class="col-md-6">
+								<input type="text" placeholder="Specification Value"
+									ng-model="specification.itemFieldValue">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<i class="fa fa-plus plusSign" title="Add" aria-hidden="true"
+							style="cursor: pointer;" ng-click="addSpecification()"></i> <i
+							class="fa fa-minus minusSign" title="Remove" aria-hidden="true"
+							style="cursor: pointer;" ng-click="removeSpecification()"></i>
+					</div>
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				<br>
+				<div class="row">
+					<div class="col-md-6">
+						<button type="submit" class="btn btn-success btnInfo align_right">SUBMIT</button>
+					</div>
+					<div class="col-md-6">
+						<button type="button" class="btn btn-warning btnInfo"
+							ng-click="clear()">CLEAR</button>
+					</div>
+				</div>
+
+
+
+
+			</div>
 		</div>
-		
-		
-		
-	    
-        <div class="col-md-3 nopad">
-        
-        
-        <div class="imgupld">
-        <input type='file' id="imgInp" />
-        </div>
-        <div class="changeimg nopad">
-        <button class="uploadedbtns changebtn" ng-click="reloadRoute()">Change Inage <i class="fa fa-retweet" aria-hidden="true"></i></button>
-        <button class="uploadedbtns savemaskbtn" ng-click="getmaskdtls()">Save Mask Area</button>
-        <input type="button" id="delselect" style="display:none;" value="asdf">
-        <div class="selectionerror">{{selection_err}}</div>
-        
-        
-        
-        <table class="table table-bordered">
-        	<thead>
-        		<tr>
-        			<th width="20%">Name</th>
-        			<th width="20%">X Pos</th>
-        			<th width="20%">Y Pos</th>
-        			<th width="20%">Width</th>
-        			<th width="20%">Height</th>
-        		</tr>
-        	</thead>
-        	<tbody>
-        		<tr ng-repeat="pos in selectedPositions">
-        			<td>{{pos.name}}</td>
-        			<td>{{pos.left}}</td>
-        			<td>{{pos.top}}</td>
-        			<td>{{pos.width}}</td>
-        			<td>{{pos.height}}</td>
-        		</tr>
-        	</tbody>
-        </table>
-        
+	</form>
 
-        
-        </div>
+	<!-- Table -->
+<div class="row" style="display:block;" id="gridBlockId">
+	<div class="col-md-12"  style="padding-left: 25px;">
+		<table id="itemTableId"></table>
 
+	</div>
 </div>
-
-</div>		
-					
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
-	
-
-
-
-
-
-<!-- <br><br><br><br>
-
-
-
-
-
-	
-	
-	
-	
-	
-	
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	asdfsadf
-	
-	
-	
-	
-	
-	
-	
-	<div class="row">
-		<div class="col-md-12">
-			<input type='file' ng-model-instant
-				onchange="angular.element(this).scope().imageUpload(event)" multiple />
-		</div>
-	</div>
-	<br>
-	<div class="row">
-		<div ng-repeat="step in stepsModel">
-			<img class="thumb" ng-src="{{step}}" />
-		</div>
-	</div>
-
-	<br>
-	<div class="row">
-		<div class="col-md-12">
-			<input type="file" img-cropper-fileread image="cropper.sourceImage" />
-		</div>
-	</div>
-
-	<div class="row" id="container">
-		<div>
-			<canvas width="500" height="300" id="canvas" image-cropper
-				image="cropper.sourceImage" cropped-image="cropper.croppedImage"
-				crop-width="400" crop-height="200" min-width="100" min-height="50"
-				keep-aspect="true" crop-area-bounds="bounds"></canvas>
-		</div>
-		<div>Cropped Image (Left: {{bounds.left}} Right:
-			{{bounds.right}} Top: {{bounds.top}} Bottom: {{bounds.bottom}})</div>
-		<div ng-show="cropper.croppedImage!=null">
-			<img ng-src="{{cropper.croppedImage}}" id="ELEMENT" />
-		</div>
-	</div>
-	<div class="row mychecking" ng-style="{'background-image': 'url(' + cropper.sourceImage + ')'}">
-	<div class="col-md-12" style="width: 100%">
-	<img class="mycheckingSelection" src="http://fillmurray.com/360/100">
-	</div>
-	</div> -->
-	
-	
-	
-	
-	
-	
-	
-	
-	
+<!-- End Table -->
 	
 	
 	

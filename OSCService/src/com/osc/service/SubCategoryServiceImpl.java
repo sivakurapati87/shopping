@@ -38,20 +38,21 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 			LOG.error(e.getMessage(), e);
 		}
 	}
-	
+
 	public List<SubCategoryJson> getAllSubCategories() {
 		List<SubCategoryJson> subCategoryJsons = null;
 		try {
-			StringBuilder sb = new StringBuilder("select s.id,s.name,s.categoryDivision.name,s.user.userName from SubCategory s where s.isDeleted = false order by s.name ASC");
+			StringBuilder sb = new StringBuilder(
+					"select s.id,s.name,s.categoryDivision.name,s.user.userName from SubCategory s where s.isDeleted = false order by s.name ASC");
 			List<?> categories = subCategoryDao.findByQuery(sb.toString(), null, null, null);
 			if (categories != null && categories.size() > 0) {
 				subCategoryJsons = new ArrayList<SubCategoryJson>();
 				for (Object object : categories) {
 					Object[] obj = (Object[]) object;
 					SubCategoryJson json = new SubCategoryJson();
-					json.setId((Integer) obj[0]);
+					json.setId((Long) obj[0]);
 					json.setName((String) obj[1]);
-					json.setCategoryDivisionName((String)obj[2]);
+					json.setCategoryDivisionName((String) obj[2]);
 					json.setStrCreatedBy(Util.getStringValueOfObj(obj[3]));
 					subCategoryJsons.add(json);
 				}
@@ -62,15 +63,15 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 		}
 		return subCategoryJsons;
 	}
-	
-	public SubCategoryJson getSubCategoryById(Integer id) {
+
+	public SubCategoryJson getSubCategoryById(Long id) {
 		SubCategoryJson subCategoryJson = null;
 		try {
 			SubCategory subCategory = (SubCategory) subCategoryDao.getById(SubCategory.class, id);
 
 			if (subCategory != null) {
 				subCategoryJson = new SubCategoryJson();
-				TransformEntityToJson.getSubCategoryJson(subCategory,subCategoryJson);
+				TransformEntityToJson.getSubCategoryJson(subCategory, subCategoryJson);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,7 +80,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 		return subCategoryJson;
 	}
 
-	public void deleteSubCategoryById(Integer id, Integer userId) {
+	public void deleteSubCategoryById(Long id, Long userId) {
 		try {
 			SubCategory subCategory = (SubCategory) subCategoryDao.getById(SubCategory.class, id);
 
@@ -95,4 +96,26 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 		}
 	}
 
+	public List<SubCategoryJson> getAllSubCategoriesWithCategory() {
+		List<SubCategoryJson> subCategoryJsons = null;
+		try {
+			StringBuilder sb = new StringBuilder(
+					"select s.id,s.name,s.categoryDivision.name,s.categoryDivision.category.name from SubCategory s where s.isDeleted = false order by s.name ASC");
+			List<?> categories = subCategoryDao.findByQuery(sb.toString(), null, null, null);
+			if (categories != null && categories.size() > 0) {
+				subCategoryJsons = new ArrayList<SubCategoryJson>();
+				for (Object object : categories) {
+					Object[] obj = (Object[]) object;
+					SubCategoryJson json = new SubCategoryJson();
+					json.setId((Long) obj[0]);
+					json.setName(Util.getStringValueOfObj(obj[1])+"("+Util.getStringValueOfObj(obj[3])+" -> "+Util.getStringValueOfObj(obj[2])+")");
+					subCategoryJsons.add(json);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+		return subCategoryJsons;
+	}
 }

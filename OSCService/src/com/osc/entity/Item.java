@@ -2,6 +2,7 @@ package com.osc.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -9,15 +10,21 @@ import javax.persistence.Table;
 @Table(name = "item")
 public class Item extends BaseEntity {
 	private String name;
-	private Integer subCategoryId;
+	private String size;
+	private Long subCategoryId;
 	private Float quantity;
 	private Double mrp;
-	private Double priceAfterDiscount;
-	private Double savedAmount;
+	private Double discount;
+	private Boolean isNameFieldExists;
+//	private Double priceAfterDiscount;
+//	private Double savedAmount;
+	@Lob
 	private byte[] description;
+	@Lob
 	private byte[] imageSrc;
 	private String barCodeNo;
-	private byte[] about;
+	@Lob
+	private byte[] adminItemInfo;
 	private Integer minQuantityToPurchase;
 	@ManyToOne
 	@JoinColumn(name = "subCategoryId", insertable = false, updatable = false)
@@ -31,11 +38,11 @@ public class Item extends BaseEntity {
 		this.name = name;
 	}
 
-	public Integer getSubCategoryId() {
+	public Long getSubCategoryId() {
 		return subCategoryId;
 	}
 
-	public void setSubCategoryId(Integer subCategoryId) {
+	public void setSubCategoryId(Long subCategoryId) {
 		this.subCategoryId = subCategoryId;
 	}
 
@@ -55,7 +62,7 @@ public class Item extends BaseEntity {
 		this.mrp = mrp;
 	}
 
-	public Double getPriceAfterDiscount() {
+/*	public Double getPriceAfterDiscount() {
 		return priceAfterDiscount;
 	}
 
@@ -69,7 +76,7 @@ public class Item extends BaseEntity {
 
 	public void setSavedAmount(Double savedAmount) {
 		this.savedAmount = savedAmount;
-	}
+	}*/
 
 	public byte[] getDescription() {
 		return description;
@@ -95,13 +102,6 @@ public class Item extends BaseEntity {
 		this.barCodeNo = barCodeNo;
 	}
 
-	public byte[] getAbout() {
-		return about;
-	}
-
-	public void setAbout(byte[] about) {
-		this.about = about;
-	}
 
 	public SubCategory getSubCategory() {
 		return subCategory;
@@ -117,6 +117,38 @@ public class Item extends BaseEntity {
 
 	public void setMinQuantityToPurchase(Integer minQuantityToPurchase) {
 		this.minQuantityToPurchase = minQuantityToPurchase;
+	}
+
+	public Double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}
+
+	public byte[] getAdminItemInfo() {
+		return adminItemInfo;
+	}
+
+	public void setAdminItemInfo(byte[] adminItemInfo) {
+		this.adminItemInfo = adminItemInfo;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public Boolean getIsNameFieldExists() {
+		return isNameFieldExists;
+	}
+
+	public void setIsNameFieldExists(Boolean isNameFieldExists) {
+		this.isNameFieldExists = isNameFieldExists;
 	}
 
 }

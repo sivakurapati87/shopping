@@ -1,10 +1,10 @@
 package com.osc.json;
 
 public class BaseJson {
-	private Integer id;
-	private Integer createdBy;
+	private Long id;
+	private Long createdBy;
 	private String createdOn;
-	private Integer updatedBy;
+	private Long updatedBy;
 	private String updatedOn;
 	
 	private String strCreatedBy;
@@ -28,11 +28,11 @@ public class BaseJson {
 		this.strUpdatedBy = strUpdatedBy;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -52,19 +52,19 @@ public class BaseJson {
 		this.updatedOn = updatedOn;
 	}
 
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public Integer getUpdatedBy() {
+	public Long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(Integer updatedBy) {
+	public void setUpdatedBy(Long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

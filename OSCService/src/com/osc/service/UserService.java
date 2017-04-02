@@ -11,7 +11,7 @@ public interface UserService {
 
 	public List<UserJson> getAllUsers();
 
-	public UserJson getUserById(Integer id);
+	public UserJson getUserById(Long id);
 	
-	public void deleteUserById(Integer id,Integer userId);
+	public void deleteUserById(Long id,Long userId);
 }

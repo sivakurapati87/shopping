@@ -7,7 +7,7 @@ package com.osc.json;
  */
 public class TaskJson extends BaseJson {
 	private String taskName;
-	private Integer assignedToId;
+	private Long assignedToId;
 	private String assignedTo;
 	private String status;
 	private String description;
@@ -15,11 +15,11 @@ public class TaskJson extends BaseJson {
 	private String doubt;
 	private Boolean isDoubt;
 
-	public Integer getAssignedToId() {
+	public Long getAssignedToId() {
 		return assignedToId;
 	}
 
-	public void setAssignedToId(Integer assignedToId) {
+	public void setAssignedToId(Long assignedToId) {
 		this.assignedToId = assignedToId;
 	}
 

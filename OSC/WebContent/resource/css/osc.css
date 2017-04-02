@@ -1,27 +1,49 @@
 input[type='text']{
 	width: 260px;
-	height:40px;
+	height:36px;
 	background: #eafdea;
 	/* font-family:  GlacialIndifference-Regular; */
 	font-size: 18px !important;
 }
 input[type='email']{
 	width: 260px;
-	height:40px;
+	height:36px;
 	background: #eafdea;
 	/* font-family:  GlacialIndifference-Regular; */
 	font-size: 18px !important;
 }
 input[type='password']{
 	width: 260px;
-	height:40px;
+	height:36px;
+	background: #eafdea;
+	/* font-family:  GlacialIndifference-Regular; */
+	font-size: 18px !important;
+}
+select{
+	width: 260px;
+	height:36px;
 	background: #eafdea;
 	/* font-family:  GlacialIndifference-Regular; */
 	font-size: 18px !important;
 }
 
+.bgModule{
+	background: #c7fac7;
+	padding: 20;
+	cursor: pointer;
+}
 .lblError{
 	font-size: 14px;
+	padding: 10px;
+	color: #ff4a4a;
+}
+.plusSign{
+	font-size: 20px;
+	padding: 10px;
+	color: #71dc6d;
+}
+.minusSign{
+	font-size: 20px;
 	padding: 10px;
 	color: #ff4a4a;
 }

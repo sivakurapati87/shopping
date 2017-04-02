@@ -17,7 +17,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "category_division")
 public class CategoryDivision extends BaseEntity {
 	private String name;
-	private Integer categoryId;
+	private Long categoryId;
 	@ManyToOne
 	@JoinColumn(name = "categoryId", insertable = false, updatable = false)
 	private Category category;
@@ -35,11 +35,11 @@ public class CategoryDivision extends BaseEntity {
 		this.name = name;
 	}
 
-	public Integer getCategoryId() {
+	public Long getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(Integer categoryId) {
+	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
 

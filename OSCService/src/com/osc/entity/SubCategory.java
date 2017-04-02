@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "subcategory")
 public class SubCategory extends BaseEntity{
-	private Integer categoryDivisionId;
+	private Long categoryDivisionId;
 	private String name;
 	@ManyToOne
 	@JoinColumn(name = "categoryDivisionId", insertable = false, updatable = false)
@@ -25,11 +25,11 @@ public class SubCategory extends BaseEntity{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getCategoryDivisionId() {
+	public Long getCategoryDivisionId() {
 		return categoryDivisionId;
 	}
 
-	public void setCategoryDivisionId(Integer categoryDivisionId) {
+	public void setCategoryDivisionId(Long categoryDivisionId) {
 		this.categoryDivisionId = categoryDivisionId;
 	}
 	public CategoryDivision getCategoryDivision() {

@@ -83,7 +83,7 @@ public class UserController {
 	}
 
 	@RequestMapping("getUserById/{id}")
-	public ResponseEntity<UserJson> getUserById(@PathVariable("id") Integer id, HttpServletRequest request) {
+	public ResponseEntity<UserJson> getUserById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
 			UserJson userJson = null;
 			try {
@@ -101,7 +101,7 @@ public class UserController {
 	}
 
 	@RequestMapping("deleteUserById/{id}")
-	public ResponseEntity<UserJson> deleteUserById(@PathVariable("id") Integer id, HttpServletRequest request) {
+	public ResponseEntity<UserJson> deleteUserById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
 			UserJson userJson = null;
 			try {

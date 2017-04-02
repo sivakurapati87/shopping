@@ -9,8 +9,10 @@ public interface SubCategoryService {
 
 	public List<SubCategoryJson> getAllSubCategories();
 	
-	public SubCategoryJson getSubCategoryById(Integer id);
+	public List<SubCategoryJson> getAllSubCategoriesWithCategory();
 	
-	public void deleteSubCategoryById(Integer id,Integer userId);
+	public SubCategoryJson getSubCategoryById(Long id);
+	
+	public void deleteSubCategoryById(Long id,Long userId);
 
 }

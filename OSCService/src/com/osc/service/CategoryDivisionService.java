@@ -9,7 +9,7 @@ public interface CategoryDivisionService {
 
 	public List<CategoryDivisionJson> getAllCategoryDivisions();
 	
-	public CategoryDivisionJson getCategoryDivisionById(Integer id);
+	public CategoryDivisionJson getCategoryDivisionById(Long id);
 	
-	public void deleteCategoryDivisionById(Integer id, Integer userId);
+	public void deleteCategoryDivisionById(Long id, Long userId);
 }

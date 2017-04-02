@@ -63,7 +63,7 @@ public class ItemFieldNameServiceImpl implements ItemFieldNameService {
 		return itemFieldNameJsons;
 	}
 
-	public ItemFieldNameJson getFieldNameById(Integer id) {
+	public ItemFieldNameJson getFieldNameById(Long id) {
 		ItemFieldNameJson itemFieldNamesJson = null;
 		try {
 			ItemFieldName itemFieldName = (ItemFieldName) itemFieldNamesDao.getById(ItemFieldName.class, id);
@@ -79,7 +79,7 @@ public class ItemFieldNameServiceImpl implements ItemFieldNameService {
 		return itemFieldNamesJson;
 	}
 
-	public void deleteFieldNameById(Integer id, Integer userId) {
+	public void deleteFieldNameById(Long id, Long userId) {
 		try {
 			ItemFieldName itemFieldName = (ItemFieldName) itemFieldNamesDao.getById(ItemFieldName.class, id);
 

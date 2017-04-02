@@ -8,32 +8,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ItemFieldValue")
 public class ItemFieldValue extends BaseEntity {
-	private Integer itemFieldInfoId;
+	private Long itemFieldNameId;
 	private String itemFieldValue;
-	private Integer itemId;
+	private Long itemId;
 	@ManyToOne
-	@JoinColumn(name = "itemFieldInfoId", insertable = false, updatable = false)
-	private ItemFieldName itemSpecificationFieldName;
-
-	public ItemFieldName getItemSpecificationFieldName() {
-		return itemSpecificationFieldName;
-	}
-
-	public void setItemSpecificationFieldName(ItemFieldName itemSpecificationFieldName) {
-		this.itemSpecificationFieldName = itemSpecificationFieldName;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "itemId", insertable = false, updatable = false)
-	private Item item;
-
-	public Integer getItemFieldInfoId() {
-		return itemFieldInfoId;
-	}
-
-	public void setItemFieldInfoId(Integer itemFieldInfoId) {
-		this.itemFieldInfoId = itemFieldInfoId;
-	}
+	@JoinColumn(name = "itemFieldNameId", insertable = false, updatable = false)
+	private ItemFieldName itemFieldName;
 
 	public String getItemFieldValue() {
 		return itemFieldValue;
@@ -43,19 +23,27 @@ public class ItemFieldValue extends BaseEntity {
 		this.itemFieldValue = itemFieldValue;
 	}
 
-	public Integer getItemId() {
+	public Long getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(Integer itemId) {
+	public void setItemId(Long itemId) {
 		this.itemId = itemId;
 	}
 
-	public Item getItem() {
-		return item;
+	public Long getItemFieldNameId() {
+		return itemFieldNameId;
 	}
 
-	public void setItem(Item item) {
-		this.item = item;
+	public void setItemFieldNameId(Long itemFieldNameId) {
+		this.itemFieldNameId = itemFieldNameId;
+	}
+
+	public ItemFieldName getItemFieldName() {
+		return itemFieldName;
+	}
+
+	public void setItemFieldName(ItemFieldName itemFieldName) {
+		this.itemFieldName = itemFieldName;
 	}
 }

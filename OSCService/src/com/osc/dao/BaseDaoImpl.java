@@ -31,8 +31,20 @@ public class BaseDaoImpl implements BaseDao {
 			LOG.error(e.getMessage(), e);
 		}
 	}
+	
+	public void remove(Object obj) {
+		try {
+			if (obj != null) {
+				getSession().delete(obj);
+			}
 
-	public Object getById(Class<?> clazz, Integer id) {
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+	}
+
+	public Object getById(Class<?> clazz, Long id) {
 		return getSession().get(clazz, id);
 	}
 

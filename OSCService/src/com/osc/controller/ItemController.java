@@ -14,25 +14,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.osc.json.CategoryJson;
-import com.osc.service.CategoryService;
+import com.osc.json.ItemJson;
+import com.osc.service.ItemService;
 import com.osc.util.Util;
 
 @RestController
-@RequestMapping("CategoryController")
+@RequestMapping("ItemController")
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class CategoryController {
-	private Logger LOG = Logger.getLogger(CategoryController.class);
+public class ItemController {
+	private Logger LOG = Logger.getLogger(ItemController.class);
 	@Autowired
-	private CategoryService categoryService;
+	private ItemService itemService;
 
 	@RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
-	public ResponseEntity<?> saveOrUpdate(@RequestBody CategoryJson categoryJson, HttpServletRequest request) {
+	public ResponseEntity<?> saveOrUpdate(@RequestBody ItemJson itemJson, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
 		try {
-			categoryJson.setCreatedBy(Util.getLoginUserId(request));
-			categoryJson.setUpdatedBy(Util.getLoginUserId(request));
-			categoryService.saveOrUpdate(categoryJson);
+			itemJson.setCreatedBy(Util.getLoginUserId(request));
+			itemJson.setUpdatedBy(Util.getLoginUserId(request));
+			itemService.saveOrUpdate(itemJson);
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOG.error(e.getMessage(), e);
@@ -46,54 +46,54 @@ public class CategoryController {
 	}
 
 	
-	@RequestMapping("getAllCategories")
-	public ResponseEntity<List<CategoryJson>> getAllCategories(HttpServletRequest request) {
+	@RequestMapping("getAllItems")
+	public ResponseEntity<List<ItemJson>> getAllItems(HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
-			List<CategoryJson> categoryJsons = null;
+			List<ItemJson> itemJsons = null;
 			try {
-				categoryJsons = categoryService.getAllCategories();
+				itemJsons = itemService.getAllItems();
 			} catch (Exception e) {
 				e.printStackTrace();
 				LOG.error(e.getMessage(), e);
-				return new ResponseEntity<List<CategoryJson>>(categoryJsons, HttpStatus.EXPECTATION_FAILED);
+				return new ResponseEntity<List<ItemJson>>(itemJsons, HttpStatus.EXPECTATION_FAILED);
 			}
-			return new ResponseEntity<List<CategoryJson>>(categoryJsons, HttpStatus.OK);
+			return new ResponseEntity<List<ItemJson>>(itemJsons, HttpStatus.OK);
 		} else {
 			LOG.error("User must login");
 			return new ResponseEntity(HttpStatus.FORBIDDEN);
 		}
 	}
 	
-	@RequestMapping("getCategoryById/{id}")
-	public ResponseEntity<CategoryJson> getCategoryById(@PathVariable("id") Long id, HttpServletRequest request) {
+	@RequestMapping("getItemById/{id}")
+	public ResponseEntity<ItemJson> getItemById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
-			CategoryJson categoryJson = null;
+			ItemJson itemJson = null;
 			try {
-				categoryJson = categoryService.getCategoryById(id);
+				itemJson = itemService.getItemById(id);
 			} catch (Exception e) {
 				e.printStackTrace();
 				LOG.error(e.getMessage(), e);
-				return new ResponseEntity<CategoryJson>(categoryJson, HttpStatus.EXPECTATION_FAILED);
+				return new ResponseEntity<ItemJson>(itemJson, HttpStatus.EXPECTATION_FAILED);
 			}
-			return new ResponseEntity<CategoryJson>(categoryJson, HttpStatus.OK);
+			return new ResponseEntity<ItemJson>(itemJson, HttpStatus.OK);
 		} else {
 			LOG.error("User must login");
 			return new ResponseEntity(HttpStatus.FORBIDDEN);
 		}
 	}
 
-	@RequestMapping("deleteCategoryById/{id}")
-	public ResponseEntity<CategoryJson> deleteCategoryById(@PathVariable("id") Long id, HttpServletRequest request) {
+	@RequestMapping("deleteItemById/{id}")
+	public ResponseEntity<ItemJson> deleteItemById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
-			CategoryJson categoryJson = null;
+			ItemJson itemJson = null;
 			try {
-				categoryService.deleteCategoryById(id, Util.getLoginUserId(request));
+				itemService.deleteItemById(id, Util.getLoginUserId(request));
 			} catch (Exception e) {
 				e.printStackTrace();
 				LOG.error(e.getMessage(), e);
-				return new ResponseEntity<CategoryJson>(categoryJson, HttpStatus.EXPECTATION_FAILED);
+				return new ResponseEntity<ItemJson>(itemJson, HttpStatus.EXPECTATION_FAILED);
 			}
-			return new ResponseEntity<CategoryJson>(categoryJson, HttpStatus.OK);
+			return new ResponseEntity<ItemJson>(itemJson, HttpStatus.OK);
 		} else {
 			LOG.error("User must login");
 			return new ResponseEntity(HttpStatus.FORBIDDEN);

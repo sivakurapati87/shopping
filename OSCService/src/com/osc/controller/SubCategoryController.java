@@ -65,8 +65,26 @@ public class SubCategoryController {
 		}
 	}
 	
+	@RequestMapping("getAllSubCategoriesWithCategory")
+	public ResponseEntity<List<SubCategoryJson>> getAllSubCategoriesWithCategory(HttpServletRequest request) {
+		if (Util.getLoginUserId(request) != null) {
+			List<SubCategoryJson> subCategoryJsons = null;
+			try {
+				subCategoryJsons = subCategoryService.getAllSubCategoriesWithCategory();
+			} catch (Exception e) {
+				e.printStackTrace();
+				LOG.error(e.getMessage(), e);
+				return new ResponseEntity<List<SubCategoryJson>>(subCategoryJsons, HttpStatus.EXPECTATION_FAILED);
+			}
+			return new ResponseEntity<List<SubCategoryJson>>(subCategoryJsons, HttpStatus.OK);
+		} else {
+			LOG.error("User must login");
+			return new ResponseEntity(HttpStatus.FORBIDDEN);
+		}
+	}
+	
 	@RequestMapping("getSubCategoryById/{id}")
-	public ResponseEntity<SubCategoryJson> getSubCategoryById(@PathVariable("id") Integer id, HttpServletRequest request) {
+	public ResponseEntity<SubCategoryJson> getSubCategoryById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
 			SubCategoryJson subCategoryJson = null;
 			try {
@@ -84,7 +102,7 @@ public class SubCategoryController {
 	}
 
 	@RequestMapping("deleteSubCategoryById/{id}")
-	public ResponseEntity<CategoryJson> deleteSubCategoryById(@PathVariable("id") Integer id, HttpServletRequest request) {
+	public ResponseEntity<CategoryJson> deleteSubCategoryById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
 			CategoryJson categoryJson = null;
 			try {

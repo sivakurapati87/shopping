@@ -50,7 +50,7 @@ public class CategoryDivisionServiceImpl implements CategoryDivisionService {
 				for (Object object : categories) {
 					Object[] obj = (Object[]) object;
 					CategoryDivisionJson json = new CategoryDivisionJson();
-					json.setId((Integer) obj[0]);
+					json.setId((Long) obj[0]);
 					json.setName((String) obj[1]);
 					json.setCategoryName((String) obj[2]);
 					json.setStrCreatedBy(Util.getStringValueOfObj(obj[3]));
@@ -64,7 +64,7 @@ public class CategoryDivisionServiceImpl implements CategoryDivisionService {
 		return categoryDivisionJsons;
 	}
 
-	public CategoryDivisionJson getCategoryDivisionById(Integer id) {
+	public CategoryDivisionJson getCategoryDivisionById(Long id) {
 		CategoryDivisionJson categoryDivisionJson = null;
 		try {
 			CategoryDivision categoryDivision = (CategoryDivision) categoryDivisionDao.getById(CategoryDivision.class, id);
@@ -80,7 +80,7 @@ public class CategoryDivisionServiceImpl implements CategoryDivisionService {
 		return categoryDivisionJson;
 	}
 
-	public void deleteCategoryDivisionById(Integer id, Integer userId) {
+	public void deleteCategoryDivisionById(Long id, Long userId) {
 		try {
 			CategoryDivision categoryDivision = (CategoryDivision) categoryDivisionDao.getById(CategoryDivision.class, id);
 

@@ -235,7 +235,7 @@ public class Util {
 	}
 	
 
-	public static Integer getLoginUserId(HttpServletRequest request) {
+	public static Long getLoginUserId(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		UserJson json = (UserJson) session.getAttribute(Constants.General.LOGIN_USER);
 		if (json != null) {
@@ -258,17 +258,27 @@ public class Util {
 		return strValue;
 	}
 	
-	public static Integer getIntegerValueOfObj(Object obj) {
-		Integer intValue = 0;
+	public static Long getIntegerValueOfObj(Object obj) {
+		Long intValue = 0l;
 		if (obj != null) {
 			if (obj instanceof BigInteger) {
-				intValue = ((BigInteger) obj).intValue();
+				intValue = ((BigInteger) obj).longValue();
 			} else {
-				intValue = (Integer) obj;
+				intValue = (Long) obj;
 			}
-
 		}
 		return intValue;
+	}
+	public static Double getDoubleValueOfObj(Object obj) {
+		Double dblValue = 0d;
+		if (obj != null) {
+			if (obj instanceof BigInteger) {
+				dblValue = ((BigInteger) obj).doubleValue();
+			} else {
+				dblValue = (Double) obj;
+			}
+		}
+		return dblValue;
 	}
 
 }

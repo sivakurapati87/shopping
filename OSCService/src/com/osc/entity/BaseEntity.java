@@ -13,10 +13,10 @@ import javax.persistence.MappedSuperclass;
 public class BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private Integer createdBy;
+	private Long id;
+	private Long createdBy;
 	private Date createdOn;
-	private Integer updatedBy;
+	private Long updatedBy;
 	private Date updatedOn;
 	private Boolean isDeleted = false;
 	@ManyToOne
@@ -31,19 +31,19 @@ public class BaseEntity {
 		this.user = user;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -55,11 +55,11 @@ public class BaseEntity {
 		this.createdOn = createdOn;
 	}
 
-	public Integer getUpdatedBy() {
+	public Long getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(Integer updatedBy) {
+	public void setUpdatedBy(Long updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

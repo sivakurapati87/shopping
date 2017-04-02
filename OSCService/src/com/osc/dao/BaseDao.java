@@ -9,9 +9,12 @@ import java.util.Map;
  *
  */
 public interface BaseDao {
+	
 	public void saveOrUpdate(Object obj);
+	
+	public void remove(Object obj);
 
-	public Object getById(Class<?> clazz,Integer id);
+	public Object getById(Class<?> clazz,Long id);
 
 	public List<?> findByQuery(String hqlQuery, Map<String, Object> params, Integer firstRecord, Integer maxRecord);
 

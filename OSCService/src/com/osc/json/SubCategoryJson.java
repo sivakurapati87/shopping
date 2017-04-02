@@ -1,7 +1,7 @@
 package com.osc.json;
 
 public class SubCategoryJson extends BaseJson {
-	private Integer categoryDivisionId;
+	private Long categoryDivisionId;
 	private String name;
 	private String categoryDivisionName;
 	private CategoryJson category;
@@ -22,11 +22,11 @@ public class SubCategoryJson extends BaseJson {
 		this.category = category;
 	}
 
-	public Integer getCategoryDivisionId() {
+	public Long getCategoryDivisionId() {
 		return categoryDivisionId;
 	}
 
-	public void setCategoryDivisionId(Integer categoryDivisionId) {
+	public void setCategoryDivisionId(Long categoryDivisionId) {
 		this.categoryDivisionId = categoryDivisionId;
 	}
 

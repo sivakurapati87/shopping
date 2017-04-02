@@ -65,7 +65,7 @@ public class FieldNameController {
 	}
 	
 	@RequestMapping("getFieldNameById/{id}")
-	public ResponseEntity<ItemFieldNameJson> getFieldNameById(@PathVariable("id") Integer id, HttpServletRequest request) {
+	public ResponseEntity<ItemFieldNameJson> getFieldNameById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
 			ItemFieldNameJson itemFieldNamesJson = null;
 			try {
@@ -83,7 +83,7 @@ public class FieldNameController {
 	}
 
 	@RequestMapping("deleteFieldNameById/{id}")
-	public ResponseEntity<ItemFieldNameJson> deleteFieldNameById(@PathVariable("id") Integer id, HttpServletRequest request) {
+	public ResponseEntity<ItemFieldNameJson> deleteFieldNameById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
 			ItemFieldNameJson itemFieldNamesJson = null;
 			try {

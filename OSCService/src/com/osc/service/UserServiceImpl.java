@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
 		return userJson;
 	}
 
-	public UserJson getUserById(Integer id) {
+	public UserJson getUserById(Long id) {
 		UserJson json = null;
 		try {
 			User user = (User) userDao.getById(User.class, id);
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
 		return json;
 	}
 
-	public void deleteUserById(Integer id, Integer userId) {
+	public void deleteUserById(Long id, Long userId) {
 		try {
 			User user = (User) userDao.getById(User.class, id);
 

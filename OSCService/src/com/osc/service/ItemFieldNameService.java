@@ -9,8 +9,8 @@ public interface ItemFieldNameService {
 
 	public List<ItemFieldNameJson> getAllItemFieldNames();
 	
-	public ItemFieldNameJson getFieldNameById(Integer id);
+	public ItemFieldNameJson getFieldNameById(Long id);
 	
-	public void deleteFieldNameById(Integer id,Integer userId);
+	public void deleteFieldNameById(Long id,Long userId);
 
 }

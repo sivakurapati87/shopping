@@ -2,32 +2,76 @@ package com.osc.util;
 
 import java.util.Date;
 
+import com.osc.entity.BaseEntity;
 import com.osc.entity.Category;
 import com.osc.entity.CategoryDivision;
+import com.osc.entity.Item;
+import com.osc.entity.ItemCroppedDimension;
 import com.osc.entity.ItemFieldName;
+import com.osc.entity.ItemFieldValue;
 import com.osc.entity.SubCategory;
 import com.osc.entity.User;
+import com.osc.json.BaseJson;
 import com.osc.json.CategoryDivisionJson;
 import com.osc.json.CategoryJson;
+import com.osc.json.ItemCroppedDimensionJson;
 import com.osc.json.ItemFieldNameJson;
+import com.osc.json.ItemFieldValueJson;
+import com.osc.json.ItemJson;
 import com.osc.json.SubCategoryJson;
 import com.osc.json.UserJson;
 
 public class TransformJsonToEntity {
-//	public static void getUser(UserJson userJson, User user) {
-//		user.setFullName(userJson.getFullName());
-//		user.setIsAdmin(userJson.getIsAdmin());
-//		user.setEmpType(userJson.getEmpType());
-//		user.setPassword(Util.passwordEncryption(userJson.getPassword()));
-//		user.setUserName(userJson.getUserName());
-//		if (user.getId() != null) {
-//			user.setUpdatedBy(userJson.getUpdatedBy());
-//			user.setUpdatedOn(new Date());
-//		} else {
-//			user.setCreatedBy(userJson.getCreatedBy());
-//			user.setCreatedOn(new Date());
-//		}
-//	}
+	public static void getItem(ItemJson itemJson, Item item) {
+		if (itemJson.getAdminItemInfo() != null) {
+			item.setAdminItemInfo(itemJson.getAdminItemInfo().getBytes());
+		}
+		if (itemJson.getDescription() != null) {
+			item.setDescription(itemJson.getDescription().getBytes());
+		}
+		item.setDiscount(itemJson.getDiscount());
+		if (itemJson.getImageSrc() != null) {
+			item.setImageSrc(itemJson.getImageSrc().getBytes());
+		}
+		item.setMinQuantityToPurchase(itemJson.getMinQuantityToPurchase());
+		item.setMrp(itemJson.getMrp());
+		item.setName(itemJson.getName());
+		item.setSize(itemJson.getSize());
+		item.setSubCategoryId(itemJson.getSubCategoryId());
+		item.setIsNameFieldExists(itemJson.getIsNameFieldExists());
+		getBaseEntity(itemJson, item);
+	}
+
+	public static void getItemFieldValue(ItemFieldValue itemFieldValue, ItemFieldValueJson itemFieldValueJson) {
+		itemFieldValue.setItemId(itemFieldValueJson.getItemId());
+		itemFieldValue.setItemFieldNameId(itemFieldValueJson.getItemFieldNameId());
+		itemFieldValue.setItemFieldValue(itemFieldValueJson.getItemFieldValue());
+
+		getBaseEntity(itemFieldValueJson, itemFieldValue);
+	}
+	
+	public static void getItemCroppedDimension(ItemCroppedDimension itemCroppedDimension,ItemCroppedDimensionJson itemCroppedDimensionJson) {
+		itemCroppedDimension.setCroppedHeight(itemCroppedDimensionJson.getHeight());
+		itemCroppedDimension.setItemId(itemCroppedDimensionJson.getItemId());
+		itemCroppedDimension.setxPosition(itemCroppedDimensionJson.getLeft());
+		itemCroppedDimension.setName(itemCroppedDimensionJson.getName());
+		itemCroppedDimension.setyPosition(itemCroppedDimensionJson.getTop());
+		itemCroppedDimension.setCroppedWidth(itemCroppedDimensionJson.getWidth());
+
+		getBaseEntity(itemCroppedDimensionJson, itemCroppedDimension);
+	}
+	
+
+	public static void getBaseEntity(BaseJson baseJson, BaseEntity baseEntity) {
+		baseEntity.setIsDeleted(false);
+		if (baseEntity.getId() != null) {
+			baseEntity.setUpdatedBy(baseJson.getUpdatedBy());
+			baseEntity.setUpdatedOn(new Date());
+		} else {
+			baseEntity.setCreatedBy(baseJson.getCreatedBy());
+			baseEntity.setCreatedOn(new Date());
+		}
+	}
 
 	public static void getCategory(CategoryJson categoryJson, Category category) {
 		category.setName(categoryJson.getName());
@@ -39,8 +83,7 @@ public class TransformJsonToEntity {
 			category.setCreatedOn(new Date());
 		}
 	}
-	
-	
+
 	public static void getItemFieldName(ItemFieldNameJson itemFieldNameJson, ItemFieldName itemFieldName) {
 		itemFieldName.setFieldName(itemFieldNameJson.getFieldName());
 		if (itemFieldName.getId() != null) {
@@ -51,6 +94,7 @@ public class TransformJsonToEntity {
 			itemFieldName.setCreatedOn(new Date());
 		}
 	}
+
 	public static void getCategoryDivision(CategoryDivisionJson categoryDivisionJson, CategoryDivision categoryDivision) {
 		categoryDivision.setName(categoryDivisionJson.getName());
 		categoryDivision.setCategoryId(categoryDivisionJson.getCategoryId());

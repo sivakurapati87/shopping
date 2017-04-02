@@ -64,7 +64,7 @@ public class CategoryDivisionController {
 	}
 
 	@RequestMapping("getCategoryDivisionById/{id}")
-	public ResponseEntity<CategoryDivisionJson> getCategoryDivisionById(@PathVariable("id") Integer id, HttpServletRequest request) {
+	public ResponseEntity<CategoryDivisionJson> getCategoryDivisionById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
 			CategoryDivisionJson categoryDivisionJson = null;
 			try {
@@ -82,7 +82,7 @@ public class CategoryDivisionController {
 	}
 
 	@RequestMapping("deleteCategoryDivisionById/{id}")
-	public ResponseEntity<CategoryDivisionJson> deleteCategoryDivisionById(@PathVariable("id") Integer id, HttpServletRequest request) {
+	public ResponseEntity<CategoryDivisionJson> deleteCategoryDivisionById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
 			CategoryDivisionJson categoryDivisionJson = null;
 			try {

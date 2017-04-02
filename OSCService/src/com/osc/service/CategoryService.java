@@ -9,8 +9,8 @@ public interface CategoryService {
 
 	public List<CategoryJson> getAllCategories();
 	
-	public CategoryJson getCategoryById(Integer id);
+	public CategoryJson getCategoryById(Long id);
 	
-	public void deleteCategoryById(Integer id,Integer userId);
+	public void deleteCategoryById(Long id,Long userId);
 
 }
