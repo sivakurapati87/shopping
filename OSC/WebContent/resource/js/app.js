@@ -34,9 +34,21 @@ App.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	        		controller : "LoginController"
 	            }
 	        }
+	}).state('item', {
+		url: "/item",
+		views: {
+			'leftMenu':{
+				templateUrl: 'views/leftmenu.html',
+        		controller : "LeftMenuController"
+			},
+            'content': {
+            	templateUrl: 'views/item.html',
+        		controller : "ItemController"
+            }
+        }
 	})
 	.state('create_item', {
-		url: "/create_item",
+		url: "/create_item/:id",
 			views: {
 				'leftMenu':{
 					templateUrl: 'views/leftmenu.html',
@@ -44,7 +56,7 @@ App.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 				},
 	            'content': {
 	            	templateUrl: 'views/create_item.html',
-	        		controller : "ItemController"
+	        		controller : "CreateItemController"
 	            }
 	        }
 	})
