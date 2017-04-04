@@ -78,7 +78,8 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 	  			$scope.selectedPositions = $scope.itemObj.itemCroppedDimensionJsonList;
 	  			$scope.specificationList =$scope.itemObj.itemFieldValueJsonList;
 	  			$scope.subCategoryIds = $scope.itemObj.subCategoryIds;
-//	  			alert(data.imageSrc);
+	  			//alert(data.imageSrc);
+	  			$scope.imgpew = data.imageSrc; 
 	  			$('#uploadedImgId').attr('src',data.imageSrc);
 	  		});
 	  		response.error(function() {
@@ -89,7 +90,7 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 
 	
 	$scope.onload = function(){
-		
+		$scope.selectimg = false;
 	     $scope.bounds = {};
 	     $scope.displayGrid = true;
 	        $scope.cropper = {};

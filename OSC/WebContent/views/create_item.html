@@ -77,6 +77,11 @@ function tony()
 	<form ng-submit="saveOrUpdateAction()">
 		<div class="row" id="displayContentId">
 			<div class="col-md-12">
+			
+			
+			<div class="selectimgmask" ng-if="selectimg">
+			
+			
 				<div class="row">
 					<div class="col-md-12">
 						<label class="lblFont_new">Select an Image and create Mask
@@ -140,6 +145,15 @@ function tony()
 						</div>
 					</div>
 				</div>
+				
+				</div>
+				
+				
+				
+				
+				
+				
+				
 				<br>
 				<div class="row">
 					<div class="col-md-12">
@@ -147,8 +161,13 @@ function tony()
 							SubCategories :</label>
 					</div>
 				</div>
+				
+				
+				
+				
+				
 				<div class="row">
-					<div class="col-md-1"></div>
+					
 					<div class="col-md-9" style="border: 1px solid #7df27d;">
 						<label ng-repeat="ch in checkBoxes"> <input
 							type="checkbox" ng-checked="subCategoryIds.indexOf(ch.id) != -1"
@@ -157,7 +176,11 @@ function tony()
 					</div>
 					<div class="col-md-2"></div>
 				</div>
-				<br>
+				
+				
+				
+				
+
 				<div class="row" ng-click="isItemInfoBlockDisplay = !isItemInfoBlockDisplay">
 					<div class="col-md-12 bgModule">
 						<label class="lblFont_new"><i class="fa fa-expand" aria-hidden="true" title="Expand" ng-if="!isItemInfoBlockDisplay"></i>
@@ -165,58 +188,152 @@ function tony()
 						  Item Info :</label>
 					</div>
 				</div>
-				<br>
+				
+				
+				
+				
+				
+				
+				
 				<div class="row" ng-if="isItemInfoBlockDisplay">
+				
 				<div class="col-md-12">
+				
+				<div class="col-md-8">
+				
+				<br>
+				
 				<div class="row">
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<label class="lblFont_new"> Item Name :</label>
 					</div>
-					<div class="col-md-9">
-						<input type="text" style="width: 460px" ng-model="itemObj.name">
+					<div class="col-md-8">
+						<input type="text" ng-model="itemObj.name">
 					</div>
 				</div>
+				
+				
 				<div class="row">
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<label class="lblFont_new"> Min Quantity To Purchase :</label>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-8">
 						<input type="text" ng-model="itemObj.minQuantityToPurchase">
 					</div>
-					<div class="col-md-3"><label class="lblFont_new"> Is the textbox Required :</label> </div>
-					<div class="col-md-3"><input type="checkbox" ng-model="itemObj.isNameFieldExists"> </div>
+
 				</div>
+				
+				
+				
+				
+				
+				
 				<div class="row">
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<label class="lblFont_new"> MRP :</label>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-8">
 						<input type="text" ng-model="itemObj.mrp">
 					</div>
-					<div class="col-md-3">
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				<div class="row">
+					<div class="col-md-4">
 						<label class="lblFont_new"> Discount On MRP :</label>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-8">
 						<input type="text" ng-model="itemObj.discount">
 					</div>
 				</div>
+				
+				
+				
+									<div class="row">
+				<div class="col-md-4">
+						<label class="lblFont_new">Is the textbox Required  :</label>
+					</div>
+					<div class="col-md-3"><input type="checkbox" ng-model="itemObj.isNameFieldExists"> </div>
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			
+				
+				
+				</div>
+				
+				
+				<div class="col-md-4 imagediv"><img ng-src="{{imgpew}}" class="viewimageprew" ></div>
+				
+				
+				
+				</div>
+				
+				
+				
+				
+				<div class="col-md-12">
+				<div class="col-md-12">
+				
 				<div class="row">
 					<div class="col-md-3">
 						<label class="lblFont_new"> Product Description :</label>
 					</div>
-					<div class="col-md-9">
-						<textarea ng-model="itemObj.description" rows="6" cols="120"></textarea>
+					<div class="col-md-9 textareaholder">
+						<textarea ng-model="itemObj.description" rows="6"></textarea>
 					</div>
 				</div>
-
+				
+				
+				
+				
+				
+				
+				
 				<div class="row">
+					
 					<div class="col-md-3">
 						<label class="lblFont_new"> Product Info For Admin :</label>
 					</div>
-					<div class="col-md-9">
-						<textarea ng-model="itemObj.adminItemInfo" rows="7" cols="80"></textarea>
+					<div class="col-md-9 textareaholder">
+						<textarea ng-model="itemObj.adminItemInfo" rows="6" cols="40"></textarea>
 					</div>
+					
+					
+					
 				</div>
+
+
+
+				
+				</div>
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				</div>
 				</div>
 
