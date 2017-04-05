@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -28,6 +29,7 @@ import sun.misc.BASE64Encoder;
 
 import com.osc.json.UserJson;
 
+@SuppressWarnings("restriction")
 public class Util {
 	private static Logger LOG = Logger.getLogger(Util.class);
 	private final static ThreadLocal<SimpleDateFormat> sdf = new ThreadLocal<SimpleDateFormat>() {
@@ -233,7 +235,6 @@ public class Util {
 		Key key = new SecretKeySpec(Constants.General.KEYVALUE, Constants.General.ALGO);
 		return key;
 	}
-	
 
 	public static Long getLoginUserId(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -249,7 +250,7 @@ public class Util {
 		UserJson json = (UserJson) session.getAttribute(Constants.General.LOGIN_USER);
 		return json;
 	}
-	
+
 	public static String getStringValueOfObj(Object obj) {
 		String strValue = "";
 		if (obj != null) {
@@ -257,7 +258,7 @@ public class Util {
 		}
 		return strValue;
 	}
-	
+
 	public static Long getIntegerValueOfObj(Object obj) {
 		Long intValue = 0l;
 		if (obj != null) {
@@ -269,6 +270,7 @@ public class Util {
 		}
 		return intValue;
 	}
+
 	public static Double getDoubleValueOfObj(Object obj) {
 		Double dblValue = 0d;
 		if (obj != null) {
@@ -281,4 +283,29 @@ public class Util {
 		return dblValue;
 	}
 
+	public static String generateRandomAlphaNumericValues() {
+		String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		StringBuilder salt = new StringBuilder();
+		Random rnd = new Random();
+		while (salt.length() < 18) { // length of the random string.
+			int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+			salt.append(SALTCHARS.charAt(index));
+		}
+		String saltStr = salt.toString();
+		return saltStr;
+	}
+
+	public static String getStringFromLocation(String imageSourceLocation) {
+		String str = null;
+		if (imageSourceLocation != null && imageSourceLocation.trim().length() > 0) {
+			try {
+				FileInputStream fis = new FileInputStream(new File(imageSourceLocation));
+				str = IOUtils.toString(fis);
+			} catch (Exception e) {
+				e.printStackTrace();
+				LOG.error(e.getMessage(), e);
+			}
+		}
+		return str;
+	}
 }

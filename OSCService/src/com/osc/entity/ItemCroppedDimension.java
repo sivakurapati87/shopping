@@ -1,7 +1,6 @@
 package com.osc.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -13,16 +12,8 @@ public class ItemCroppedDimension extends BaseEntity {
 	private Integer croppedHeight;
 	private String name;
 	private Long itemId;
-	@Lob
-	private byte[] croppedImage;
+	private String croppedImageLocation;
 
-	public byte[] getCroppedImage() {
-		return croppedImage;
-	}
-
-	public void setCroppedImage(byte[] croppedImage) {
-		this.croppedImage = croppedImage;
-	}
 
 	public Integer getxPosition() {
 		return xPosition;
@@ -70,6 +61,14 @@ public class ItemCroppedDimension extends BaseEntity {
 
 	public void setItemId(Long itemId) {
 		this.itemId = itemId;
+	}
+
+	public String getCroppedImageLocation() {
+		return croppedImageLocation;
+	}
+
+	public void setCroppedImageLocation(String croppedImageLocation) {
+		this.croppedImageLocation = croppedImageLocation;
 	}
 
 }

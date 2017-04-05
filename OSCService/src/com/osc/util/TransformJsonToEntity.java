@@ -23,22 +23,19 @@ import com.osc.json.UserJson;
 
 public class TransformJsonToEntity {
 	public static void getItem(ItemJson itemJson, Item item) {
-		if (itemJson.getAdminItemInfo() != null) {
-			item.setAdminItemInfo(itemJson.getAdminItemInfo().getBytes());
-		}
-		if (itemJson.getDescription() != null) {
-			item.setDescription(itemJson.getDescription().getBytes());
-		}
+		item.setAdminItemInfo(itemJson.getAdminItemInfo());
+		item.setDescription(itemJson.getDescription());
 		item.setDiscount(itemJson.getDiscount());
-		if (itemJson.getImageSrc() != null) {
-			item.setImageSrc(itemJson.getImageSrc().getBytes());
-		}
+		// if (itemJson.getImageSrc() != null) {
+		// item.setImageSrc(itemJson.getImageSrc().getBytes());
+		// }
 		item.setMinQuantityToPurchase(itemJson.getMinQuantityToPurchase());
 		item.setMrp(itemJson.getMrp());
 		item.setName(itemJson.getName());
 		item.setSize(itemJson.getSize());
 		item.setSubCategoryId(itemJson.getSubCategoryId());
 		item.setIsNameFieldExists(itemJson.getIsNameFieldExists());
+		item.setImageSourceLocation(itemJson.getImageSourceLocation());
 		getBaseEntity(itemJson, item);
 	}
 
@@ -49,8 +46,8 @@ public class TransformJsonToEntity {
 
 		getBaseEntity(itemFieldValueJson, itemFieldValue);
 	}
-	
-	public static void getItemCroppedDimension(ItemCroppedDimension itemCroppedDimension,ItemCroppedDimensionJson itemCroppedDimensionJson) {
+
+	public static void getItemCroppedDimension(ItemCroppedDimension itemCroppedDimension, ItemCroppedDimensionJson itemCroppedDimensionJson) {
 		itemCroppedDimension.setCroppedHeight(itemCroppedDimensionJson.getHeight());
 		itemCroppedDimension.setItemId(itemCroppedDimensionJson.getItemId());
 		itemCroppedDimension.setxPosition(itemCroppedDimensionJson.getLeft());
@@ -60,7 +57,6 @@ public class TransformJsonToEntity {
 
 		getBaseEntity(itemCroppedDimensionJson, itemCroppedDimension);
 	}
-	
 
 	public static void getBaseEntity(BaseJson baseJson, BaseEntity baseEntity) {
 		baseEntity.setIsDeleted(false);

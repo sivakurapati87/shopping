@@ -6,5 +6,7 @@ public class Constants {
 		public static final String ID = "id";
 		public static final String ALGO = "AES";
 		public static final byte[] KEYVALUE = new byte[] { 'T', 'h', 'e', 'B', 'e', 's', 't', 'S', 'e', 'c', 'r', 'e', 't', 'K', 'e', 'y' };
+		
+		public static final String main_image_loc = "\\ks\\item_main\\";
 	}
 }

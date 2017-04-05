@@ -34,7 +34,7 @@ public class TransformEntityToJson {
 		itemJson.setAdminItemInfo(new String(item.getAdminItemInfo()));
 		itemJson.setDescription(new String(item.getDescription()));
 		itemJson.setDiscount(item.getDiscount());
-		itemJson.setImageSrc(new String(item.getImageSrc()));
+//		itemJson.setImageSrc(new String(item.getImageSrc()));
 		itemJson.setMinQuantityToPurchase(item.getMinQuantityToPurchase());
 		itemJson.setMrp(item.getMrp());
 		itemJson.setName(item.getName());

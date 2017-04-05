@@ -1,11 +1,15 @@
 package com.osc.service;
 
+import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,7 @@ import com.osc.entity.ItemFieldValue;
 import com.osc.json.ItemCroppedDimensionJson;
 import com.osc.json.ItemFieldValueJson;
 import com.osc.json.ItemJson;
+import com.osc.util.Constants;
 import com.osc.util.TransformEntityToJson;
 import com.osc.util.TransformJsonToEntity;
 import com.osc.util.Util;
@@ -33,6 +38,22 @@ public class ItemServiceImpl implements ItemService {
 		try {
 			Item item = null;
 			if (itemJson.getSubCategoryIds() != null) {
+				
+				String imageSourceLocation = Constants.General.main_image_loc+Util.generateRandomAlphaNumericValues()+".txt";
+				File f=new File(imageSourceLocation);
+				if(!f.exists()){
+					f.createNewFile();
+				}else{
+					while(f.exists()){
+						imageSourceLocation = Constants.General.main_image_loc+Util.generateRandomAlphaNumericValues()+".txt";
+						f = new File(imageSourceLocation);
+					}
+					f.createNewFile();
+				}
+				FileUtils.writeByteArrayToFile(new File(imageSourceLocation), itemJson.getImageSrc().getBytes());
+				
+				itemJson.setImageSourceLocation(imageSourceLocation);
+				
 				for (Long subCategoryId : itemJson.getSubCategoryIds()) {
 					if (itemJson.getId() != null) {
 						item = (Item) itemDao.getById(Item.class, itemJson.getId());
@@ -45,6 +66,17 @@ public class ItemServiceImpl implements ItemService {
 						if(list!=null){
 							item = list.get(0);
 						}*/
+						
+						if (item.getImageSourceLocation() != null && item.getImageSourceLocation().trim().length() > 0) {
+							try {
+								Files.delete(FileSystems.getDefault().getPath(item.getImageSourceLocation()));	
+							} catch (Exception e) {
+								e.printStackTrace();
+								LOG.error(e.getMessage(),e);
+							}
+							
+						}
+						
 					}else {
 						item = new Item();
 					}
@@ -178,7 +210,7 @@ public class ItemServiceImpl implements ItemService {
 		List<ItemJson> itemJsons = null;
 		try {
 			StringBuilder sb = new StringBuilder(
-					"select i.id,i.name,i.subCategory.name,i.mrp,i.discount,i.imageSrc from Item i where i.isDeleted = false order by i.name ASC");
+					"select i.id,i.name,i.subCategory.name,i.mrp,i.discount,i.imageSourceLocation from Item i where i.isDeleted = false order by i.name ASC");
 			List<?> categories = itemDao.findByQuery(sb.toString(), null, null, null);
 			if (categories != null && categories.size() > 0) {
 				itemJsons = new ArrayList<ItemJson>();
@@ -190,7 +222,8 @@ public class ItemServiceImpl implements ItemService {
 					json.setSubcategory(Util.getStringValueOfObj(obj[2]));
 					json.setMrp(Util.getDoubleValueOfObj(obj[3]));
 					json.setDiscount(Util.getDoubleValueOfObj(obj[4]));
-					json.setImageSrc(new String((byte[]) obj[5]));
+					json.setImageSourceLocation(Util.getStringValueOfObj(obj[5]));
+					json.setImageSrc(Util.getStringFromLocation(json.getImageSourceLocation()));
 					itemJsons.add(json);
 				}
 			}
@@ -205,10 +238,12 @@ public class ItemServiceImpl implements ItemService {
 		ItemJson itemJson = null;
 		try {
 			Item item = (Item) itemDao.getById(Item.class, id);
-
+			
 			if (item != null) {
 				itemJson = new ItemJson();
 				TransformEntityToJson.getItemJson(item, itemJson);
+				itemJson.setImageSourceLocation(item.getImageSourceLocation());
+				itemJson.setImageSrc(Util.getStringFromLocation(itemJson.getImageSourceLocation()));
 				getItemFieldValueJson(itemJson);
 				getCroppedImageJson(itemJson);
 			}

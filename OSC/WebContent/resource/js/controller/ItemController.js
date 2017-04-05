@@ -90,28 +90,40 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state', functi
 			'click .removeCategory' : function(e,
 					value, row, index) {
 //				itemId = row.id;
-				angular.element("#createItemControllerId").scope().deleteCategory();
+				angular.element("#createItemControllerId").scope().deleteItem(row.id);
 			}
 			
 		}
 		
-		$scope.editItem = function(){
-			var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/getItemById/"+itemId);
+
+		$scope.deleteItem = function(itemId){
+			var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/deleteItemById/"+itemId);
 	  		response.success(function(data) {
-	  			$scope.onClickAddNew();
-	  			$scope.itemObj = data;
-	  			
-	  			$scope.selectedPositions = $scope.itemObj.itemCroppedDimensionJsonList;
-	  			$scope.specificationList =$scope.itemObj.itemFieldValueJsonList;
-	  			$scope.subCategoryIds = $scope.itemObj.subCategoryIds;
-//	  			alert(data.imageSrc);
-	  			$('#uploadedImgId').attr('src',data.imageSrc);
+	  			$state.go($state.current, {}, {reload: true});
 	  		});
 	  		response.error(function() {
 	        	  console.error('Could not Perform well');
 	        	  $state.go("login");
 	          });
 		}
+		
+//		$scope.editItem = function(){
+//			var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/getItemById/"+itemId);
+//	  		response.success(function(data) {
+//	  			$scope.onClickAddNew();
+//	  			$scope.itemObj = data;
+//	  			
+//	  			$scope.selectedPositions = $scope.itemObj.itemCroppedDimensionJsonList;
+//	  			$scope.specificationList =$scope.itemObj.itemFieldValueJsonList;
+//	  			$scope.subCategoryIds = $scope.itemObj.subCategoryIds;
+////	  			alert(data.imageSrc);
+//	  			$('#uploadedImgId').attr('src',data.imageSrc);
+//	  		});
+//	  		response.error(function() {
+//	        	  console.error('Could not Perform well');
+//	        	  $state.go("login");
+//	          });
+//		}
 
 	$scope.onClickAddNew = function(){
 	}

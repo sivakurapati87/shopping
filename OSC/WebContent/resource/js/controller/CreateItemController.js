@@ -81,6 +81,14 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 	  			//alert(data.imageSrc);
 	  			$scope.imgpew = data.imageSrc; 
 	  			$('#uploadedImgId').attr('src',data.imageSrc);
+	  			$("#imageprew").show();
+	  			
+	  			if($scope.selectedPositions){
+	  				for(var i=0;i<$scope.selectedPositions.length;i++){
+	  					$scope.obj =$scope.selectedPositions[i];
+	  					$scope.getMaskImpl();
+	  				}
+	  			}
 	  		});
 	  		response.error(function() {
 	        	  console.error('Could not Perform well');
@@ -161,7 +169,12 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 //		$scope.uploadedImage = $('#uploadedImgId').attr('src');
 		
 		$scope.selection_err = "";
-		$scope.obj = {left: $('#x').val(), top: $('#y').val(), width: $('#w').val(), height: $('#h').val(),name:"Image "+(i++)}
+		$scope.obj = {left: $('#x').val(), top: $('#y').val(), width: $('#w').val(), height: $('#h').val(),name:"Image "+(i++)};
+		
+		$scope.getMaskImpl();
+	};
+
+	$scope.getMaskImpl = function(){
 		if(!$scope.obj.left)
 		{
 		$scope.selection_err = "Please select mask Area";
@@ -191,12 +204,8 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 			}else{
 				$scope.selection_err = "Selected Area is already Masked";
 			}
-		
-		
-	    
 
-	};
-	
+	}
 	
 	
 	

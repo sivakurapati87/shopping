@@ -19,6 +19,7 @@ public class ItemJson extends BaseJson {
 	private String about;
 	private String adminItemInfo;
 	private Long[] subCategoryIds;
+	private String imageSourceLocation;
 	private Integer minQuantityToPurchase;
 	private List<ItemCroppedDimensionJson> itemCroppedDimensionJsonList;
 	private List<ItemFieldValueJson> itemFieldValueJsonList;
@@ -173,6 +174,14 @@ public class ItemJson extends BaseJson {
 
 	public void setSubcategory(String subcategory) {
 		this.subcategory = subcategory;
+	}
+
+	public String getImageSourceLocation() {
+		return imageSourceLocation;
+	}
+
+	public void setImageSourceLocation(String imageSourceLocation) {
+		this.imageSourceLocation = imageSourceLocation;
 	}
 
 }

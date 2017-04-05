@@ -1,5 +1,6 @@
 package com.osc.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -18,14 +19,15 @@ public class Item extends BaseEntity {
 	private Boolean isNameFieldExists;
 //	private Double priceAfterDiscount;
 //	private Double savedAmount;
-	@Lob
-	private byte[] description;
-	@Lob
-	private byte[] imageSrc;
+	@Column(length=40000)
+	private String description;
+//	@Lob
+//	private String imageSrc;
 	private String barCodeNo;
-	@Lob
-	private byte[] adminItemInfo;
+	@Column(length=40000)
+	private String adminItemInfo;
 	private Integer minQuantityToPurchase;
+	private String imageSourceLocation;
 	@ManyToOne
 	@JoinColumn(name = "subCategoryId", insertable = false, updatable = false)
 	private SubCategory subCategory;
@@ -78,21 +80,21 @@ public class Item extends BaseEntity {
 		this.savedAmount = savedAmount;
 	}*/
 
-	public byte[] getDescription() {
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(byte[] description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public byte[] getImageSrc() {
-		return imageSrc;
-	}
-
-	public void setImageSrc(byte[] imageSrc) {
-		this.imageSrc = imageSrc;
-	}
+//	public String getImageSrc() {
+//		return imageSrc;
+//	}
+//
+//	public void setImageSrc(String imageSrc) {
+//		this.imageSrc = imageSrc;
+//	}
 
 	public String getBarCodeNo() {
 		return barCodeNo;
@@ -127,11 +129,11 @@ public class Item extends BaseEntity {
 		this.discount = discount;
 	}
 
-	public byte[] getAdminItemInfo() {
+	public String getAdminItemInfo() {
 		return adminItemInfo;
 	}
 
-	public void setAdminItemInfo(byte[] adminItemInfo) {
+	public void setAdminItemInfo(String adminItemInfo) {
 		this.adminItemInfo = adminItemInfo;
 	}
 
@@ -149,6 +151,14 @@ public class Item extends BaseEntity {
 
 	public void setIsNameFieldExists(Boolean isNameFieldExists) {
 		this.isNameFieldExists = isNameFieldExists;
+	}
+
+	public String getImageSourceLocation() {
+		return imageSourceLocation;
+	}
+
+	public void setImageSourceLocation(String imageSourceLocation) {
+		this.imageSourceLocation = imageSourceLocation;
 	}
 
 }

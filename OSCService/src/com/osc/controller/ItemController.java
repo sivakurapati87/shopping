@@ -70,7 +70,6 @@ public class ItemController {
 			ItemJson itemJson = null;
 			try {
 				itemJson = itemService.getItemById(id);
-				System.out.println(itemJson.getImageSrc());
 			} catch (Exception e) {
 				e.printStackTrace();
 				LOG.error(e.getMessage(), e);
