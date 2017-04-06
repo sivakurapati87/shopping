@@ -3,7 +3,7 @@
 App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','$stateParams', function($scope,$http,$rootScope,$state,$stateParams) {
 
 	
-	$rootScope.current_state= 'item';
+	$rootScope.current_state= "item";
 	
 	$scope.obj = {};
 	var itemId = null;
@@ -52,6 +52,8 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
   	}
 	
 	$scope.saveOrUpdateAction = function(){
+		$scope.errorOccured = false;
+		if($scope.subCategoryIds && $scope.subCategoryIds.length >0){
 		$scope.itemObj.itemCroppedDimensionJsonList = $scope.selectedPositions;
 		$scope.itemObj.itemFieldValueJsonList = $scope.specificationList;
 		$scope.itemObj.subCategoryIds = $scope.subCategoryIds;
@@ -59,16 +61,18 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 //		alert(JSON.stringify($scope.itemObj));
 		var response = $http.post(constants.localhost_port+constants.service_context+"/ItemController/saveOrUpdate",$scope.itemObj);
 		response.success(function(data) {
-//			$state.go($state.current, {}, {reload: true});
-			var i=1;
+			$state.go("item");
 		});
 		response.error(function() {
       	  console.error('Could not save or update');
       	  $state.go("login");
         });
-
+		}else{
+			$scope.errorOccured = true;
+		}
 	}
 
+	
 		
 		$scope.editItem = function(){
 			var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/getItemById/"+itemId);
@@ -78,17 +82,18 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 	  			$scope.selectedPositions = $scope.itemObj.itemCroppedDimensionJsonList;
 	  			$scope.specificationList =$scope.itemObj.itemFieldValueJsonList;
 	  			$scope.subCategoryIds = $scope.itemObj.subCategoryIds;
-	  			//alert(data.imageSrc);
-	  			$scope.imgpew = data.imageSrc; 
+//	  			alert(data.imageSrc);
 	  			$('#uploadedImgId').attr('src',data.imageSrc);
 	  			$("#imageprew").show();
-	  			
+
 	  			if($scope.selectedPositions){
 	  				for(var i=0;i<$scope.selectedPositions.length;i++){
-	  					$scope.obj =$scope.selectedPositions[i];
-	  					$scope.getMaskImpl();
-	  				}
-	  			}
+	  					$scope.obj = $scope.selectedPositions[i];
+	  			var newEle = angular.element("<div style='position:absolute;background-color:#ffff00;border:1px solid #000000;opacity:0.5;top:"+$scope.obj.top+"px;left:"+$scope.obj.left+"px;width:"+$scope.obj.width+"px;height:"+$scope.obj.height+"px;'></div>");
+			    var target = document.getElementById('imageprew');
+			    angular.element(target).append(newEle);
+			    $("#delselect").click();
+	  			}}
 	  		});
 	  		response.error(function() {
 	        	  console.error('Could not Perform well');
@@ -96,9 +101,12 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 	          });
 		}
 
-	
+	$scope.clear = function(){
+		$state.go($state.current, {}, {reload: true});
+	}
+		
 	$scope.onload = function(){
-		$scope.selectimg = false;
+		
 	     $scope.bounds = {};
 	     $scope.displayGrid = true;
 	        $scope.cropper = {};
@@ -169,12 +177,7 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 //		$scope.uploadedImage = $('#uploadedImgId').attr('src');
 		
 		$scope.selection_err = "";
-		$scope.obj = {left: $('#x').val(), top: $('#y').val(), width: $('#w').val(), height: $('#h').val(),name:"Image "+(i++)};
-		
-		$scope.getMaskImpl();
-	};
-
-	$scope.getMaskImpl = function(){
+		$scope.obj = {left: $('#x').val(), top: $('#y').val(), width: $('#w').val(), height: $('#h').val(),name:"Image "+(i++)}
 		if(!$scope.obj.left)
 		{
 		$scope.selection_err = "Please select mask Area";
@@ -204,8 +207,12 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 			}else{
 				$scope.selection_err = "Selected Area is already Masked";
 			}
+		
+		
+	    
 
-	}
+	};
+	
 	
 	
 	

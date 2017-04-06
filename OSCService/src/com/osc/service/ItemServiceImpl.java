@@ -39,6 +39,11 @@ public class ItemServiceImpl implements ItemService {
 			Item item = null;
 			if (itemJson.getSubCategoryIds() != null) {
 				
+				File folders = new File(Constants.General.main_image_loc);
+				if(!folders.exists()){
+					folders.mkdirs();
+				}
+				
 				String imageSourceLocation = Constants.General.main_image_loc+Util.generateRandomAlphaNumericValues()+".txt";
 				File f=new File(imageSourceLocation);
 				if(!f.exists()){
@@ -210,7 +215,7 @@ public class ItemServiceImpl implements ItemService {
 		List<ItemJson> itemJsons = null;
 		try {
 			StringBuilder sb = new StringBuilder(
-					"select i.id,i.name,i.subCategory.name,i.mrp,i.discount,i.imageSourceLocation from Item i where i.isDeleted = false order by i.name ASC");
+					"select i.id,i.name,i.subCategory.name,i.mrp,i.discount,i.imageSourceLocation from Item i where i.isDeleted = false order by coalesce(i.updatedOn,i.createdOn) DESC");
 			List<?> categories = itemDao.findByQuery(sb.toString(), null, null, null);
 			if (categories != null && categories.size() > 0) {
 				itemJsons = new ArrayList<ItemJson>();

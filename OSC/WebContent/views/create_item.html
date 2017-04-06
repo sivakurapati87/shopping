@@ -145,12 +145,13 @@ function tony()
 					<div class="col-md-12">
 						<label class="lblFont_new">Add this item to below
 							SubCategories :</label>
+							<label class="lblError" ng-if="errorOccured">Please pick atleast one subCategory</label>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-1"></div>
 					<div class="col-md-9" style="border: 1px solid #7df27d;">
-						<label ng-repeat="ch in checkBoxes"> <input
+						<label ng-repeat="ch in checkBoxes"> <input 
 							type="checkbox" ng-checked="subCategoryIds.indexOf(ch.id) != -1"
 							ng-click="chAction(ch.id)" ng-disabled="itemObj.id">{{ch.name}} &nbsp;&nbsp;
 						</label>
@@ -173,7 +174,7 @@ function tony()
 						<label class="lblFont_new"> Item Name :</label>
 					</div>
 					<div class="col-md-9">
-						<input type="text" style="width: 460px" ng-model="itemObj.name">
+						<input type="text" style="width: 460px" ng-model="itemObj.name" required="required">
 					</div>
 				</div>
 				<div class="row">
@@ -181,7 +182,7 @@ function tony()
 						<label class="lblFont_new"> Min Quantity To Purchase :</label>
 					</div>
 					<div class="col-md-3">
-						<input type="text" ng-model="itemObj.minQuantityToPurchase">
+						<input type="text" ng-model="itemObj.minQuantityToPurchase" numbers-only required="required">
 					</div>
 					<div class="col-md-3"><label class="lblFont_new"> Is the textbox Required :</label> </div>
 					<div class="col-md-3"><input type="checkbox" ng-model="itemObj.isNameFieldExists"> </div>
@@ -191,13 +192,13 @@ function tony()
 						<label class="lblFont_new"> MRP :</label>
 					</div>
 					<div class="col-md-3">
-						<input type="text" ng-model="itemObj.mrp">
+						<input type="text" ng-model="itemObj.mrp" valid-number required="required">
 					</div>
 					<div class="col-md-3">
 						<label class="lblFont_new"> Discount On MRP :</label>
 					</div>
 					<div class="col-md-3">
-						<input type="text" ng-model="itemObj.discount">
+						<input type="text" ng-model="itemObj.discount" valid-number required="required">
 					</div>
 				</div>
 				<div class="row">
@@ -273,7 +274,7 @@ function tony()
 				<br>
 				<div class="row">
 					<div class="col-md-6">
-						<button type="submit" class="btn btn-success btnInfo align_right">SUBMIT</button>
+						<button type="submit" class="btn btn-success btnInfo align_right" ng-click="errorOccured=false">SUBMIT</button>
 					</div>
 					<div class="col-md-6">
 						<button type="button" class="btn btn-warning btnInfo"
