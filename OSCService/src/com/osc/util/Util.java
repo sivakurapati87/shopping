@@ -10,6 +10,7 @@ import java.text.Format;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -307,5 +308,28 @@ public class Util {
 			}
 		}
 		return str;
+	}
+
+	public static String getStringFromArray(Object[] strArray) {
+		String strValue = "";
+		if (strArray != null && strArray.length > 0) {
+			strValue = Arrays.asList(strArray).toString().replace("[", "").replace("]", "");
+		}
+		return strValue;
+	}
+
+	public static Long[] getLongArrayFromLongList(List<Long> list) {
+		Long[] longArray = null;
+		try {
+			if (list != null && list.size() > 0) {
+				longArray = new Long[list.size()];
+				for (int i = 0; i < list.size(); i++)
+					longArray[i] = list.get(i);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+		return longArray;
 	}
 }

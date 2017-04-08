@@ -41,9 +41,9 @@ public class TransformEntityToJson {
 		itemJson.setIsNameFieldExists(item.getIsNameFieldExists());
 		itemJson.setQuantity(item.getQuantity());
 		itemJson.setSize(item.getSize());
-		itemJson.setSubCategoryId(item.getSubCategoryId());
-		Long[] subCategories = {item.getSubCategoryId()};
-		itemJson.setSubCategoryIds(subCategories);
+//		itemJson.setSubCategoryId(item.getSubCategoryId());
+//		Long[] subCategories = {item.getSubCategoryId()};
+//		itemJson.setSubCategoryIds(subCategories);
 		getBaseJson(itemJson, item);
 	}
 	

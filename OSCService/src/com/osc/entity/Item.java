@@ -2,9 +2,6 @@ package com.osc.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,7 +9,7 @@ import javax.persistence.Table;
 public class Item extends BaseEntity {
 	private String name;
 	private String size;
-	private Long subCategoryId;
+//	private Long subCategoryId;
 	private Float quantity;
 	private Double mrp;
 	private Double discount;
@@ -28,9 +25,9 @@ public class Item extends BaseEntity {
 	private String adminItemInfo;
 	private Integer minQuantityToPurchase;
 	private String imageSourceLocation;
-	@ManyToOne
-	@JoinColumn(name = "subCategoryId", insertable = false, updatable = false)
-	private SubCategory subCategory;
+//	@ManyToOne
+//	@JoinColumn(name = "subCategoryId", insertable = false, updatable = false)
+//	private SubCategory subCategory;
 
 	public String getName() {
 		return name;
@@ -40,13 +37,13 @@ public class Item extends BaseEntity {
 		this.name = name;
 	}
 
-	public Long getSubCategoryId() {
-		return subCategoryId;
-	}
-
-	public void setSubCategoryId(Long subCategoryId) {
-		this.subCategoryId = subCategoryId;
-	}
+//	public Long getSubCategoryId() {
+//		return subCategoryId;
+//	}
+//
+//	public void setSubCategoryId(Long subCategoryId) {
+//		this.subCategoryId = subCategoryId;
+//	}
 
 	public Float getQuantity() {
 		return quantity;
@@ -105,13 +102,13 @@ public class Item extends BaseEntity {
 	}
 
 
-	public SubCategory getSubCategory() {
-		return subCategory;
-	}
-
-	public void setSubCategory(SubCategory subCategory) {
-		this.subCategory = subCategory;
-	}
+//	public SubCategory getSubCategory() {
+//		return subCategory;
+//	}
+//
+//	public void setSubCategory(SubCategory subCategory) {
+//		this.subCategory = subCategory;
+//	}
 
 	public Integer getMinQuantityToPurchase() {
 		return minQuantityToPurchase;

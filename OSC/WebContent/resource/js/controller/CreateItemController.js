@@ -81,7 +81,9 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 	  			
 	  			$scope.selectedPositions = $scope.itemObj.itemCroppedDimensionJsonList;
 	  			$scope.specificationList =$scope.itemObj.itemFieldValueJsonList;
+	  			if( $scope.itemObj.subCategoryIds){
 	  			$scope.subCategoryIds = $scope.itemObj.subCategoryIds;
+	  			}
 //	  			alert(data.imageSrc);
 	  			$('#uploadedImgId').attr('src',data.imageSrc);
 	  			$("#imageprew").show();

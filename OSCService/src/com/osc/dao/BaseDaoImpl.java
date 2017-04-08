@@ -54,7 +54,11 @@ public class BaseDaoImpl implements BaseDao {
 			Query query = getSession().createQuery(hqlQuery);
 			if (params != null) {
 				for (Map.Entry<String, Object> mapEntry : params.entrySet()) {
+					if(mapEntry.getValue() instanceof List){
+						query.setParameterList(mapEntry.getKey(),(List<?>) mapEntry.getValue());
+					}else{
 					query.setParameter(mapEntry.getKey(), mapEntry.getValue());
+					}
 				}
 			}
 			if (firstRecord != null && maxRecord != null) {

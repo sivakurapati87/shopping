@@ -19,6 +19,7 @@ import com.osc.dao.ItemDao;
 import com.osc.entity.Item;
 import com.osc.entity.ItemCroppedDimension;
 import com.osc.entity.ItemFieldValue;
+import com.osc.entity.SubCategoryItem;
 import com.osc.json.ItemCroppedDimensionJson;
 import com.osc.json.ItemFieldValueJson;
 import com.osc.json.ItemJson;
@@ -34,62 +35,81 @@ public class ItemServiceImpl implements ItemService {
 	@Autowired
 	private ItemDao itemDao;
 
+	@SuppressWarnings("unchecked")
 	public void saveOrUpdate(ItemJson itemJson) {
 		try {
 			Item item = null;
 			if (itemJson.getSubCategoryIds() != null) {
-				
+
 				File folders = new File(Constants.General.main_image_loc);
-				if(!folders.exists()){
+				if (!folders.exists()) {
 					folders.mkdirs();
 				}
-				
-				String imageSourceLocation = Constants.General.main_image_loc+Util.generateRandomAlphaNumericValues()+".txt";
-				File f=new File(imageSourceLocation);
-				if(!f.exists()){
+
+				String imageSourceLocation = Constants.General.main_image_loc + Util.generateRandomAlphaNumericValues() + ".txt";
+				File f = new File(imageSourceLocation);
+				if (!f.exists()) {
 					f.createNewFile();
-				}else{
-					while(f.exists()){
-						imageSourceLocation = Constants.General.main_image_loc+Util.generateRandomAlphaNumericValues()+".txt";
+				} else {
+					while (f.exists()) {
+						imageSourceLocation = Constants.General.main_image_loc + Util.generateRandomAlphaNumericValues() + ".txt";
 						f = new File(imageSourceLocation);
 					}
 					f.createNewFile();
 				}
 				FileUtils.writeByteArrayToFile(new File(imageSourceLocation), itemJson.getImageSrc().getBytes());
-				
+
 				itemJson.setImageSourceLocation(imageSourceLocation);
-				
-				for (Long subCategoryId : itemJson.getSubCategoryIds()) {
-					if (itemJson.getId() != null) {
-						item = (Item) itemDao.getById(Item.class, itemJson.getId());
-						
-						/*Map<String, Object> paramMap = new HashMap<String, Object>();
-						StringBuilder sb = new StringBuilder("select i from Item i where i.itemId = ?1 and i.subCategoryId = ?2 order by name ASC");
-						paramMap.put("1", itemJson.getId());
-						paramMap.put("2", subCategoryId);
-						List<Item> list = (List<Item>) itemDao.findByQuery(sb.toString(), paramMap, null, null);
-						if(list!=null){
-							item = list.get(0);
-						}*/
-						
-						if (item.getImageSourceLocation() != null && item.getImageSourceLocation().trim().length() > 0) {
-							try {
-								Files.delete(FileSystems.getDefault().getPath(item.getImageSourceLocation()));	
-							} catch (Exception e) {
-								e.printStackTrace();
-								LOG.error(e.getMessage(),e);
-							}
-							
+
+				if (itemJson.getId() != null) {
+					item = (Item) itemDao.getById(Item.class, itemJson.getId());
+
+					/*
+					 * Map<String, Object> paramMap = new HashMap<String,
+					 * Object>(); StringBuilder sb = new StringBuilder(
+					 * "select i from Item i where i.itemId = ?1 and i.subCategoryId = ?2 order by name ASC"
+					 * ); paramMap.put("1", itemJson.getId()); paramMap.put("2",
+					 * subCategoryId); List<Item> list = (List<Item>)
+					 * itemDao.findByQuery(sb.toString(), paramMap, null, null);
+					 * if(list!=null){ item = list.get(0); }
+					 */
+
+					if (item.getImageSourceLocation() != null && item.getImageSourceLocation().trim().length() > 0) {
+						try {
+							Files.delete(FileSystems.getDefault().getPath(item.getImageSourceLocation()));
+						} catch (Exception e) {
+							e.printStackTrace();
+							LOG.error(e.getMessage(), e);
 						}
-						
-					}else {
-						item = new Item();
+
 					}
-					TransformJsonToEntity.getItem(itemJson, item);
-					item.setSubCategoryId(subCategoryId);
-					itemDao.saveOrUpdate(item);
-					saveOrUpdateCroppedImages(itemJson, item.getId());
-					saveOrUpdateFields(itemJson, item.getId());
+
+				} else {
+					item = new Item();
+				}
+				TransformJsonToEntity.getItem(itemJson, item);
+				// item.setSubCategoryId(subCategoryId);
+				itemDao.saveOrUpdate(item);
+				saveOrUpdateCroppedImages(itemJson, item.getId());
+				saveOrUpdateFields(itemJson, item.getId());
+
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				StringBuilder sb = new StringBuilder("select cd from SubCategoryItem cd where cd.itemId = ?1");
+				paramMap.put("1", itemJson.getId());
+				List<SubCategoryItem> list = (List<SubCategoryItem>) itemDao.findByQuery(sb.toString(), paramMap, null, null);
+
+				if (list != null && list.size() > 0) {
+					for (SubCategoryItem subCategoryItem : list) {
+						itemDao.remove(subCategoryItem);
+					}
+				}
+				for (Long subCategoryId : itemJson.getSubCategoryIds()) {
+					SubCategoryItem subCategoryItem = new SubCategoryItem();
+					subCategoryItem.setItemId(item.getId());
+					subCategoryItem.setSubCategoryId(subCategoryId);
+					subCategoryItem.setCreatedOn(new Date());
+					subCategoryItem.setCreatedBy(itemJson.getCreatedBy());
+					itemDao.saveOrUpdate(subCategoryItem);
 				}
 			}
 
@@ -215,21 +235,47 @@ public class ItemServiceImpl implements ItemService {
 		List<ItemJson> itemJsons = null;
 		try {
 			StringBuilder sb = new StringBuilder(
-					"select i.id,i.name,i.subCategory.name,i.mrp,i.discount,i.imageSourceLocation from Item i where i.isDeleted = false order by coalesce(i.updatedOn,i.createdOn) DESC");
+					"select i.id,i.name,i.mrp,i.discount,i.imageSourceLocation from Item i where i.isDeleted = false order by coalesce(i.updatedOn,i.createdOn) DESC");
 			List<?> categories = itemDao.findByQuery(sb.toString(), null, null, null);
 			if (categories != null && categories.size() > 0) {
+				List<Long> itemIds = new ArrayList<Long>();
 				itemJsons = new ArrayList<ItemJson>();
 				for (Object object : categories) {
 					Object[] obj = (Object[]) object;
 					ItemJson json = new ItemJson();
 					json.setId(Util.getIntegerValueOfObj(obj[0]));
+					itemIds.add(json.getId());
 					json.setName(Util.getStringValueOfObj(obj[1]));
-					json.setSubcategory(Util.getStringValueOfObj(obj[2]));
-					json.setMrp(Util.getDoubleValueOfObj(obj[3]));
-					json.setDiscount(Util.getDoubleValueOfObj(obj[4]));
-					json.setImageSourceLocation(Util.getStringValueOfObj(obj[5]));
+					// json.setSubcategory(Util.getStringValueOfObj(obj[2]));
+					json.setMrp(Util.getDoubleValueOfObj(obj[2]));
+					json.setDiscount(Util.getDoubleValueOfObj(obj[3]));
+					json.setImageSourceLocation(Util.getStringValueOfObj(obj[4]));
 					json.setImageSrc(Util.getStringFromLocation(json.getImageSourceLocation()));
 					itemJsons.add(json);
+				}
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				sb = new StringBuilder("select s.subCategory.name,s.itemId from SubCategoryItem s where s.itemId in ?1");
+				paramMap.put("1", itemIds);
+				List<?> subCategoryItems = itemDao.findByQuery(sb.toString(), paramMap, null, null);
+				if (subCategoryItems != null && subCategoryItems.size() > 0) {
+					Map<Long, List<String>> itemWithSubCategoryNameMap = new HashMap<Long, List<String>>();
+					for (Object subCategoryItem : subCategoryItems) {
+						Object[] obj = (Object[]) subCategoryItem;
+						Long itemId = Util.getIntegerValueOfObj(obj[1]);
+						String subCategoryName = Util.getStringValueOfObj(obj[0]);
+						if (itemWithSubCategoryNameMap.get(itemId) != null) {
+							itemWithSubCategoryNameMap.get(itemId).add(subCategoryName);
+						} else {
+							List<String> subCategoryList = new ArrayList<String>();
+							subCategoryList.add(subCategoryName);
+							itemWithSubCategoryNameMap.put(itemId, subCategoryList);
+						}
+					}
+
+					for (ItemJson json : itemJsons) {
+						String subCategories = Util.getStringFromArray(itemWithSubCategoryNameMap.get(json.getId()).toArray());
+						json.setSubcategory(subCategories);
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -239,16 +285,25 @@ public class ItemServiceImpl implements ItemService {
 		return itemJsons;
 	}
 
+	@SuppressWarnings("unchecked")
 	public ItemJson getItemById(Long id) {
 		ItemJson itemJson = null;
 		try {
 			Item item = (Item) itemDao.getById(Item.class, id);
-			
+
 			if (item != null) {
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				StringBuilder sb = new StringBuilder("select s.subCategoryId from SubCategoryItem s where s.itemId = ?1");
+				paramMap.put("1", id);
+				List<Long> subCategoryItems = (List<Long>) itemDao.findByQuery(sb.toString(), paramMap, null, null);
+
 				itemJson = new ItemJson();
 				TransformEntityToJson.getItemJson(item, itemJson);
 				itemJson.setImageSourceLocation(item.getImageSourceLocation());
 				itemJson.setImageSrc(Util.getStringFromLocation(itemJson.getImageSourceLocation()));
+				if (subCategoryItems != null) {
+					itemJson.setSubCategoryIds(Util.getLongArrayFromLongList(subCategoryItems));
+				}
 				getItemFieldValueJson(itemJson);
 				getCroppedImageJson(itemJson);
 			}
@@ -303,6 +358,7 @@ public class ItemServiceImpl implements ItemService {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void deleteItemById(Long id, Long userId) {
 		try {
 			Item item = (Item) itemDao.getById(Item.class, id);
@@ -311,8 +367,43 @@ public class ItemServiceImpl implements ItemService {
 				item.setIsDeleted(Boolean.TRUE);
 				item.setUpdatedBy(userId);
 				item.setUpdatedOn(new Date());
+				itemDao.saveOrUpdate(item);
+				
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				StringBuilder sb = new StringBuilder("select cd from SubCategoryItem cd where cd.itemId = ?1");
+				paramMap.put("1", id);
+				List<SubCategoryItem> list = (List<SubCategoryItem>) itemDao.findByQuery(sb.toString(), paramMap, null, null);
+
+				if (list != null && list.size() > 0) {
+					for (SubCategoryItem subCategoryItem : list) {
+						itemDao.remove(subCategoryItem);
+					}
+				}
+				
+				paramMap = new HashMap<String, Object>();
+				sb = new StringBuilder("select cd from ItemCroppedDimension cd where cd.itemId = ?1 order by cd.name ASC");
+				paramMap.put("1", id);
+				List<ItemCroppedDimension> croppedlist = (List<ItemCroppedDimension>) itemDao.findByQuery(sb.toString(), paramMap, null, null);
+				if (croppedlist != null && croppedlist.size() > 0) {
+					for (ItemCroppedDimension cropp : croppedlist) {
+						itemDao.remove(cropp);
+					}
+				}
+				
+				paramMap = new HashMap<String, Object>();
+				sb = new StringBuilder("select ifv from ItemFieldValue ifv where ifv.itemId = ?1");
+				paramMap.put("1", id);
+				List<ItemFieldValue> itemFieldlist = (List<ItemFieldValue>) itemDao.findByQuery(sb.toString(), paramMap, null, null);
+				if (itemFieldlist != null && itemFieldlist.size() > 0) {
+					for (ItemFieldValue itemField : itemFieldlist) {
+						itemDao.remove(itemField);
+					}
+				}
 			}
-			itemDao.saveOrUpdate(item);
+			
+			
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOG.error(e.getMessage(), e);

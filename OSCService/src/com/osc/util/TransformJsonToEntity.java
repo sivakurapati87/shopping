@@ -33,7 +33,7 @@ public class TransformJsonToEntity {
 		item.setMrp(itemJson.getMrp());
 		item.setName(itemJson.getName());
 		item.setSize(itemJson.getSize());
-		item.setSubCategoryId(itemJson.getSubCategoryId());
+//		item.setSubCategoryId(itemJson.getSubCategoryId());
 		item.setIsNameFieldExists(itemJson.getIsNameFieldExists());
 		item.setImageSourceLocation(itemJson.getImageSourceLocation());
 		getBaseEntity(itemJson, item);
