@@ -1,6 +1,7 @@
 package com.osc.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.osc.json.SubCategoryJson;
 
@@ -9,7 +10,7 @@ public interface SubCategoryService {
 
 	public List<SubCategoryJson> getAllSubCategories();
 	
-	public List<SubCategoryJson> getAllSubCategoriesWithCategory();
+	public Map<String,List<SubCategoryJson>> getAllSubCategoriesWithCategory();
 	
 	public SubCategoryJson getSubCategoryById(Long id);
 	

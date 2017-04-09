@@ -8,5 +8,8 @@ public class Constants {
 		public static final byte[] KEYVALUE = new byte[] { 'T', 'h', 'e', 'B', 'e', 's', 't', 'S', 'e', 'c', 'r', 'e', 't', 'K', 'e', 'y' };
 		
 		public static final String main_image_loc = "\\ks\\item_main\\";
+		
+		public static final String UNIQUE_SubCategories = "unique";
+		public static final String MULTIPLE_SubCategories = "multiple";
 	}
 }

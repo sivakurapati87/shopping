@@ -16,14 +16,20 @@
 				<label>Category Name :</label>
 			</div>
 			<div class="col-md-6">
-				<div angucomplete-alt id="customerId" 
+			<select ng-model="categoryDivisionObj.categoryId"
+									ng-options="fieldName.id as fieldName.name for fieldName in categoryList">
+									<option value="" disabled selected>Select
+										Category</option>
+								</select>
+			
+				<!-- <div angucomplete-alt id="customerId" 
 																	pause="100"
 																	selected-object="selectedCategoryNameAction"
 																	local-data="categoryList"
 																	search-fields="name" title-field="name"
 																	minlength="2"  id="categoryNameId" initial-value="categoryObj"
 																	input-class="search-control height34 "
-																	match-class="highlight"></div>
+																	match-class="highlight"></div> -->
 			</div>
 		</div>
 		

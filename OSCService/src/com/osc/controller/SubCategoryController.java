@@ -1,6 +1,7 @@
 package com.osc.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -66,17 +67,17 @@ public class SubCategoryController {
 	}
 	
 	@RequestMapping("getAllSubCategoriesWithCategory")
-	public ResponseEntity<List<SubCategoryJson>> getAllSubCategoriesWithCategory(HttpServletRequest request) {
+	public ResponseEntity<Map<String,List<SubCategoryJson>>> getAllSubCategoriesWithCategory(HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
-			List<SubCategoryJson> subCategoryJsons = null;
+			Map<String,List<SubCategoryJson>> subCategoryJsonsMap = null;
 			try {
-				subCategoryJsons = subCategoryService.getAllSubCategoriesWithCategory();
+				subCategoryJsonsMap = subCategoryService.getAllSubCategoriesWithCategory();
 			} catch (Exception e) {
 				e.printStackTrace();
 				LOG.error(e.getMessage(), e);
-				return new ResponseEntity<List<SubCategoryJson>>(subCategoryJsons, HttpStatus.EXPECTATION_FAILED);
+				return new ResponseEntity<Map<String,List<SubCategoryJson>>>(subCategoryJsonsMap, HttpStatus.EXPECTATION_FAILED);
 			}
-			return new ResponseEntity<List<SubCategoryJson>>(subCategoryJsons, HttpStatus.OK);
+			return new ResponseEntity<Map<String,List<SubCategoryJson>>>(subCategoryJsonsMap, HttpStatus.OK);
 		} else {
 			LOG.error("User must login");
 			return new ResponseEntity(HttpStatus.FORBIDDEN);

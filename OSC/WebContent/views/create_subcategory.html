@@ -16,14 +16,29 @@
 				<label>Category Division Name :</label>
 			</div>
 			<div class="col-md-6">
-				<div angucomplete-alt id="customerId" 
+			<select ng-model="subCategoryObj.categoryDivisionId"
+									ng-options="fieldName.id as fieldName.name for fieldName in categoryDivisionList">
+									<option value="" disabled selected>Select
+										Category Division</option>
+								</select>
+			
+				<!-- <div angucomplete-alt id="customerId" 
 																	pause="100"
 																	selected-object="selectedCategoryDivisionNameAction"
 																	local-data="categoryDivisionList"
 																	search-fields="name" title-field="name"
 																	minlength="2"  id="categoryDivisionNameId" initial-value="categoryDivisionObj"
 																	input-class="search-control height34 "
-																	match-class="highlight"></div>
+																	match-class="highlight"></div> -->
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-6 lblfont16px" style="text-align: end">
+				<label>Is Unique Products :</label>
+			</div>
+			<div class="col-md-6">
+				<input type="checkbox" ng-model="subCategoryObj.isUniqueProduct">
 			</div>
 		</div>
 		

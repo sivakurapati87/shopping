@@ -13,6 +13,8 @@ public class SubCategory extends BaseEntity{
 	@ManyToOne
 	@JoinColumn(name = "categoryDivisionId", insertable = false, updatable = false)
 	private CategoryDivision categoryDivision;
+
+	private Boolean isUniqueProduct;
 	/*@OneToMany(mappedBy = "subCategory", fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@Where(clause = "isDeleted='false'")
@@ -38,6 +40,12 @@ public class SubCategory extends BaseEntity{
 
 	public void setCategoryDivision(CategoryDivision categoryDivision) {
 		this.categoryDivision = categoryDivision;
+	}
+	public Boolean getIsUniqueProduct() {
+		return isUniqueProduct;
+	}
+	public void setIsUniqueProduct(Boolean isUniqueProduct) {
+		this.isUniqueProduct = isUniqueProduct;
 	}
 	
 }

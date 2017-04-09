@@ -116,6 +116,10 @@ App.controller('SubCategoryController', ['$scope','$http','$rootScope','$state',
 	        field: 'categoryDivisionName',
 	        title: 'Category Division Name'
 	    }, {
+	        field: 'isUniqueProduct',
+	        title: 'Is Unique Product',
+	        formatter : uniqueProductFormatter
+	    }, {
 	        field: 'strCreatedBy',
 	        title: 'createdBy'
 	    },
@@ -135,6 +139,14 @@ App.controller('SubCategoryController', ['$scope','$http','$rootScope','$state',
 				return [
 						'<a class="editSubCategory actionIcons" title="Edit"><i class="fa fa-edit" style="font-size:12px;"></i></a>&nbsp;',
 						'&nbsp;<a class="removeSubCategory actionIcons" title="Remove"><i class="fa fa-trash-o" style="font-size:12px;"></i></a>',
+						 ]
+						.join('');
+			}
+	
+	function uniqueProductFormatter(value, row,
+			index) {
+				return [
+						'<label>'+(row.isUniqueProduct?"Yes":"No")+'</label>',
 						 ]
 						.join('');
 			}

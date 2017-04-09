@@ -259,6 +259,14 @@ public class Util {
 		}
 		return strValue;
 	}
+	
+	public static Boolean getBooleanValueOfObj(Object obj) {
+		Boolean boolValue = false;
+		if (obj != null) {
+			boolValue = (Boolean)obj;
+		}
+		return boolValue;
+	}
 
 	public static Long getIntegerValueOfObj(Object obj) {
 		Long intValue = 0l;

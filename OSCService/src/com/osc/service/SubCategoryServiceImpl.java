@@ -2,7 +2,9 @@ package com.osc.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.osc.dao.SubCategoryDao;
 import com.osc.entity.SubCategory;
 import com.osc.json.SubCategoryJson;
+import com.osc.util.Constants;
 import com.osc.util.TransformEntityToJson;
 import com.osc.util.TransformJsonToEntity;
 import com.osc.util.Util;
@@ -43,7 +46,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 		List<SubCategoryJson> subCategoryJsons = null;
 		try {
 			StringBuilder sb = new StringBuilder(
-					"select s.id,s.name,s.categoryDivision.name,s.user.userName from SubCategory s where s.isDeleted = false order by s.name ASC");
+					"select s.id,s.name,s.categoryDivision.name,s.user.userName,s.isUniqueProduct from SubCategory s where s.isDeleted = false order by s.name ASC");
 			List<?> categories = subCategoryDao.findByQuery(sb.toString(), null, null, null);
 			if (categories != null && categories.size() > 0) {
 				subCategoryJsons = new ArrayList<SubCategoryJson>();
@@ -54,6 +57,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 					json.setName((String) obj[1]);
 					json.setCategoryDivisionName((String) obj[2]);
 					json.setStrCreatedBy(Util.getStringValueOfObj(obj[3]));
+					json.setIsUniqueProduct(Util.getBooleanValueOfObj(obj[4]));
 					subCategoryJsons.add(json);
 				}
 			}
@@ -96,26 +100,37 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 		}
 	}
 
-	public List<SubCategoryJson> getAllSubCategoriesWithCategory() {
-		List<SubCategoryJson> subCategoryJsons = null;
+	public Map<String,List<SubCategoryJson>> getAllSubCategoriesWithCategory() {
+		Map<String,List<SubCategoryJson>> subCategoryJsonsMap = null;
 		try {
 			StringBuilder sb = new StringBuilder(
-					"select s.id,s.name,s.categoryDivision.name,s.categoryDivision.category.name from SubCategory s where s.isDeleted = false order by s.name ASC");
+					"select s.id,s.name,s.categoryDivision.name,s.categoryDivision.category.name,s.isUniqueProduct from SubCategory s where s.isDeleted = false order by s.name ASC");
 			List<?> categories = subCategoryDao.findByQuery(sb.toString(), null, null, null);
 			if (categories != null && categories.size() > 0) {
-				subCategoryJsons = new ArrayList<SubCategoryJson>();
+				subCategoryJsonsMap = new HashMap<String,List<SubCategoryJson>>();
+				List<SubCategoryJson> uniqueSubCategories = new ArrayList<SubCategoryJson>();
+				List<SubCategoryJson> multipleSubCategories = new ArrayList<SubCategoryJson>();
 				for (Object object : categories) {
 					Object[] obj = (Object[]) object;
 					SubCategoryJson json = new SubCategoryJson();
 					json.setId((Long) obj[0]);
 					json.setName(Util.getStringValueOfObj(obj[1])+"("+Util.getStringValueOfObj(obj[3])+" -> "+Util.getStringValueOfObj(obj[2])+")");
-					subCategoryJsons.add(json);
+					json.setIsUniqueProduct(Util.getBooleanValueOfObj(obj[4]));
+//					subCategoryJsons.add(json);
+					if(json.getIsUniqueProduct()){
+						uniqueSubCategories.add(json);
+					}else{
+						multipleSubCategories.add(json);
+					}
 				}
+				subCategoryJsonsMap.put(Constants.General.UNIQUE_SubCategories, uniqueSubCategories);
+				subCategoryJsonsMap.put(Constants.General.MULTIPLE_SubCategories, multipleSubCategories);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOG.error(e.getMessage(), e);
 		}
-		return subCategoryJsons;
+		return subCategoryJsonsMap;
 	}
 }

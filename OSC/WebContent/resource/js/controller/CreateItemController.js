@@ -6,6 +6,8 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 	$rootScope.current_state= "item";
 	
 	$scope.obj = {};
+	$scope.uniqueSubCategory = null;
+	$scope.isMultipleProduct = false;
 	var itemId = null;
 	$scope.itemObj = {};
 	$scope.selectedPositions = [];
@@ -22,7 +24,8 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 	$scope.getAllSubCategoriesWithCategory = function(){
   		var response = $http.get(constants.localhost_port+constants.service_context+"/SubCategoryController/getAllSubCategoriesWithCategory");
   		response.success(function(data) {
-  			$scope.checkBoxes = data;
+  			$scope.checkBoxes = data.multiple;
+  			$scope.uniqueSubCategories = data.unique;
   		});
   		response.error(function() {
         	  console.error('Could not Perform well');
@@ -51,12 +54,22 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
           });
   	}
 	
+	
+	$scope.onChangeSingelValue = function(value){
+		$scope.uniqueSubCategory = value;
+	}
+	
 	$scope.saveOrUpdateAction = function(){
 		$scope.errorOccured = false;
+		if($scope.uniqueSubCategory){
+			$scope.subCategoryIds = [$scope.uniqueSubCategory];
+		}
 		if($scope.subCategoryIds && $scope.subCategoryIds.length >0){
 		$scope.itemObj.itemCroppedDimensionJsonList = $scope.selectedPositions;
 		$scope.itemObj.itemFieldValueJsonList = $scope.specificationList;
+
 		$scope.itemObj.subCategoryIds = $scope.subCategoryIds;
+		
 		$scope.itemObj.imageSrc = $('#uploadedImgId').attr('src');
 //		alert(JSON.stringify($scope.itemObj));
 		var response = $http.post(constants.localhost_port+constants.service_context+"/ItemController/saveOrUpdate",$scope.itemObj);
@@ -79,10 +92,24 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 	  		response.success(function(data) {
 	  			$scope.itemObj = data;
 	  			
+	  			
+	  			
 	  			$scope.selectedPositions = $scope.itemObj.itemCroppedDimensionJsonList;
 	  			$scope.specificationList =$scope.itemObj.itemFieldValueJsonList;
-	  			if( $scope.itemObj.subCategoryIds){
-	  			$scope.subCategoryIds = $scope.itemObj.subCategoryIds;
+	  			if($scope.itemObj.subCategoryIds){
+	  				var flag=false;
+	  				if($scope.itemObj.subCategoryIds.length == 1){
+	  					for(var i=0;i<$scope.uniqueSubCategories.length;i++){
+	  						if($scope.uniqueSubCategories[i].id == $scope.itemObj.subCategoryIds[0]){
+	  							flag = true;
+	  							$scope.uniqueSubCategory = $scope.itemObj.subCategoryIds[0];
+	  						}
+	  					}
+	  				}
+	  				if(!flag){
+	  					$scope.isMultipleProduct = true;
+	  					$scope.subCategoryIds = $scope.itemObj.subCategoryIds;
+	  				}
 	  			}
 //	  			alert(data.imageSrc);
 	  			$('#uploadedImgId').attr('src',data.imageSrc);

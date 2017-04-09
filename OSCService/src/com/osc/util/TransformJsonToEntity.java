@@ -108,13 +108,16 @@ public class TransformJsonToEntity {
 		subCategory.setName(subCategoryJson.getName());
 		subCategory.setCategoryDivisionId(subCategoryJson.getCategoryDivisionId());
 		subCategory.setIsDeleted(Boolean.FALSE);
-		if (subCategory.getId() != null) {
-			subCategory.setUpdatedBy(subCategoryJson.getUpdatedBy());
-			subCategory.setUpdatedOn(new Date());
-		} else {
-			subCategory.setCreatedBy(subCategoryJson.getCreatedBy());
-			subCategory.setCreatedOn(new Date());
-		}
+		subCategory.setIsUniqueProduct(subCategoryJson.getIsUniqueProduct());
+		
+		getBaseEntity(subCategoryJson, subCategory);
+//		if (subCategory.getId() != null) {
+//			subCategory.setUpdatedBy(subCategoryJson.getUpdatedBy());
+//			subCategory.setUpdatedOn(new Date());
+//		} else {
+//			subCategory.setCreatedBy(subCategoryJson.getCreatedBy());
+//			subCategory.setCreatedOn(new Date());
+//		}
 	}
 
 	public static void getUser(UserJson userJson, User user) {
