@@ -11,6 +11,7 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state', functi
   		var response = $http.post(constants.localhost_port+constants.service_context+"/ItemController/getAllItems",$scope.pageObj);
   		response.success(function(data) {
   			$scope.itemList = data;
+  			$scope.paginationValue = "Page "+(parseInt($scope.pageObj.pageFrom / constants.records_per_page)+1)+' Of '+(parseInt($scope.maxRecords / constants.records_per_page)+1);
 //  			$scope.displayTable();
   		});
   		response.error(function() {
@@ -31,6 +32,7 @@ $scope.getNoOfItems = function(){
   	}
 	
 	$scope.pagination = function(symbol){
+		var presentPage = $scope.pageObj.pageFrom;
 		if(symbol == 'start'){
 			$scope.pageObj.pageFrom = 0;
 		}else if(symbol == 'prev'){
@@ -40,7 +42,13 @@ $scope.getNoOfItems = function(){
 		}else{
 			$scope.pageObj.pageFrom = parseInt($scope.maxRecords / constants.records_per_page) * constants.records_per_page ;
 		}
+		
+		if($scope.pageObj.pageFrom == $scope.maxRecords){
+			$scope.pageObj.pageFrom = presentPage;
+		}
 //		alert(JSON.stringify($scope.pageObj));
+		
+		
 		$scope.getAllItems();
 	}
 
