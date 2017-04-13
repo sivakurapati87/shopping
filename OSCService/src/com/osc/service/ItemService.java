@@ -10,7 +10,7 @@ public interface ItemService {
 
 	public List<ItemJson> getAllItems(PageJson pageJson);
 	
-	public Long findNoOfItems();
+	public Long findNoOfItems(PageJson pageJson);
 	
 	public ItemJson getItemById(Long id);
 	

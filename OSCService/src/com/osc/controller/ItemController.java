@@ -65,12 +65,12 @@ public class ItemController {
 		}
 	}
 
-	@RequestMapping(value="findNoOfItems")
-	public ResponseEntity<Long> findNoOfItems(HttpServletRequest request) {
+	@RequestMapping(value="findNoOfItems",method=RequestMethod.POST)
+	public ResponseEntity<Long> findNoOfItems(HttpServletRequest request,@RequestBody PageJson pageJson) {
 		if (Util.getLoginUserId(request) != null) {
 			Long noOfRecords = null;
 			try {
-				noOfRecords = itemService.findNoOfItems();
+				noOfRecords = itemService.findNoOfItems(pageJson);
 			} catch (Exception e) {
 				e.printStackTrace();
 				LOG.error(e.getMessage(), e);

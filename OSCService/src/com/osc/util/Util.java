@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
+import com.osc.json.PageJson;
 import com.osc.json.UserJson;
 
 @SuppressWarnings("restriction")
@@ -339,5 +340,32 @@ public class Util {
 			LOG.error(e.getMessage(), e);
 		}
 		return longArray;
+	}
+	public static void doSearchAction(PageJson pageJson,StringBuilder sb,Map<String,Object> params){
+		if(pageJson.getSearchName() != null && pageJson.getSearchName().trim().length()>0){
+			if(pageJson.getSearchOperator().equalsIgnoreCase("like")){
+				sb.append(" and i."+pageJson.getSearchName()+" like ?1");
+				params.put("1", "%"+pageJson.getSearchValue()+"%");
+			}if(pageJson.getSearchOperator().equalsIgnoreCase("gt")){
+				sb.append(" and i."+pageJson.getSearchName()+" > ?2");
+				params.put("2", Double.parseDouble(pageJson.getSearchValue()));
+			}if(pageJson.getSearchOperator().equalsIgnoreCase("ge")){
+				sb.append(" and i."+pageJson.getSearchName()+" >= ?3");
+				params.put("3", Double.parseDouble(pageJson.getSearchValue()));
+			}if(pageJson.getSearchOperator().equalsIgnoreCase("lt")){
+				sb.append(" and i."+pageJson.getSearchName()+" < ?4");
+				params.put("4", Double.parseDouble(pageJson.getSearchValue()));
+			}if(pageJson.getSearchOperator().equalsIgnoreCase("le")){
+				sb.append(" and i."+pageJson.getSearchName()+" <= ?5");
+				params.put("5", Double.parseDouble(pageJson.getSearchValue()));
+			}if(pageJson.getSearchOperator().equalsIgnoreCase("eq")){
+				sb.append(" and i."+pageJson.getSearchName()+" = ?6");
+				params.put("6", Double.parseDouble(pageJson.getSearchValue()));
+			}
+			if(pageJson.getSearchOperator().equalsIgnoreCase("equals")){
+				sb.append(" and i."+pageJson.getSearchName()+" = ?6");
+				params.put("6", pageJson.getSearchValue());
+			}
+		}
 	}
 }

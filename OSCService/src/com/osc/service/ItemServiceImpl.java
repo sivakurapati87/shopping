@@ -235,9 +235,34 @@ public class ItemServiceImpl implements ItemService {
 	public List<ItemJson> getAllItems(PageJson pageJson) {
 		List<ItemJson> itemJsons = null;
 		try {
+			Map<String,Object> params = new HashMap<String, Object>();
 			StringBuilder sb = new StringBuilder(
-					"select i.id,i.name,i.mrp,i.discount,i.imageSourceLocation from Item i where i.isDeleted = false order by coalesce(i.updatedOn,i.createdOn) DESC");
-			List<?> categories = itemDao.findByQuery(sb.toString(), null, pageJson.getPageFrom(), pageJson.getPageTo());
+					"select i.id,i.name,i.mrp,i.discount,i.imageSourceLocation from Item i where i.isDeleted = false ");
+			/*if(pageJson.getSearchName() != null && pageJson.getSearchName().trim().length()>0){
+				if(pageJson.getSearchOperator().equalsIgnoreCase("like")){
+					sb.append(" i."+pageJson.getSearchName()+" like ?1");
+					params.put("1", "%"+pageJson.getSearchValue()+"%");
+				}if(pageJson.getSearchOperator().equalsIgnoreCase("gt")){
+					sb.append(" i."+pageJson.getSearchName()+" > ?2");
+					params.put("2", pageJson.getSearchValue());
+				}if(pageJson.getSearchOperator().equalsIgnoreCase("ge")){
+					sb.append(" i."+pageJson.getSearchName()+" >= ?3");
+					params.put("3", pageJson.getSearchValue());
+				}if(pageJson.getSearchOperator().equalsIgnoreCase("lt")){
+					sb.append(" i."+pageJson.getSearchName()+" < ?4");
+					params.put("4", pageJson.getSearchValue());
+				}if(pageJson.getSearchOperator().equalsIgnoreCase("le")){
+					sb.append(" i."+pageJson.getSearchName()+" <= ?5");
+					params.put("5", pageJson.getSearchValue());
+				}if(pageJson.getSearchOperator().equalsIgnoreCase("eq")){
+					sb.append(" i."+pageJson.getSearchName()+" = ?6");
+					params.put("6", pageJson.getSearchValue());
+				}
+			}*/
+			Util.doSearchAction(pageJson, sb, params);
+			sb.append(" order by coalesce(i.updatedOn,i.createdOn) DESC ");
+			
+			List<?> categories = itemDao.findByQuery(sb.toString(), params, pageJson.getPageFrom(), pageJson.getPageTo());
 			if (categories != null && categories.size() > 0) {
 				List<Long> itemIds = new ArrayList<Long>();
 				itemJsons = new ArrayList<ItemJson>();
@@ -359,11 +384,13 @@ public class ItemServiceImpl implements ItemService {
 		}
 	}
 
-	public Long findNoOfItems() {
+	public Long findNoOfItems(PageJson pageJson) {
 		Long noOfRecords =null;
 		try {
+			Map<String,Object> params = new HashMap<String, Object>();
 			StringBuilder sb = new StringBuilder("select count(i) from Item i where i.isDeleted = false");
-			noOfRecords = (Long) itemDao.findByQuery(sb.toString(), null);
+			Util.doSearchAction(pageJson, sb, params);
+			noOfRecords = (Long) itemDao.findByQuery(sb.toString(), params);
 			return noOfRecords;
 		} catch (Exception e) {
 			e.printStackTrace();

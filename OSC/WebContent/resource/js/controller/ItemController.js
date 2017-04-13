@@ -20,8 +20,13 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state', functi
           });
   	}
 	
+	$scope.searchAction = function(){
+		$scope.getAllItems();
+		$scope.getNoOfItems();
+	}
+	
 $scope.getNoOfItems = function(){
-  		var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/findNoOfItems");
+  		var response = $http.post(constants.localhost_port+constants.service_context+"/ItemController/findNoOfItems",$scope.pageObj);
   		response.success(function(data) {
   			$scope.maxRecords = data;
   		});

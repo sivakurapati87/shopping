@@ -19,7 +19,38 @@
 	</div> -->
 	<!-- End Table -->
 	<div class="row">
-		<div class="col-md-9"><label style="padding-left:78px;">{{paginationValue}} &nbsp;&nbsp; No. of Records : {{maxRecords}}</label></div>
+		<div class="col-md-2"><label style="padding-left:78px;">{{paginationValue}}</label></div>
+		<div class="col-md-2"><label>No. of Records : {{maxRecords}}</label> </div>
+		<div class="col-md-5">
+		<div class="row">
+				<div class="col-md-3">
+					<select ng-model="pageObj.searchName" style="width: 110px">
+						<option value="name">Item Name</option>
+						<option value="mrp">MRP</option>
+						<option value="discount">Discount</option>
+					</select>
+				</div>
+				<div class="col-md-3">
+					<select ng-model="pageObj.searchOperator" style="width: 76px" ng-if="pageObj.searchName == 'name'">
+						<option value="equals">Equals</option>
+						<option value="like">Like</option>
+					</select>
+					<select ng-model="pageObj.searchOperator" style="width: 76px" ng-if="!(pageObj.searchName == 'name')">
+						<option value="eq">Equals</option>
+						<option value="gt">Greater Than</option>
+						<option value="ge">Greater Than Equal</option>
+						<option value="lt">Less Than</option>
+						<option value="le">Less Than Equal</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<input type="text" style="width: 135px" ng-model="pageObj.searchValue">
+				</div>
+				<div class="col-md-2">
+					<button type="button" class="btn btn-success" ng-click="searchAction()">Go</button>
+				</div>
+			</div>
+		</div>
 		<div class="col-md-2">
 			<div class="row">
 				<div class="col-md-3 cursor_pointer" ng-click="pagination('start')" title="First"><i class="fa fa-fast-backward" aria-hidden="true"></i></div>
