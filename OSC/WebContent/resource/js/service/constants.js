@@ -1,6 +1,6 @@
 var constants = {
 
-	localhost_port : 'http://localhost:8080/',
+	localhost_port : '/',
 	// contexts
 	service_context : 'OSCService',
 	records_per_page :5,

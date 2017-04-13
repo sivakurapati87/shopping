@@ -1,33 +1,62 @@
-<div class="container-fluid" id="userControllerId"
-	style="background: white; width: 100%;">
+<div class="container-fluid" id="userControllerId">
 	<form ng-submit="loginAction()">
-		<br><br><br><br><br><br><br>
-		
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+
 		<div class="row">
 			<div class="col-md-1"></div>
-			<div class="col-md-8" style="background: #ceecd9;">
-			<br>
-			<div class="row">
-					<div class="col-md-4"></div>
-					<div class="col-md-8">
-						<label class="lblError" ng-if="displayError">Invalid User Name OR Password</label>
-					</div>
-				</div>
-			<br>
-				<div class="row">
-					<div class="col-md-4"></div>
-					<div class="col-md-8">
-						<input type="text" class="form-control" placeholder="User Name"
-							required="required" ng-model="userObj.userName">
-					</div>
-				</div>
+			<div class="col-md-8"
+				style="background-image: url('resource/images/login.png'); background-size: cover;">
 				<br>
 				<div class="row">
 					<div class="col-md-4"></div>
 					<div class="col-md-8">
+						<label class="lblError" ng-if="displayError">Invalid User
+							Name OR Password</label>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-3"></div>
+					<div class="col-md-9">
+						<div class="row">
+							<div class="col-md-1" style="font-size: 24px;color: #ecd1d1;">
+								<i class="fa fa-user-circle-o" aria-hidden="true" ></i>
+							</div>
+							<div class="col-md-11">
+								<input type="text" class="form-control" placeholder="User Name"
+									required="required" ng-model="userObj.userName">
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-3"></div>
+					<div class="col-md-9">
+						<div class="row">
+							<div class="col-md-1" style="font-size: 24px;color: #ecd1d1;">
+								<i class="fa fa-key" aria-hidden="true" ></i>
+							</div>
+							<div class="col-md-11">
+								<input type="password" class="form-control" placeholder="Password"
+							required="required" ng-model="userObj.password">
+							</div>
+						</div>
+
+					</div>
+				<!-- 
+					<div class="col-md-4"></div>
+					<div class="col-md-8">
 						<input type="password" class="form-control" placeholder="Password"
 							required="required" ng-model="userObj.password">
-					</div>
+					</div> -->
 				</div>
 				<br> <br>
 				<div class="row">
@@ -36,7 +65,8 @@
 						<button type="submit" class="btn btn-success btnInfo">LOGIN</button>
 					</div>
 				</div>
-				<br><br>
+				<br>
+				<br>
 			</div>
 		</div>
 		<div class="col-md-3"></div>
