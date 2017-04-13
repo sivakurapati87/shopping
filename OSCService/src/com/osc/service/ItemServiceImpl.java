@@ -23,6 +23,7 @@ import com.osc.entity.SubCategoryItem;
 import com.osc.json.ItemCroppedDimensionJson;
 import com.osc.json.ItemFieldValueJson;
 import com.osc.json.ItemJson;
+import com.osc.json.PageJson;
 import com.osc.util.Constants;
 import com.osc.util.TransformEntityToJson;
 import com.osc.util.TransformJsonToEntity;
@@ -231,12 +232,12 @@ public class ItemServiceImpl implements ItemService {
 		}
 	}
 
-	public List<ItemJson> getAllItems() {
+	public List<ItemJson> getAllItems(PageJson pageJson) {
 		List<ItemJson> itemJsons = null;
 		try {
 			StringBuilder sb = new StringBuilder(
 					"select i.id,i.name,i.mrp,i.discount,i.imageSourceLocation from Item i where i.isDeleted = false order by coalesce(i.updatedOn,i.createdOn) DESC");
-			List<?> categories = itemDao.findByQuery(sb.toString(), null, null, null);
+			List<?> categories = itemDao.findByQuery(sb.toString(), null, pageJson.getPageFrom(), pageJson.getPageTo());
 			if (categories != null && categories.size() > 0) {
 				List<Long> itemIds = new ArrayList<Long>();
 				itemJsons = new ArrayList<ItemJson>();
@@ -358,6 +359,20 @@ public class ItemServiceImpl implements ItemService {
 		}
 	}
 
+	public Long findNoOfItems() {
+		Long noOfRecords =null;
+		try {
+			StringBuilder sb = new StringBuilder("select count(i) from Item i where i.isDeleted = false");
+			noOfRecords = (Long) itemDao.findByQuery(sb.toString(), null);
+			return noOfRecords;
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+		return noOfRecords;
+	}
+
+	
 	@SuppressWarnings("unchecked")
 	public void deleteItemById(Long id, Long userId) {
 		try {

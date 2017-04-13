@@ -4,19 +4,45 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state', functi
 
 	
 	$rootScope.current_state= $state.current.name;
-	
+	$scope.pageObj = {pageFrom:0,pageTo:constants.records_per_page};
 
 	$scope.getAllItems = function(){
-  		var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/getAllItems");
+		
+  		var response = $http.post(constants.localhost_port+constants.service_context+"/ItemController/getAllItems",$scope.pageObj);
   		response.success(function(data) {
   			$scope.itemList = data;
-  			$scope.displayTable();
+//  			$scope.displayTable();
   		});
   		response.error(function() {
         	  console.error('Could not Perform well');
         	  $state.go("login");
           });
   	}
+	
+$scope.getNoOfItems = function(){
+  		var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/findNoOfItems");
+  		response.success(function(data) {
+  			$scope.maxRecords = data;
+  		});
+  		response.error(function() {
+        	  console.error('Could not Perform well');
+        	  $state.go("login");
+          });
+  	}
+	
+	$scope.pagination = function(symbol){
+		if(symbol == 'start'){
+			$scope.pageObj.pageFrom = 0;
+		}else if(symbol == 'prev'){
+			$scope.pageObj.pageFrom = ($scope.pageObj.pageFrom - constants.records_per_page)<0?0:($scope.pageObj.pageFrom - constants.records_per_page);
+		}else if(symbol == 'next'){
+			$scope.pageObj.pageFrom = ($scope.pageObj.pageFrom + constants.records_per_page)> $scope.maxRecords ?(parseInt($scope.maxRecords / constants.records_per_page) * constants.records_per_page):($scope.pageObj.pageFrom + constants.records_per_page);
+		}else{
+			$scope.pageObj.pageFrom = parseInt($scope.maxRecords / constants.records_per_page) * constants.records_per_page ;
+		}
+//		alert(JSON.stringify($scope.pageObj));
+		$scope.getAllItems();
+	}
 
 
 	$scope.displayTable = function(){
@@ -107,29 +133,16 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state', functi
 	          });
 		}
 		
-//		$scope.editItem = function(){
-//			var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/getItemById/"+itemId);
-//	  		response.success(function(data) {
-//	  			$scope.onClickAddNew();
-//	  			$scope.itemObj = data;
-//	  			
-//	  			$scope.selectedPositions = $scope.itemObj.itemCroppedDimensionJsonList;
-//	  			$scope.specificationList =$scope.itemObj.itemFieldValueJsonList;
-//	  			$scope.subCategoryIds = $scope.itemObj.subCategoryIds;
-////	  			alert(data.imageSrc);
-//	  			$('#uploadedImgId').attr('src',data.imageSrc);
-//	  		});
-//	  		response.error(function() {
-//	        	  console.error('Could not Perform well');
-//	        	  $state.go("login");
-//	          });
-//		}
+		
+		$scope.editItem = function(itemId){
+			$state.go("create_item",{id:itemId});
+		}
 
 	$scope.onClickAddNew = function(){
 	}
 	
 	$scope.onload = function(){
-		
+			$scope.getNoOfItems();
 	        $scope.getAllItems();
 	}
 	

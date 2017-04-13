@@ -72,4 +72,25 @@ public class BaseDaoImpl implements BaseDao {
 		}
 		return list;
 	}
+	
+	public Object findByQuery(String hqlQuery, Map<String, Object> params) {
+		Object result = null;
+		try {
+			Query query = getSession().createQuery(hqlQuery);
+			if (params != null) {
+				for (Map.Entry<String, Object> mapEntry : params.entrySet()) {
+					if(mapEntry.getValue() instanceof List){
+						query.setParameterList(mapEntry.getKey(),(List<?>) mapEntry.getValue());
+					}else{
+					query.setParameter(mapEntry.getKey(), mapEntry.getValue());
+					}
+				}
+			}
+			result = query.uniqueResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+		return result;
+	}
 }

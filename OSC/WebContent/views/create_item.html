@@ -151,7 +151,7 @@ function tony()
 				<div class="row">
 					<div class="col-md-4">
 					<label style="font-size: 13px;color: #381cc1;">Select this, if you apply this product for many</label>
-						<input type="checkbox" ng-model="isMultipleProduct">
+						<input type="checkbox" ng-model="isMultipleProduct" ng-click="onClickMultipleProductChk(isMultipleProduct)">
 						</div>
 						<div class="col-md-8" style="border: 1px solid #7df27d;" ng-if="isMultipleProduct">
 						<label ng-repeat="ch in checkBoxes"> <input 

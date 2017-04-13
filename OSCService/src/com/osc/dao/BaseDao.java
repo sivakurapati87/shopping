@@ -17,5 +17,7 @@ public interface BaseDao {
 	public Object getById(Class<?> clazz,Long id);
 
 	public List<?> findByQuery(String hqlQuery, Map<String, Object> params, Integer firstRecord, Integer maxRecord);
+	
+	public Object findByQuery(String hqlQuery, Map<String, Object> params);
 
 }

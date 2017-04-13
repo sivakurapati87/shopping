@@ -59,9 +59,13 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 		$scope.uniqueSubCategory = value;
 	}
 	
+	$scope.onClickMultipleProductChk = function(ckValue){
+		$scope.isMultipleProduct = ckValue;
+	}
+	
 	$scope.saveOrUpdateAction = function(){
 		$scope.errorOccured = false;
-		if($scope.uniqueSubCategory){
+		if(!$scope.isMultipleProduct && $scope.uniqueSubCategory){
 			$scope.subCategoryIds = [$scope.uniqueSubCategory];
 		}
 		if($scope.subCategoryIds && $scope.subCategoryIds.length >0){

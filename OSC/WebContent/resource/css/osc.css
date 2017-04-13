@@ -79,13 +79,16 @@ select{
 	font-weight: 100 !important;
 }
 .grid_headerBG{
-	background: #7c9693;
+	background: #6fc758;
+	color: white;
+	font-size: 14px;
+	padding-top: 8px;
 }
 .grid_odd{
 	background: #fcfcfc;
 }
 .grid_even{
-	background: #ebeded;
+	background: #b7ffb7;
 }
 .selectBox{
 	width: 260px;
@@ -479,4 +482,8 @@ ul.alert-dropdown {
 textarea
 {
 	width:100%;
+}
+
+.cursor_pointer{
+	cursor: pointer;
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osc.json.ItemJson;
+import com.osc.json.PageJson;
 import com.osc.service.ItemService;
 import com.osc.util.Util;
 
@@ -46,12 +47,12 @@ public class ItemController {
 	}
 
 	
-	@RequestMapping("getAllItems")
-	public ResponseEntity<List<ItemJson>> getAllItems(HttpServletRequest request) {
+	@RequestMapping(value="getAllItems",method=RequestMethod.POST)
+	public ResponseEntity<List<ItemJson>> getAllItems(HttpServletRequest request,@RequestBody PageJson pageJson) {
 		if (Util.getLoginUserId(request) != null) {
 			List<ItemJson> itemJsons = null;
 			try {
-				itemJsons = itemService.getAllItems();
+				itemJsons = itemService.getAllItems(pageJson);
 			} catch (Exception e) {
 				e.printStackTrace();
 				LOG.error(e.getMessage(), e);
@@ -63,6 +64,25 @@ public class ItemController {
 			return new ResponseEntity(HttpStatus.FORBIDDEN);
 		}
 	}
+
+	@RequestMapping(value="findNoOfItems")
+	public ResponseEntity<Long> findNoOfItems(HttpServletRequest request) {
+		if (Util.getLoginUserId(request) != null) {
+			Long noOfRecords = null;
+			try {
+				noOfRecords = itemService.findNoOfItems();
+			} catch (Exception e) {
+				e.printStackTrace();
+				LOG.error(e.getMessage(), e);
+				return new ResponseEntity<Long>(noOfRecords, HttpStatus.EXPECTATION_FAILED);
+			}
+			return new ResponseEntity<Long>(noOfRecords, HttpStatus.OK);
+		} else {
+			LOG.error("User must login");
+			return new ResponseEntity(HttpStatus.FORBIDDEN);
+		}
+	}
+
 	
 	@RequestMapping("getItemById/{id}")
 	public ResponseEntity<ItemJson> getItemById(@PathVariable("id") Long id, HttpServletRequest request) {

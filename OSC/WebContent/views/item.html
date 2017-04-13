@@ -1,6 +1,6 @@
 <div class="container-fluid" style="background: white; width: 100%;"
 	id="createItemControllerId">
-<br>
+	<br>
 	<div class="row">
 		<div class="col-md-12" style="text-align: right;">
 			<button type="button" class="btn btn-info" ui-sref="create_item">
@@ -8,29 +8,68 @@
 			</button>
 		</div>
 	</div>
-
+	<br> <br>
 
 	<!-- Table -->
-	<div class="row" >
+	<!-- 	<div class="row" >
 		<div class="col-md-12" style="padding-left: 25px;">
 			<table id="itemTableId"></table>
 
 		</div>
-	</div>
+	</div> -->
 	<!-- End Table -->
+	<div class="row">
+		<div class="col-md-9"></div>
+		<div class="col-md-2">
+			<div class="row">
+				<div class="col-md-3 cursor_pointer" ng-click="pagination('start')" title="First"><i class="fa fa-fast-backward" aria-hidden="true"></i></div>
+				<div class="col-md-3 cursor_pointer" ng-click="pagination('prev')" title="Previous"><i class="fa fa-backward" aria-hidden="true"></i></div>
+				<div class="col-md-3 cursor_pointer" ng-click="pagination('next')" title="Next"><i class="fa fa-forward" aria-hidden="true"></i></div>
+				<div class="col-md-3 cursor_pointer" ng-click="pagination('last')" title="Last"><i class="fa fa-fast-forward" aria-hidden="true"></i></div>
+			</div>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+	<br>
+	<div class="row ">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<div class="row grid_headerBG" style="height: 36px">
+				<div class="col-md-2">Item Name</div>
+				<div class="col-md-2">SubCategory Name</div>
+				<div class="col-md-2">MRP</div>
+				<div class="col-md-2">Discount</div>
+				<div class="col-md-2">Image</div>
+				<div class="col-md-2">Actions</div>
+			</div>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+</div>
 
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-md-10">
+		<div class="row" ng-repeat="product in itemList" style="padding: 1px"
+			ng-class-odd="'grid_odd'" ng-class-even="'grid_even'">
+			<div class="col-md-2">{{product.name}}</div>
+			<div class="col-md-2">{{product.subcategory}}</div>
+			<div class="col-md-2">{{product.mrp}}</div>
+			<div class="col-md-2">{{product.discount}}</div>
+			<div class="col-md-2">
+				<img ng-src="{{product.imageSrc}}"
+					style="width: 100px; height: 100px;">
+			</div>
+			<div class="col-md-2">
+				<a class="editItem actionIcons" title="Edit" ng-click="editItem(product.id)"><i
+					class="fa fa-edit" style="font-size: 12px;"></i></a>&nbsp;&nbsp;<a
+					class="removeCategory actionIcons" title="Remove" ng-click="deleteItem(product.id)"><i
+					class="fa fa-trash-o" style="font-size: 12px;"></i></a>
+			</div>
+		</div>
 
+	</div>
+	<div class="col-md-1"></div>
 
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
