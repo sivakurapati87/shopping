@@ -134,4 +134,45 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 		}
 		return subCategoryJsonsMap;
 	}
+	
+	public Map<String,Map<String,List<SubCategoryJson>>> allCategoriesWithSubCategory() {
+		Map<String,Map<String,List<SubCategoryJson>>> subCategoryJsonsMap = null;
+		try {
+			StringBuilder sb = new StringBuilder(
+					"select s.id,s.name,s.categoryDivision.name,s.categoryDivision.category.name from SubCategory s where s.isDeleted = false order by s.name ASC");
+			List<?> categories = subCategoryDao.findByQuery(sb.toString(), null, null, null);
+			if (categories != null && categories.size() > 0) {
+				subCategoryJsonsMap = new HashMap<String,Map<String,List<SubCategoryJson>>>();
+				for (Object object : categories) {
+					Object[] obj = (Object[]) object;
+					SubCategoryJson json = new SubCategoryJson();
+					json.setId((Long) obj[0]);
+					json.setName(Util.getStringValueOfObj(obj[1]));
+					json.setCategoryDivisionName(Util.getStringValueOfObj(obj[2]));
+					json.setCategoryName(Util.getStringValueOfObj(obj[3]));
+					
+					if(subCategoryJsonsMap.get(json.getCategoryName())!=null){
+						if(subCategoryJsonsMap.get(json.getCategoryName()).get(json.getCategoryDivisionName())!=null){
+							subCategoryJsonsMap.get(json.getCategoryName()).get(json.getCategoryDivisionName()).add(json);
+						}else{
+							List<SubCategoryJson> list = new ArrayList<SubCategoryJson>();
+							list.add(json);
+							subCategoryJsonsMap.get(json.getCategoryName()).put(json.getCategoryDivisionName(), list);
+						}
+					}else{
+						Map<String,List<SubCategoryJson>> map = new HashMap<String, List<SubCategoryJson>>();
+						List<SubCategoryJson> list = new ArrayList<SubCategoryJson>();
+						list.add(json);
+						map.put(json.getCategoryDivisionName(), list);
+						subCategoryJsonsMap.put(json.getCategoryName(), map);
+					}
+				}
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+		return subCategoryJsonsMap;
+	}
 }

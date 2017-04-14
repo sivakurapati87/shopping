@@ -4,6 +4,7 @@ public class SubCategoryJson extends BaseJson {
 	private Long categoryDivisionId;
 	private String name;
 	private String categoryDivisionName;
+	private String categoryName;
 	private Boolean isUniqueProduct;
 	private CategoryJson category;
 	private Boolean showItemsInHomePage;
@@ -54,6 +55,14 @@ public class SubCategoryJson extends BaseJson {
 
 	public void setShowItemsInHomePage(Boolean showItemsInHomePage) {
 		this.showItemsInHomePage = showItemsInHomePage;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 }

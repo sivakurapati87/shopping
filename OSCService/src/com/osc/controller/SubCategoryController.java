@@ -84,6 +84,25 @@ public class SubCategoryController {
 		}
 	}
 	
+	//This is for user page
+	@RequestMapping("allCategoriesWithSubCategory")
+	public ResponseEntity<Map<String,Map<String,List<SubCategoryJson>>>> allCategoriesWithSubCategory(HttpServletRequest request) {
+		if (Util.getLoginUserId(request) != null) {
+			Map<String,Map<String,List<SubCategoryJson>>> subCategoryJsonsMap = null;
+			try {
+				subCategoryJsonsMap = subCategoryService.allCategoriesWithSubCategory();
+			} catch (Exception e) {
+				e.printStackTrace();
+				LOG.error(e.getMessage(), e);
+				return new ResponseEntity<Map<String,Map<String,List<SubCategoryJson>>>>(subCategoryJsonsMap, HttpStatus.EXPECTATION_FAILED);
+			}
+			return new ResponseEntity<Map<String,Map<String,List<SubCategoryJson>>>>(subCategoryJsonsMap, HttpStatus.OK);
+		} else {
+			LOG.error("User must login");
+			return new ResponseEntity(HttpStatus.FORBIDDEN);
+		}
+	}
+	
 	@RequestMapping("getSubCategoryById/{id}")
 	public ResponseEntity<SubCategoryJson> getSubCategoryById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
