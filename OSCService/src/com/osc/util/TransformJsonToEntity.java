@@ -109,6 +109,7 @@ public class TransformJsonToEntity {
 		subCategory.setCategoryDivisionId(subCategoryJson.getCategoryDivisionId());
 		subCategory.setIsDeleted(Boolean.FALSE);
 		subCategory.setIsUniqueProduct(subCategoryJson.getIsUniqueProduct());
+		subCategory.setShowItemsInHomePage(subCategoryJson.getShowItemsInHomePage());
 		
 		getBaseEntity(subCategoryJson, subCategory);
 //		if (subCategory.getId() != null) {

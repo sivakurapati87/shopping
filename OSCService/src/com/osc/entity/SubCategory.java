@@ -15,6 +15,9 @@ public class SubCategory extends BaseEntity{
 	private CategoryDivision categoryDivision;
 
 	private Boolean isUniqueProduct;
+	
+	private Boolean showItemsInHomePage;
+	
 	/*@OneToMany(mappedBy = "subCategory", fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@Where(clause = "isDeleted='false'")
@@ -46,6 +49,12 @@ public class SubCategory extends BaseEntity{
 	}
 	public void setIsUniqueProduct(Boolean isUniqueProduct) {
 		this.isUniqueProduct = isUniqueProduct;
+	}
+	public Boolean getShowItemsInHomePage() {
+		return showItemsInHomePage;
+	}
+	public void setShowItemsInHomePage(Boolean showItemsInHomePage) {
+		this.showItemsInHomePage = showItemsInHomePage;
 	}
 	
 }

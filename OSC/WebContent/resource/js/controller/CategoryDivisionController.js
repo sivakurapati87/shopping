@@ -112,12 +112,15 @@ App.controller('CategoryDivisionController', ['$scope','$http','$rootScope','$st
 		pageList : [ 5,10, 20],
 	    columns: [{
 	        field: 'name',
+	        sortable:true,
 	        title: 'Category Divison Name'
 	    }, {
 	        field: 'categoryName',
+	        sortable:true,
 	        title: 'Category Name'
 	    }, {
 	        field: 'strCreatedBy',
+	        sortable:true,
 	        title: 'createdBy'
 	    },
 		{

@@ -17,7 +17,7 @@
 			</div>
 			<div class="col-md-6">
 			<select ng-model="subCategoryObj.categoryDivisionId"
-									ng-options="fieldName.id as fieldName.name for fieldName in categoryDivisionList">
+									ng-options="fieldName.id as fieldName.name for fieldName in categoryDivisionList" required="required">
 									<option value="" disabled selected>Select
 										Category Division</option>
 								</select>
@@ -39,6 +39,15 @@
 			</div>
 			<div class="col-md-6">
 				<input type="checkbox" ng-model="subCategoryObj.isUniqueProduct">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-6 lblfont16px" style="text-align: end">
+				<label>Show The Items In Home Page :</label>
+			</div>
+			<div class="col-md-6">
+				<input type="checkbox" ng-model="subCategoryObj.showItemsInHomePage">
 			</div>
 		</div>
 		

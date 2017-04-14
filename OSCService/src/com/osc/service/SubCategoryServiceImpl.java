@@ -46,7 +46,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 		List<SubCategoryJson> subCategoryJsons = null;
 		try {
 			StringBuilder sb = new StringBuilder(
-					"select s.id,s.name,s.categoryDivision.name,s.user.userName,s.isUniqueProduct from SubCategory s where s.isDeleted = false order by s.name ASC");
+					"select s.id,s.name,s.categoryDivision.name,s.user.userName,s.isUniqueProduct,s.showItemsInHomePage from SubCategory s where s.isDeleted = false order by s.name ASC");
 			List<?> categories = subCategoryDao.findByQuery(sb.toString(), null, null, null);
 			if (categories != null && categories.size() > 0) {
 				subCategoryJsons = new ArrayList<SubCategoryJson>();
@@ -58,6 +58,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 					json.setCategoryDivisionName((String) obj[2]);
 					json.setStrCreatedBy(Util.getStringValueOfObj(obj[3]));
 					json.setIsUniqueProduct(Util.getBooleanValueOfObj(obj[4]));
+					json.setShowItemsInHomePage(Util.getBooleanValueOfObj(obj[5]));
 					subCategoryJsons.add(json);
 				}
 			}

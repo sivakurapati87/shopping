@@ -95,6 +95,7 @@ public class TransformEntityToJson {
 		json.setName(subCategory.getName());
 		json.setCategoryDivisionId(subCategory.getCategoryDivisionId());
 		json.setIsUniqueProduct(subCategory.getIsUniqueProduct());
+		json.setShowItemsInHomePage(subCategory.getShowItemsInHomePage());
 		getBaseJson(json, subCategory);
 	}
 

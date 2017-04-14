@@ -111,16 +111,25 @@ App.controller('SubCategoryController', ['$scope','$http','$rootScope','$state',
 		pageList : [ 5,10, 20],
 	    columns: [{
 	        field: 'name',
+	        sortable:true,
 	        title: 'SubCategory Name'
 	    }, {
 	        field: 'categoryDivisionName',
+	        sortable:true,
 	        title: 'Category Division Name'
 	    }, {
 	        field: 'isUniqueProduct',
 	        title: 'Is Unique Product',
+	        sortable:true,
 	        formatter : uniqueProductFormatter
 	    }, {
+	        field: 'showItemsInHomePage',
+	        title: 'Show Items In Home Page',
+	        sortable:true,
+	        formatter : showHomePageFormatter
+	    }, {
 	        field: 'strCreatedBy',
+	        sortable:true,
 	        title: 'createdBy'
 	    },
 		{
@@ -142,6 +151,15 @@ App.controller('SubCategoryController', ['$scope','$http','$rootScope','$state',
 						 ]
 						.join('');
 			}
+	
+	function showHomePageFormatter(value, row,
+			index) {
+				return [
+						'<label>'+(row.showItemsInHomePage?"Yes":"No")+'</label>',
+						 ]
+						.join('');
+			}
+
 	
 	function uniqueProductFormatter(value, row,
 			index) {
