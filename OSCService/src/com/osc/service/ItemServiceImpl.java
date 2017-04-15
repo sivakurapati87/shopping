@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -235,33 +236,33 @@ public class ItemServiceImpl implements ItemService {
 	public List<ItemJson> getAllItems(PageJson pageJson) {
 		List<ItemJson> itemJsons = null;
 		try {
-			Map<String,Object> params = new HashMap<String, Object>();
-			StringBuilder sb = new StringBuilder(
-					"select i.id,i.name,i.mrp,i.discount,i.imageSourceLocation from Item i where i.isDeleted = false ");
-			/*if(pageJson.getSearchName() != null && pageJson.getSearchName().trim().length()>0){
-				if(pageJson.getSearchOperator().equalsIgnoreCase("like")){
-					sb.append(" i."+pageJson.getSearchName()+" like ?1");
-					params.put("1", "%"+pageJson.getSearchValue()+"%");
-				}if(pageJson.getSearchOperator().equalsIgnoreCase("gt")){
-					sb.append(" i."+pageJson.getSearchName()+" > ?2");
-					params.put("2", pageJson.getSearchValue());
-				}if(pageJson.getSearchOperator().equalsIgnoreCase("ge")){
-					sb.append(" i."+pageJson.getSearchName()+" >= ?3");
-					params.put("3", pageJson.getSearchValue());
-				}if(pageJson.getSearchOperator().equalsIgnoreCase("lt")){
-					sb.append(" i."+pageJson.getSearchName()+" < ?4");
-					params.put("4", pageJson.getSearchValue());
-				}if(pageJson.getSearchOperator().equalsIgnoreCase("le")){
-					sb.append(" i."+pageJson.getSearchName()+" <= ?5");
-					params.put("5", pageJson.getSearchValue());
-				}if(pageJson.getSearchOperator().equalsIgnoreCase("eq")){
-					sb.append(" i."+pageJson.getSearchName()+" = ?6");
-					params.put("6", pageJson.getSearchValue());
-				}
-			}*/
+			Map<String, Object> params = new HashMap<String, Object>();
+			StringBuilder sb = new StringBuilder("select i.id,i.name,i.mrp,i.discount,i.imageSourceLocation from Item i where i.isDeleted = false ");
+			/*
+			 * if(pageJson.getSearchName() != null &&
+			 * pageJson.getSearchName().trim().length()>0){
+			 * if(pageJson.getSearchOperator().equalsIgnoreCase("like")){
+			 * sb.append(" i."+pageJson.getSearchName()+" like ?1");
+			 * params.put("1", "%"+pageJson.getSearchValue()+"%");
+			 * }if(pageJson.getSearchOperator().equalsIgnoreCase("gt")){
+			 * sb.append(" i."+pageJson.getSearchName()+" > ?2");
+			 * params.put("2", pageJson.getSearchValue());
+			 * }if(pageJson.getSearchOperator().equalsIgnoreCase("ge")){
+			 * sb.append(" i."+pageJson.getSearchName()+" >= ?3");
+			 * params.put("3", pageJson.getSearchValue());
+			 * }if(pageJson.getSearchOperator().equalsIgnoreCase("lt")){
+			 * sb.append(" i."+pageJson.getSearchName()+" < ?4");
+			 * params.put("4", pageJson.getSearchValue());
+			 * }if(pageJson.getSearchOperator().equalsIgnoreCase("le")){
+			 * sb.append(" i."+pageJson.getSearchName()+" <= ?5");
+			 * params.put("5", pageJson.getSearchValue());
+			 * }if(pageJson.getSearchOperator().equalsIgnoreCase("eq")){
+			 * sb.append(" i."+pageJson.getSearchName()+" = ?6");
+			 * params.put("6", pageJson.getSearchValue()); } }
+			 */
 			Util.doSearchAction(pageJson, sb, params);
 			sb.append(" order by coalesce(i.updatedOn,i.createdOn) DESC ");
-			
+
 			List<?> categories = itemDao.findByQuery(sb.toString(), params, pageJson.getPageFrom(), pageJson.getPageTo());
 			if (categories != null && categories.size() > 0) {
 				List<Long> itemIds = new ArrayList<Long>();
@@ -385,9 +386,9 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	public Long findNoOfItems(PageJson pageJson) {
-		Long noOfRecords =null;
+		Long noOfRecords = null;
 		try {
-			Map<String,Object> params = new HashMap<String, Object>();
+			Map<String, Object> params = new HashMap<String, Object>();
 			StringBuilder sb = new StringBuilder("select count(i) from Item i where i.isDeleted = false");
 			Util.doSearchAction(pageJson, sb, params);
 			noOfRecords = (Long) itemDao.findByQuery(sb.toString(), params);
@@ -399,7 +400,6 @@ public class ItemServiceImpl implements ItemService {
 		return noOfRecords;
 	}
 
-	
 	@SuppressWarnings("unchecked")
 	public void deleteItemById(Long id, Long userId) {
 		try {
@@ -410,7 +410,7 @@ public class ItemServiceImpl implements ItemService {
 				item.setUpdatedBy(userId);
 				item.setUpdatedOn(new Date());
 				itemDao.saveOrUpdate(item);
-				
+
 				Map<String, Object> paramMap = new HashMap<String, Object>();
 				StringBuilder sb = new StringBuilder("select cd from SubCategoryItem cd where cd.itemId = ?1");
 				paramMap.put("1", id);
@@ -421,7 +421,7 @@ public class ItemServiceImpl implements ItemService {
 						itemDao.remove(subCategoryItem);
 					}
 				}
-				
+
 				paramMap = new HashMap<String, Object>();
 				sb = new StringBuilder("select cd from ItemCroppedDimension cd where cd.itemId = ?1 order by cd.name ASC");
 				paramMap.put("1", id);
@@ -431,7 +431,7 @@ public class ItemServiceImpl implements ItemService {
 						itemDao.remove(cropp);
 					}
 				}
-				
+
 				paramMap = new HashMap<String, Object>();
 				sb = new StringBuilder("select ifv from ItemFieldValue ifv where ifv.itemId = ?1");
 				paramMap.put("1", id);
@@ -442,14 +442,59 @@ public class ItemServiceImpl implements ItemService {
 					}
 				}
 			}
-			
-			
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOG.error(e.getMessage(), e);
 		}
+	}
+
+	public Map<String, List<ItemJson>> getAllHomeProducts() {
+		Map<String, List<ItemJson>> homeProductList = null;
+		try {
+			StringBuilder sb = new StringBuilder(
+					"select s.subCategoryId,count(s.subCategoryId) from SubCategoryItem s where s.subCategory.showItemsInHomePage = true and "
+							+ " s.item.isDeleted = false group by s.subCategoryId");
+
+			List<?> items = itemDao.findByQuery(sb.toString(), null, null, null);
+
+			if (items != null && items.size() > 0) {
+				homeProductList = new TreeMap<String, List<ItemJson>>();
+				for (Object item : items) {
+					Object[] itemObj = (Object[]) item;
+					if (Util.getIntegerValueOfObj(itemObj[1]) >= 4) {
+						sb = new StringBuilder("select i.item.id,i.item.name,i.item.mrp,i.item.discount,i.item.imageSourceLocation,i.subCategory.name from "
+								+ "SubCategoryItem i where i.subCategoryId ="+Util.getIntegerValueOfObj(itemObj[0]));
+						items = itemDao.findByQuery(sb.toString(), null, 0, Constants.General.MAX_HOME_RECORDS);
+						if (items != null && items.size() > 0) {
+						
+							for (Object object : items) {
+								Object[] obj = (Object[]) object;
+								ItemJson json = new ItemJson();
+								json.setId(Util.getIntegerValueOfObj(obj[0]));
+								json.setName(Util.getStringValueOfObj(obj[1]));
+								json.setMrp(Util.getDoubleValueOfObj(obj[2]));
+								json.setDiscount(Util.getDoubleValueOfObj(obj[3]));
+								json.setImageSourceLocation(Util.getStringValueOfObj(obj[4]));
+								json.setImageSrc(Util.getStringFromLocation(json.getImageSourceLocation()));
+								json.setSubcategory(Util.getStringValueOfObj(obj[5]));
+								if (homeProductList.get(json.getSubcategory()) != null) {
+									homeProductList.get(json.getSubcategory()).add(json);
+								} else {
+									List<ItemJson> jsonList = new ArrayList<ItemJson>();
+									jsonList.add(json);
+									homeProductList.put(json.getSubcategory(), jsonList);
+								}
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+		return homeProductList;
 	}
 
 }

@@ -22,6 +22,12 @@
 <link rel="stylesheet"
 	href="webjars/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" href="resource/css/app.css" />
+
+<link rel="stylesheet" href="resource/css/bs.css" />
+<link rel="stylesheet" href="resource/css/corousel.css" />
+
+<!-- <link rel="stylesheet" href="resource/css/animate.css" /> -->
+
 <link rel="stylesheet" href="resource/css/ng-grid.css" />
 <link rel="stylesheet" href="resource/css/image-crop-styles.css" />
 <link rel="stylesheet" href="resource/css/osc.css" />
@@ -47,6 +53,7 @@
 
 <script src="resource/js/app.js"></script>
 
+ <script src="resource/js/controller/HeaderController.js"></script>
  <script src="resource/js/controller/HomeController.js"></script>
 
 <!-- <script src="resource/js/controller/ItemController.js"></script>
@@ -67,7 +74,7 @@
 
 </head>
 <body style="background: white;">
-	<div ng-include src="'views/header.html'"></div>
+	<div ui-view="header"></div>
 	<div class="row" style="width: 100%">
 		<!-- <div class="col-md-2">
 			<div ui-view="leftMenu"></div>

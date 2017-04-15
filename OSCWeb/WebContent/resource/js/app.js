@@ -26,6 +26,10 @@ App.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	.state('home', {
 		url: "/home",
 			views: {
+				'header':{
+					templateUrl: 'views/header.html',
+	        		controller : "HeaderController"
+				},
 	            'content': {
 	            	templateUrl: 'views/home.html',
 	        		controller : "HomeController"

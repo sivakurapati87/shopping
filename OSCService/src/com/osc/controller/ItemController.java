@@ -1,6 +1,7 @@
 package com.osc.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,25 +31,24 @@ public class ItemController {
 	@RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
 	public ResponseEntity<?> saveOrUpdate(@RequestBody ItemJson itemJson, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
-		try {
-			itemJson.setCreatedBy(Util.getLoginUserId(request));
-			itemJson.setUpdatedBy(Util.getLoginUserId(request));
-			itemService.saveOrUpdate(itemJson);
-		} catch (Exception e) {
-			e.printStackTrace();
-			LOG.error(e.getMessage(), e);
-			return new ResponseEntity<Object>(HttpStatus.EXPECTATION_FAILED);
-		}
-		return new ResponseEntity<Object>(HttpStatus.OK);
+			try {
+				itemJson.setCreatedBy(Util.getLoginUserId(request));
+				itemJson.setUpdatedBy(Util.getLoginUserId(request));
+				itemService.saveOrUpdate(itemJson);
+			} catch (Exception e) {
+				e.printStackTrace();
+				LOG.error(e.getMessage(), e);
+				return new ResponseEntity<Object>(HttpStatus.EXPECTATION_FAILED);
+			}
+			return new ResponseEntity<Object>(HttpStatus.OK);
 		} else {
 			LOG.error("User must login");
 			return new ResponseEntity(HttpStatus.FORBIDDEN);
 		}
 	}
 
-	
-	@RequestMapping(value="getAllItems",method=RequestMethod.POST)
-	public ResponseEntity<List<ItemJson>> getAllItems(HttpServletRequest request,@RequestBody PageJson pageJson) {
+	@RequestMapping(value = "getAllItems", method = RequestMethod.POST)
+	public ResponseEntity<List<ItemJson>> getAllItems(HttpServletRequest request, @RequestBody PageJson pageJson) {
 		if (Util.getLoginUserId(request) != null) {
 			List<ItemJson> itemJsons = null;
 			try {
@@ -65,8 +65,8 @@ public class ItemController {
 		}
 	}
 
-	@RequestMapping(value="findNoOfItems",method=RequestMethod.POST)
-	public ResponseEntity<Long> findNoOfItems(HttpServletRequest request,@RequestBody PageJson pageJson) {
+	@RequestMapping(value = "findNoOfItems", method = RequestMethod.POST)
+	public ResponseEntity<Long> findNoOfItems(HttpServletRequest request, @RequestBody PageJson pageJson) {
 		if (Util.getLoginUserId(request) != null) {
 			Long noOfRecords = null;
 			try {
@@ -83,7 +83,6 @@ public class ItemController {
 		}
 	}
 
-	
 	@RequestMapping("getItemById/{id}")
 	public ResponseEntity<ItemJson> getItemById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
@@ -120,5 +119,22 @@ public class ItemController {
 		}
 	}
 
+	@RequestMapping("getAllHomeProducts")
+	public ResponseEntity<Map<String,List<ItemJson>>> getAllHomeProducts(HttpServletRequest request) {
+//		if (Util.getLoginUserId(request) != null) {
+			Map<String,List<ItemJson>> homeProductList = null;
+			try {
+				homeProductList = itemService.getAllHomeProducts();
+			} catch (Exception e) {
+				e.printStackTrace();
+				LOG.error(e.getMessage(), e);
+				return new ResponseEntity<Map<String,List<ItemJson>>>( homeProductList, HttpStatus.EXPECTATION_FAILED);
+			}
+			return new ResponseEntity<Map<String,List<ItemJson>>>( homeProductList, HttpStatus.OK);
+//		} else {
+//			LOG.error("User must login");
+//			return new ResponseEntity(HttpStatus.FORBIDDEN);
+//		}
+	}
 
 }

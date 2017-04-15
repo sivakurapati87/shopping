@@ -1,2 +1,59 @@
-<div class="container-fluid">
-Siva Kurapati </div>
+<div class="container-fluid" style="width: 100%;">
+<div class="row">
+<div class="col-md-12">
+<div class="container corouseldisplay">
+    	<div id="carousel">
+			<figure><img src="resource/images/corousel/corousel_1.jpg" alt="" class="corousel_img_heigwidth"></figure>
+			<figure><img src="resource/images/corousel/corousel_2.jpg" alt="" class="corousel_img_heigwidth"></figure>
+			<figure><img src="resource/images/corousel/corousel_3.jpg" alt="" class="corousel_img_heigwidth"></figure>
+			<figure><img src="resource/images/corousel/corousel_4.jpg" alt="" class="corousel_img_heigwidth"></figure>
+			<figure><img src="resource/images/corousel/corousel_1.jpg" alt="" class="corousel_img_heigwidth"></figure>
+			<figure><img src="resource/images/corousel/corousel_2.jpg" alt="" class="corousel_img_heigwidth"></figure>
+			<figure><img src="resource/images/corousel/corousel_3.jpg" alt="" class="corousel_img_heigwidth"></figure>
+			<figure><img src="resource/images/corousel/corousel_4.jpg" alt="" class="corousel_img_heigwidth"></figure>
+			<figure><img src="resource/images/corousel/corousel_3.jpg" alt="" class="corousel_img_heigwidth"></figure>
+		</div>
+	</div>
+	</div>
+</div>
+<br><br><br>
+	<div class="row" ng-repeat="(subcategory,itemList) in homeProductDataList">
+		<div class="col-md-12">
+		<div class="row">
+		<div class="col-md-12 div_row_bg fontSize18" >
+		<div class="row">
+		<div class="col-md-7 text_right padding-top10">
+		<label>{{subcategory}}</label>
+		</div>
+		<div class="col-md-5 text_right" >
+		<img src="resource/images/view_more.png" alt="" height="36">
+		</div>
+		</div>
+		
+		
+		</div>
+		</div>
+		<div class="row">
+			<section class="container-fluid">
+				<div class="col-md-3 mainrow" ng-repeat="itemJson in itemList">
+					<div class="mainitem">
+						<a><img ng-src="{{itemJson.imageSrc}}" class="img_ht_wt"></a>
+						<span class="itemname">{{itemJson.name}}</span>
+						<div class="itemcheckout">
+							<div class="itemprice pull-left">
+								<i class="fa fa-inr" aria-hidden="true"></i> 500/-
+							</div>
+							<div class="pm-button pull-right">
+								<a
+									href="https://www.payumoney.com/paybypayumoney/#/D429F4DDEF3A2B2A2AF08970A94FCA48"><img
+									src="https://www.payumoney.com//media/images/payby_payumoney/buttons/221.png" /></a>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+			</div>
+		</div>
+	</div>
+</div>
