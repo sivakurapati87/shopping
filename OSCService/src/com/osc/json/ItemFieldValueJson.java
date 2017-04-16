@@ -5,6 +5,7 @@ public class ItemFieldValueJson extends BaseJson {
 	private Long itemFieldNameId;
 	private String itemFieldValue;
 	private Long itemId;
+	private String itemFieldName;
 
 
 	public String getItemFieldValue() {
@@ -29,5 +30,13 @@ public class ItemFieldValueJson extends BaseJson {
 
 	public void setItemFieldNameId(Long itemFieldNameId) {
 		this.itemFieldNameId = itemFieldNameId;
+	}
+
+	public String getItemFieldName() {
+		return itemFieldName;
+	}
+
+	public void setItemFieldName(String itemFieldName) {
+		this.itemFieldName = itemFieldName;
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osc.json.ItemJson;
@@ -85,20 +86,39 @@ public class ItemController {
 
 	@RequestMapping("getItemById/{id}")
 	public ResponseEntity<ItemJson> getItemById(@PathVariable("id") Long id, HttpServletRequest request) {
-		if (Util.getLoginUserId(request) != null) {
-			ItemJson itemJson = null;
-			try {
-				itemJson = itemService.getItemById(id);
-			} catch (Exception e) {
-				e.printStackTrace();
-				LOG.error(e.getMessage(), e);
-				return new ResponseEntity<ItemJson>(itemJson, HttpStatus.EXPECTATION_FAILED);
-			}
-			return new ResponseEntity<ItemJson>(itemJson, HttpStatus.OK);
-		} else {
-			LOG.error("User must login");
-			return new ResponseEntity(HttpStatus.FORBIDDEN);
+		// if (Util.getLoginUserId(request) != null) {
+		ItemJson itemJson = null;
+		try {
+			itemJson = itemService.getItemById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<ItemJson>(itemJson, HttpStatus.EXPECTATION_FAILED);
 		}
+		return new ResponseEntity<ItemJson>(itemJson, HttpStatus.OK);
+		// } else {
+		// LOG.error("User must login");
+		// return new ResponseEntity(HttpStatus.FORBIDDEN);
+		// }
+	}
+
+	@RequestMapping("getItemsBySubCategoryId")
+	public ResponseEntity<List<ItemJson>> getItemsBySubCategoryId(@RequestParam("subCategoryId") Long subCategoryId, @RequestParam("firstResult") Integer firstResult,
+			HttpServletRequest request) {
+		// if (Util.getLoginUserId(request) != null) {
+		List<ItemJson> itemJsonList = null;
+		try {
+			itemJsonList = itemService.getItemsBySubCategoryId(subCategoryId, firstResult);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<List<ItemJson>>(itemJsonList, HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<List<ItemJson>>(itemJsonList, HttpStatus.OK);
+		// } else {
+		// LOG.error("User must login");
+		// return new ResponseEntity(HttpStatus.FORBIDDEN);
+		// }
 	}
 
 	@RequestMapping("deleteItemById/{id}")
@@ -120,21 +140,21 @@ public class ItemController {
 	}
 
 	@RequestMapping("getAllHomeProducts")
-	public ResponseEntity<Map<String,List<ItemJson>>> getAllHomeProducts(HttpServletRequest request) {
-//		if (Util.getLoginUserId(request) != null) {
-			Map<String,List<ItemJson>> homeProductList = null;
-			try {
-				homeProductList = itemService.getAllHomeProducts();
-			} catch (Exception e) {
-				e.printStackTrace();
-				LOG.error(e.getMessage(), e);
-				return new ResponseEntity<Map<String,List<ItemJson>>>( homeProductList, HttpStatus.EXPECTATION_FAILED);
-			}
-			return new ResponseEntity<Map<String,List<ItemJson>>>( homeProductList, HttpStatus.OK);
-//		} else {
-//			LOG.error("User must login");
-//			return new ResponseEntity(HttpStatus.FORBIDDEN);
-//		}
+	public ResponseEntity<Map<String, List<ItemJson>>> getAllHomeProducts(HttpServletRequest request) {
+		// if (Util.getLoginUserId(request) != null) {
+		Map<String, List<ItemJson>> homeProductList = null;
+		try {
+			homeProductList = itemService.getAllHomeProducts();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<Map<String, List<ItemJson>>>(homeProductList, HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<Map<String, List<ItemJson>>>(homeProductList, HttpStatus.OK);
+		// } else {
+		// LOG.error("User must login");
+		// return new ResponseEntity(HttpStatus.FORBIDDEN);
+		// }
 	}
 
 }

@@ -9,7 +9,7 @@ App.controller('CreateItemController', ['$scope','$http','$rootScope','$state','
 	$scope.uniqueSubCategory = null;
 	$scope.isMultipleProduct = false;
 	var itemId = null;
-	$scope.itemObj = {};
+	$scope.itemObj = {minQuantityToPurchase:1};
 	$scope.selectedPositions = [];
 	var i=1;
 

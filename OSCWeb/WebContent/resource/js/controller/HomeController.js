@@ -15,5 +15,13 @@ App.controller('HomeController', ['$scope','$http','$rootScope','$state', functi
 		}
   	}
 	
+	$scope.viewProduct = function(itemId){
+		$state.go("view_item",{id:itemId});
+	}
+	
+	$scope.viewAllItems = function(subCategoryId){
+		$state.go("view_all_items",{id:subCategoryId});
+	}
+	
 	$scope.getAllHomeProducts();
 }]);

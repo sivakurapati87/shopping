@@ -1,0 +1,79 @@
+<div class="container-fluid" style="width: 100%;">
+	<div class="row border_bottom">
+		<div class="col-md-6" style="text-align: center;">
+			<img alt="" ng-src="{{itemObj.imageSrc}}" style="width: 100%">
+
+		</div>
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-md-12 product_lbl">
+					<label> {{itemObj.name}}</label>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-3">
+					<label> Quantity</label>
+				</div>
+				<div class="col-md-9">
+					<input ng-model="customerItem.quantity" class="quantity_textbox"
+						ng-blur="onChangeItemQuantity()"> <br> <label
+						ng-if="errorMsg" class="error">Min Quantity to purchase is
+						{{itemObj.minQuantityToPurchase}}</label>
+				</div>
+			</div>
+			<br>
+			<div class="row border_bottom">
+				<div class="col-md-3">
+					<label> Each at</label>
+				</div>
+				<div class="col-md-9">
+					<span><img alt="" src="resource/images/gray-rupee-icon.png">
+						{{itemObj.mrp}}</span>
+				</div>
+				<br>
+			</div>
+			<br>
+			<div class="row border_bottom">
+				<div class="col-md-3">
+					<b> Total </b>
+				</div>
+				<div class="col-md-9">
+					<span><img alt="" src="resource/images/gray-rupee-icon.png">
+						<b>{{customerItem.total}}</b></span>
+
+				</div>
+			</div>
+			<br>
+			<div class="row border_bottom">
+				<div class="col-md-12" style="padding-left: 100px;">
+					<button type="button" ng-disabled="errorMsg"
+						class="btn btn-success addToCart">ADD TO CART</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<b>PRODUCT DESCRIPTION:</b>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<p>{{itemObj.description}}</p>
+		</div>
+	</div>
+	<br>
+	<div class="row div_row_bg padding-top10" style="width: 70%">
+		<div class="col-md-12">
+			<b>SPECIFICATIONS:</b>
+		</div>
+	</div>
+	<div class="row" ng-repeat="specification in specificationList" style="width: 70%">
+	<div class="col-md-6 border_all"> {{specification.itemFieldName}}</div>
+	<div class="col-md-6 border_all">{{specification.itemFieldValue}}</div>
+	</div>
+</div>
+
+<!-- <div scroll-trigger="test()" threshold="10">Trigger element</div> -->

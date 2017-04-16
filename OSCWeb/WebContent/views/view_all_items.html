@@ -1,0 +1,23 @@
+<div class="container-fluid" style="width: 100%;text-align: left;" align="center">
+<div class="row div_row_bg padding-top10" >
+		<div class="col-md-12">
+			<b>{{itemList[0].subcategory}} Products :</b>
+		</div>
+	</div>
+	<div class="row">
+		<section class="container-fluid">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-3 mainrow" ng-repeat="itemJson in itemList">
+						<div class="mainitem" ng-click="viewProduct(itemJson.id)">
+							<a><img ng-src="{{itemJson.imageSrc}}" class="img_ht_wt"></a>
+							<span class="itemname">{{itemJson.name}}</span> <span
+								ng-if="itemJson.discount && itemJson.discount !=0">Flat
+								{{itemJson.discount}}% Off </span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>

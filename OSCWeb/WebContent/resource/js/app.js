@@ -17,6 +17,20 @@ App.run(['$rootScope','$state','$http', function ($rootScope,$state,$http) {
     });*/
 }]);
 
+App.directive('scrollTrigger', function($window) {
+    return {
+        link : function(scope, element, attrs) {
+            var offset = parseInt(attrs.threshold) || 0;
+            var e = jQuery(element[0]);
+            var doc = jQuery(document);
+            angular.element(document).bind('scroll', function() {
+                if (doc.scrollTop() + $window.innerHeight + offset > e.offset().top) {
+                    scope.$apply(attrs.scrollTrigger);
+                }
+            });
+        }
+    };
+});
 
 App.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
 	
@@ -35,6 +49,30 @@ App.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	        		controller : "HomeController"
 	            }
 	        }
+	}).state('view_item', {
+		url: "/view_item/:id",
+		views: {
+			'header':{
+				templateUrl: 'views/header.html',
+        		controller : "HeaderController"
+			},
+            'content': {
+            	templateUrl: 'views/view_item.html',
+        		controller : "ItemController"
+            }
+        }
+	}).state('view_all_items', {
+		url: "/view_all_items/:id",
+		views: {
+			'header':{
+				templateUrl: 'views/header.html',
+        		controller : "HeaderController"
+			},
+            'content': {
+            	templateUrl: 'views/view_all_items.html',
+        		controller : "AllItemsController"
+            }
+        }
 	})
 	
 }]);

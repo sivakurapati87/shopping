@@ -50,6 +50,7 @@ public class TransformEntityToJson {
 	public static void getItemFieldValueJson(ItemFieldValue itemFieldValue, ItemFieldValueJson itemFieldValueJson) {
 		itemFieldValueJson.setItemId(itemFieldValue.getItemId());
 		itemFieldValueJson.setItemFieldNameId(itemFieldValue.getItemFieldNameId());
+		itemFieldValueJson.setItemFieldName(itemFieldValue.getItemFieldName().getFieldName());
 		itemFieldValueJson.setItemFieldValue(itemFieldValue.getItemFieldValue());
 		
 		getBaseJson(itemFieldValueJson, itemFieldValue);

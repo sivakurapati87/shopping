@@ -18,5 +18,7 @@ public interface ItemService {
 	public Map<String,List<ItemJson>> getAllHomeProducts();
 	
 	public void deleteItemById(Long id,Long userId);
+	
+	public List<ItemJson> getItemsBySubCategoryId(Long subCategoryId,Integer firstResult);
 
 }

@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-1">
-			<img alt="ads" class="logo_ht_wt" src="resource/images/OSC1.png">
+			<img alt="ads" class="logo_ht_wt" src="resource/images/OSC1.png" ui-sref="home">
 		</div>
 		<div class="col-md-8 padding_top">
 			<div class="row">
@@ -25,8 +25,56 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3"></div>
+		<div class="col-md-3">
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-9">
+
+					<div class="cartName">
+						<i class="fa fa-shopping-cart fa-2x"></i> Cart
+						<div class="cartItems" style="padding-bottom: 10px;">
+							<div class="row" style="margin: 5px 0px;"
+								ng-repeat="cartItem in rsAddedCartItemList">
+								<div class="col-md-3">
+									<img ng-src="{{cartItem.itemImageBase64}}" width="80"
+										height="80">
+								</div>
+								<div class="col-md-3">
+									<label class="lable_12">{{cartItem.itemName}}</label>
+								</div>
+								<div class="col-md-3">
+									QTY : <label class="lable_12">{{cartItem.quantity}}</label>
+								</div>
+								<div class="col-md-3">
+									Rs. <label class="lable_12">{{cartItem.subTotal}}</label>
+								</div>
+							</div>
+							<div style="width: 100%">
+								<div class="col-md-5">
+									<label class="lable16"> {{rsAddedCartItemList.length}}</label>
+									items in your cart
+								</div>
+								<div class="col-md-2">Subtotal</div>
+								<div class="col-md-5">
+									<label class="lable16">Rs.{{totalCost()}}</label>
+								</div>
+							</div>
+							<div style="width: 100%; margin: 10px 0px;">
+								<div class="col-md-12">
+									<button class="btn btn-success width80" ng-click="checkout()">
+										PROCEED TO CHECKOUT &nbsp; <i class="fa fa-play"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
 	</div>
+
+
 	<div class="row">
 		<div class="col-md-12">
 			<nav class="navbar navbar-default" role="navigation">

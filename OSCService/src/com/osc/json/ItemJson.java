@@ -6,6 +6,7 @@ public class ItemJson extends BaseJson {
 	private String name;
 	private String size;
 	private Long subCategoryId;
+	private Long categoryId;
 	private String subcategory;
 	private Float quantity;
 	private Double mrp;
@@ -182,6 +183,14 @@ public class ItemJson extends BaseJson {
 
 	public void setImageSourceLocation(String imageSourceLocation) {
 		this.imageSourceLocation = imageSourceLocation;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 
 }

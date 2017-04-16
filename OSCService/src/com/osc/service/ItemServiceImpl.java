@@ -463,11 +463,12 @@ public class ItemServiceImpl implements ItemService {
 				for (Object item : items) {
 					Object[] itemObj = (Object[]) item;
 					if (Util.getIntegerValueOfObj(itemObj[1]) >= 4) {
-						sb = new StringBuilder("select i.item.id,i.item.name,i.item.mrp,i.item.discount,i.item.imageSourceLocation,i.subCategory.name from "
-								+ "SubCategoryItem i where i.subCategoryId ="+Util.getIntegerValueOfObj(itemObj[0]));
+						sb = new StringBuilder("select i.item.id,i.item.name,i.item.mrp,i.item.discount,i.item.imageSourceLocation,i.subCategory.name,"
+								+ "i.subCategory.id,i.subCategory.categoryDivision.categoryId from " + "SubCategoryItem i where i.subCategoryId ="
+								+ Util.getIntegerValueOfObj(itemObj[0]));
 						items = itemDao.findByQuery(sb.toString(), null, 0, Constants.General.MAX_HOME_RECORDS);
 						if (items != null && items.size() > 0) {
-						
+
 							for (Object object : items) {
 								Object[] obj = (Object[]) object;
 								ItemJson json = new ItemJson();
@@ -478,6 +479,8 @@ public class ItemServiceImpl implements ItemService {
 								json.setImageSourceLocation(Util.getStringValueOfObj(obj[4]));
 								json.setImageSrc(Util.getStringFromLocation(json.getImageSourceLocation()));
 								json.setSubcategory(Util.getStringValueOfObj(obj[5]));
+								json.setSubCategoryId(Util.getIntegerValueOfObj(obj[6]));
+								json.setCategoryId(Util.getIntegerValueOfObj(obj[7]));
 								if (homeProductList.get(json.getSubcategory()) != null) {
 									homeProductList.get(json.getSubcategory()).add(json);
 								} else {
@@ -497,4 +500,31 @@ public class ItemServiceImpl implements ItemService {
 		return homeProductList;
 	}
 
+	public List<ItemJson> getItemsBySubCategoryId(Long subCategoryId, Integer firstResult) {
+		List<ItemJson> itemList = null;
+		try {
+			StringBuilder sb = new StringBuilder("select i.item.id,i.item.name,i.item.mrp,i.item.discount,i.item.imageSourceLocation,i.subCategory.name"
+					+ " from " + "SubCategoryItem i where i.subCategoryId =" + subCategoryId);
+			List<?> items = itemDao.findByQuery(sb.toString(), null, firstResult, Constants.General.MAX_ITEMS_RECORDS);
+			if (items != null && items.size() > 0) {
+				itemList = new ArrayList<ItemJson>();
+				for (Object object : items) {
+					Object[] obj = (Object[]) object;
+					ItemJson json = new ItemJson();
+					json.setId(Util.getIntegerValueOfObj(obj[0]));
+					json.setName(Util.getStringValueOfObj(obj[1]));
+					json.setMrp(Util.getDoubleValueOfObj(obj[2]));
+					json.setDiscount(Util.getDoubleValueOfObj(obj[3]));
+					json.setImageSourceLocation(Util.getStringValueOfObj(obj[4]));
+					json.setImageSrc(Util.getStringFromLocation(json.getImageSourceLocation()));
+					json.setSubcategory(Util.getStringValueOfObj(obj[5]));
+					itemList.add(json);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+		return itemList;
+	}
 }
