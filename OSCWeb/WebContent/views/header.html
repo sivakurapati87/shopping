@@ -32,21 +32,21 @@
 
 					<div class="cartName">
 						<i class="fa fa-shopping-cart fa-2x"></i> Cart
-						<div class="cartItems" style="padding-bottom: 10px;">
+						<div class="cartItems" style="padding-bottom: 10px;" ng-if="rsAddedCartItemList && rsAddedCartItemList.length > 0">
 							<div class="row" style="margin: 5px 0px;"
 								ng-repeat="cartItem in rsAddedCartItemList">
 								<div class="col-md-3">
-									<img ng-src="{{cartItem.itemImageBase64}}" width="80"
+									<img ng-src="{{cartItem.imageSrc}}" width="80"
 										height="80">
 								</div>
 								<div class="col-md-3">
-									<label class="lable_12">{{cartItem.itemName}}</label>
+									<label class="lable_12">{{cartItem.name}}</label>
 								</div>
 								<div class="col-md-3">
 									QTY : <label class="lable_12">{{cartItem.quantity}}</label>
 								</div>
 								<div class="col-md-3">
-									Rs. <label class="lable_12">{{cartItem.subTotal}}</label>
+									Rs. <label class="lable_12">{{cartItem.total}}</label>
 								</div>
 							</div>
 							<div style="width: 100%">
@@ -91,11 +91,11 @@
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="dropdown"
+						<li class="dropdown category"
 							ng-repeat="(category,value) in navigationDataList"><a
 							class="dropdown-toggle cursor_pointer" data-toggle="dropdown">{{category}}<b
-								class="caret"></b></a>
-							<ul class="dropdown-menu multi-column columns-2">
+								class="caret "></b></a>
+							<ul class="dropdown-menu multi-column columns-2 subCategory">
 								<li>
 									<div class="row">
 
@@ -104,7 +104,7 @@
 											<ul class="multi-column-dropdown">
 												<li><label>{{subCategory}}</label></li>
 												<li class="divider"></li>
-												<li><a class="cursor_pointer"
+												<li><a class="cursor_pointer" ng-click="viewAllItems(itemJson.id)"
 													ng-repeat="itemJson in itemJsonList">{{itemJson.name}}</a></li>
 											</ul>
 										</div>

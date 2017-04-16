@@ -48,8 +48,8 @@
 		ng-repeat="(subcategory,itemList) in homeProductDataList">
 		<div class="col-md-12">
 			<div class="row">
-				<div class="col-md-12 div_row_bg  padding-top10"
-					style="text-align: center;">
+				<div class="col-md-12 div_row_bg  padding-top10 cursor_pointer"
+					style="text-align: center;" ng-click="viewAllItems(itemList[0].subCategoryId)">
 					<label class="fontSize18">{{subcategory}}</label>
 					<!-- 							<img src="resource/images/view_more.png" alt="" height="36"> -->
 
@@ -63,9 +63,16 @@
 							<div class="col-md-3 mainrow" ng-repeat="itemJson in itemList">
 								<div class="mainitem" ng-click="viewProduct(itemJson.id)">
 									<a><img ng-src="{{itemJson.imageSrc}}" class="img_ht_wt"></a>
-									<span class="itemname">{{itemJson.name}}</span> <span
+									<span class="itemname">{{itemJson.name}}</span>
+									<b><img alt="" src="resource/images/gray-rupee-icon.png"> {{itemJson.mrp}}</b>
+									<br><br>
+									 <span
 										ng-if="itemJson.discount && itemJson.discount !=0">Flat
 										{{itemJson.discount}}% Off </span>
+										<br><br>
+										<span>
+										<button class="btn btn-success" type="button">CUSTOMISE NOW</button>
+										</span>
 								</div>
 							</div>
 						</div>

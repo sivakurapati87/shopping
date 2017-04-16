@@ -20,6 +20,8 @@ body
 	list-style: none;
   margin: 0px;
   padding: 0px;
+  font-family: serif;
+  font-size: 14px;
 }
 .multi-column-dropdown li a {
 	display: block;
@@ -201,6 +203,11 @@ body
 	.cartItems{min-width: 10px; height:10px; background: #e8e8d0; position: absolute; right: 0px;  display: none; z-index: 150;-webkit-transition: height 2s; 
     transition: height 2s;}
 	.cartName:hover .cartItems{display: block; min-width: 360px; width: auto; height: auto; min-height:100px;}
+	
+	
+	.subCategory {display: none;}
+	.category:hover .subCategory{display: block;color: #3c003c;font-size: 16px;font-family: serif;}
+	.dropdown:hover{background: #e2efee;}
 	
 	.show1{}
 	.show2{display: none;}
@@ -408,4 +415,8 @@ body
 	border: 1px solid #f0f0f0;
 	height: 36px;
 	padding-top: 10px;
+}
+.padding-left
+{
+	padding-left: 20px;
 }
