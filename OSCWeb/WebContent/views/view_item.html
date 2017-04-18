@@ -1,10 +1,328 @@
+<script src="http://files.codepedia.info/uploads/iScripts/html2canvas.js"></script>
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		
+
+		
+		
+
+var crop_max_width = 400;
+var crop_max_height = 400;
+var jcrop_api;
+var canvas;
+var context;
+var image;
+var prefsize;
+
+var selectedId,
+	usruploadedimg,
+	selimage;
+
+
+
+
+
+function loadImage(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    canvas = null;
+    reader.onload = function(e) {
+      image = new Image();
+      image.onload = validateImage;
+      $(".underlay").show();
+      image.src = e.target.result;
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+
+
+function validateImage() {
+  if (canvas != null) {
+    image = new Image();
+    image.onload = restartJcrop;
+    image.src = canvas.toDataURL('image/png');
+
+    var mycanvas = document.getElementById("canvas");
+	selimage    = mycanvas.toDataURL("image/png");
+	$(".underlay").hide();
+
+  } else restartJcrop();
+}
+
+function restartJcrop() {
+  if (jcrop_api != null) {
+    jcrop_api.destroy();
+  }
+	
+
+	setw = sizeW;
+    seth = sizeH;
+
+
+
+  $("#views").empty();
+  $("#views").append("<canvas id=\"canvas\">");
+  canvas = $("#canvas")[0];
+  context = canvas.getContext("2d");
+  canvas.width = image.width;
+  canvas.height = image.height;
+  context.drawImage(image, 0, 0);
+  $("#canvas").Jcrop({
+    onSelect: selectcanvas,
+    onRelease: clearcanvas,
+    /*setSelect: [0,0,setw,seth],*/
+      aspectRatio: sizeW / sizeH,
+    boxWidth: crop_max_width,
+    boxHeight: crop_max_height
+  }, function() {
+    jcrop_api = this;
+  });
+  clearcanvas();
+}
+
+function clearcanvas() {
+  prefsize = {
+    x: 0,
+    y: 0,
+    w: canvas.width,
+    h: canvas.height,
+  };
+}
+
+function selectcanvas(coords) {
+  prefsize = {
+    x: Math.round(coords.x),
+    y: Math.round(coords.y),
+    w: Math.round(coords.w),
+    h: Math.round(coords.h)
+  };
+}
+
+function applyCrop() {
+		canvas.width = prefsize.w;
+  		canvas.height = prefsize.h;
+  		context.drawImage(image, prefsize.x, prefsize.y, prefsize.w, prefsize.h, 0, 0, canvas.width, canvas.height);
+  		validateImage();
+	
+}
+
+
+
+
+$("#cropbutton").click(function(e) {
+  applyCrop();
+  $("#" + usruploadedimg).attr('src', selimage);
+  
+});
+
+
+
+
+
+
+
+
+
+setTimeout(function(){  
+
+
+
+var uploadbtn = $(".userupimg");
+uploadbtn .each(function(){
+	
+	$(this).change(function(){
+		selectedId = $(this).attr("id");
+		usruploadedimg = $(this).parent(".browsmask").prev("div.usrimg").children(".uploadedImgId").attr("id");
+		sizeW = $(this).parent(".browsmask")[0].style.width.slice(0,-2);
+		sizeH = $(this).parent(".browsmask")[0].style.height.slice(0,-2);;
+		/* alert("ID: " + selectedId + " DIMEnsions: " + sizeW + " X " + sizeH); */
+		loadImage(this);
+     	$(this).parent(".browsmask").css("background", "none")
+	});
+});
+
+}, 100);
+
+
+
+
+
+
+$("#getallimages").click(function(){
+
+	var ab = $("#imageprew div").children("img").length;
+	for(i=0; i< ab; i++)
+	{
+		var imgblob = $("#uploadimg" + i).attr("src");
+		alert(imgblob);
+	}
+	/*uploadimg0*/
+});
+
+
+
+
+
+
+
+
+
+
+
+  $("#btnSave").click(function() { 
+      
+
+
+        html2canvas(document.getElementById("imageprew"), {
+    onrendered: function (canvas) {
+        var imageData = canvas.toDataURL('image/png'); 
+        $("#newimg").attr('src',imageData);
+        alert(imageData);
+ }
+});
+
+
+    });
+
+
+
+
+
+
+});
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+	
+	body
+	{
+		margin:0;
+		padding:0;
+	}
+	.orgnimg
+	{
+		z-index:1;
+	}
+	.orgnimg img {
+    max-width: 750px;
+}
+
+.usrimg
+{
+	position:absolute;
+	z-index: -5;
+}
+.browsmask
+{
+	position:absolute;
+	background: url("resource/images/userupload.png") no-repeat center;
+}
+
+.browsmask:hover
+{
+	background: url("resource/images/userupload.png") no-repeat center!important;
+}
+
+.browsmask input[type="file"]
+{
+	opacity:0;
+	width:100%;
+	height:100%;
+}
+
+
+.underlay
+{
+	margin:0;
+	padding:0;
+	position:fixed;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	width:100%;
+	height:100%;
+	z-index:9999;
+	background:rgba(0,0,0,0.7);
+	display:none;
+
+}
+.underlay #views
+{
+	margin:auto!important;
+	width:406px;
+	border:3px solid #555555!important;
+
+}
+
+.underlay #views .jcrop-holder
+{
+	margin:auto!important;
+}
+
+
+.tediv
+{
+	position:fixed;
+	right: 10;
+	top: 10;
+}
+.cropbtn
+{
+	background-color:#ff0000;
+}
+.popcont
+{
+	padding:20px;
+	background-color:#ffffff;
+	width:460px;
+	margin: 25px auto 0px auto;
+}
+</style>
+
+
+
+
+
+ <div class="underlay">
+ <div class="popcont">
+  <div id="views"></div>
+  <h4>Please select an area to crop</h4>
+  <button id="cropbutton" class="btn btn-success addToCart pull-right" type="button">Crop <i class="fa fa-crop" aria-hidden="true"></i></button>
+  <div class="clearfix"></div>
+  </div>
+  </div>
+  
+  
+  
+  
+
+
 <div class="container-fluid" style="width: 100%;">
 	<div class="row border_bottom">
-		<div class="col-md-6" style="text-align: center;">
-			<img alt="" ng-src="{{itemObj.imageSrc}}" style="width: 100%">
+		
+		<div class="col-md-8 orgnimg" id="imageprew">
+			<img alt="" ng-src="{{itemObj.imageSrc}}">
 
 		</div>
-		<div class="col-md-6">
+		
+		
+		<div class="col-md-4">
 			<div class="row">
 				<div class="col-md-12 product_lbl">
 					<label> {{itemObj.name}}</label>
@@ -50,6 +368,15 @@
 					<button type="button" ng-disabled="errorMsg"
 						class="btn btn-success addToCart" ng-click="addToCartAction()">ADD
 						TO CART</button>
+						
+						
+						<button ng-click="getallimages()" class="btn btn-success addToCart" type="button">Get Image Blob</button>
+						
+						
+						
+						
+						
+						
 
 				</div>
 			</div>
