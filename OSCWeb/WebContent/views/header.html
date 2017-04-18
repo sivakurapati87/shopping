@@ -10,13 +10,13 @@
 				<div class="col-md-8 remove_padding">
 					<div angucomplete-alt id="searchId" pause="100"
 						selected-object="selectedCategoryDivisionNameAction"
-						local-data="categoryDivisionList" search-fields="name"
+						local-data="searchDataList" search-fields="name"
 						title-field="name" minlength="2" id="categoryDivisionNameId"
 						initial-value="categoryDivisionObj" input-class="search-control "
 						match-class="highlight"></div>
 				</div>
 				<div class="col-md-3 remove_padding">
-					<button value="Search"
+					<button value="Search" ng-click="viewAllItems(subCategoryId)"
 						class=" form-control btn  btn-sm height46 lable16"
 						style="background: #13ef18;">
 						<span class="glyphicon glyphicon-search" style="font-size: 18px"></span>
