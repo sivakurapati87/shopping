@@ -84,6 +84,22 @@ body
 	font-size: 22px;
 	color:#000000;
 }
+.footer_color1{
+	background-color: #d19cbc;
+	color: #eee;
+	margin-top: 20px;
+	padding-bottom: 10px;
+}
+.footer_color2{
+	background-color: #c07aa5;
+	color: #eee;
+	padding-bottom: 10px;
+}
+.footer_color3{
+	background-color: #984778;
+	color: #eee;
+	padding-bottom: 10px;
+}
 
 .navbar-default {
     background-color: #4e253e;

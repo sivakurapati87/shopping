@@ -104,6 +104,7 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
 			}
 		});
 		if(!isItemExists){
+			$scope.getallimages();
 			$rootScope.rsAddedCartItemList.push($scope.customerItem);
 		}
 		}

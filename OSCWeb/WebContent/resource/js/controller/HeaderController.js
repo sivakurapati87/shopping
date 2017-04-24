@@ -5,6 +5,8 @@ App.controller('HeaderController', ['$scope','$http','$rootScope','$state', func
 	$rootScope.rsAddedCartItemList = [];
 	}
 	
+	$rootScope.year = (new Date()).getFullYear();
+
 	$scope.getAllCategoriesWithSubCategory = function(){
 		if(!$rootScope.navigationDataList){
   		var response = $http.get(constants.localhost_port+constants.service_context+"/SubCategoryController/allCategoriesWithSubCategory");
@@ -15,7 +17,7 @@ App.controller('HeaderController', ['$scope','$http','$rootScope','$state', func
   			$.each(data, function (i, val) {
   			  $.each(val, function(innerKey, innerValue) {
   				  for(var j=0;j<innerValue.length;j++){
-  					  var obj = innerValue[j];
+  					  var obj = angular.copy(innerValue[j]);
   					  obj.name = obj.name+' in '+ obj.categoryName;
   					$rootScope.searchDataList.push(obj);
   				  }
