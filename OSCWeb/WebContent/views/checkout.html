@@ -1,0 +1,39 @@
+<form action="https://secure.payu.in/_payment" method="post"
+					name="payuForm">
+					<input type="hidden" name="phone"
+						value="{{customerJson.phoneNumber}}" /> <input
+						type="hidden" name="service_provider" value="payu_paisa" /> <input
+						type="hidden" name="txnid"
+						value="{{customerJson.txnId}}" /> <input
+						type="hidden" name="hash"
+						value="{{customerJson.hashCodeId}}" /> <input
+						type="hidden" name="zipcode" value="" /> <input type="hidden"
+						name="curl" value="" /> <input type="hidden" name="state"
+						value="" /> <input type="hidden" name="lastname" value="" /> <input
+						type="hidden" name="address1" value="" /> <input type="hidden"
+						name="address2" value="" /> <input type="hidden" name="firstname"
+						value="{{customerJson.firstName}}" /> <input
+						type="hidden" name="furl"
+						value="http://localhost:8080/OSCWeb/" /> <input
+						type="hidden" name="productinfo" value="nothing" /> <input
+						type="hidden" name="country" value="" /> <input type="hidden"
+						name="city" value="" /> <input type="hidden" name="udf2"
+						value="{{customerJson.txnId}}" /> <input
+						type="hidden" name="amount"
+						value="{{customerJson.strTotalPurchase}}" /> <input
+						type="hidden" name="udf1" value="" /> <input type="hidden"
+						name="pg" value="" /> <input type="hidden" name="udf5" value="" />
+					<input type="hidden" name="email"
+						value="{{customerJson.emailId}}" /> <input
+						type="hidden" name="udf4" value="" /> <input type="hidden"
+						name="surl"
+						value="http://localhost:8080/OSCWeb/" />
+					<input type="hidden" name="udf3" value="" /> <input type="hidden"
+						name="key" value="4XJHz7g1" />
+						<br>
+						<input type="submit" value="Pay Now">
+						
+				
+				
+
+				</form>

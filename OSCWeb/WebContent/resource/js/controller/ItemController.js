@@ -1,6 +1,6 @@
 'use strict';
 
-App.controller('ItemController', ['$scope','$http','$rootScope','$state','$stateParams', function($scope,$http,$rootScope,$state,$stateParams) {
+App.controller('ItemController', ['$scope','$http','$rootScope','$state','$stateParams','$timeout', function($scope,$http,$rootScope,$state,$stateParams,$timeout) {
 	
 	$scope.customerItem = {};
 	
@@ -9,14 +9,15 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
 	$scope.getallimages = function()
 	{
 		var ab = $("#imageprew div").children("img").length;
-		alert(ab);
+//		alert(ab);
+		$scope.custPhotoJsonList = [];
 		for(var i=0; i< ab; i++)
 		{
 			var imgblob = $("#uploadimg" + i).attr("src");
-			alert(imgblob);
+			$scope.custPhotoJson = {itemId : $scope.customerItem.itemId,imageBlob:imgblob,isUploadedFrame:false};
+			$scope.custPhotoJsonList.push($scope.custPhotoJson);
 		}
 		
-
 		
 		
 		
@@ -24,11 +25,12 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
             onrendered: function (canvas) {
                 var imageData = canvas.toDataURL('image/png'); 
                 $("#newimg").attr('src',imageData);
-                alert(imageData);
+                
+                $scope.customerItem.divBlob = imageData;
+                $scope.customerItem.custPhotoJsonList =  $scope.custPhotoJsonList;
          }
         });
 
-        
         
 		
 
@@ -42,12 +44,14 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
 		var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/getItemById/"+$stateParams.id);
   		response.success(function(data) {
   			$scope.itemObj = data;
-  			$scope.customerItem = data;
+  			$scope.customerItem.itemId = data.id;
   			if($scope.itemObj && $scope.itemObj.discount && $scope.itemObj.discount != 0){
   				$scope.itemObj.mrp = $scope.itemObj.mrp - ($scope.itemObj.mrp * $scope.itemObj.discount) / 100;
   				$scope.itemObj.mrp = parseFloat($scope.itemObj.mrp).toFixed(2);
   				$scope.customerItem.mrp =$scope.itemObj.mrp;
+  				$scope.customerItem.name =data.name;
   				$scope.customerItem.total = $scope.itemObj.mrp;
+  				$scope.customerItem.itemFieldValueJsonList = data.itemFieldValueJsonList;
   				if($scope.itemObj.minQuantityToPurchase){
   					$scope.itemObj.mrp = parseFloat($scope.itemObj.mrp / $scope.itemObj.minQuantityToPurchase).toFixed(2);//This is for each quantity 
   				}
@@ -96,16 +100,35 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
 
 	$scope.addToCartPerformAction = function(){
 		var isItemExists = false;
+		$scope.croppedItemMsg = null;
 		if($rootScope.rsAddedCartItemList){
+			if($scope.selectedPositions && $scope.selectedPositions.length){
+				var ab = $("#imageprew div").children("img").length;
+				for(var i=0; i< ab; i++)
+				{
+					var imgblob = $("#uploadimg" + i).attr("src");
+					if(!imgblob)
+						{
+						$scope.croppedItemMsg = 'please upload the images';
+						$('#addToCartPopupId').modal('hide');
+						return;
+						
+						}
+				}
+			}
 		angular.forEach($rootScope.rsAddedCartItemList, function(obj, key) {
-			if(obj.id == $scope.customerItem.id)
+			if(obj.id == $scope.customerItem.itemId)
 			{
 				isItemExists = true;
 			}
 		});
 		if(!isItemExists){
 			$scope.getallimages();
-			$rootScope.rsAddedCartItemList.push($scope.customerItem);
+			$timeout(function() {//wait for some time to redirect to another page
+				alert(JSON.stringify($scope.customerItem.divBlob));
+				$rootScope.rsAddedCartItemList.push($scope.customerItem);	
+			 }, 400);
+	        
 		}
 		}
 		$('#addToCartPopupId').modal('hide');

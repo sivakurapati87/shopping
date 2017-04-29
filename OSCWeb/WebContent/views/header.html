@@ -29,14 +29,13 @@
 			<div class="row">
 				<div class="col-md-3"></div>
 				<div class="col-md-9">
-
 					<div class="cartName">
 						<i class="fa fa-shopping-cart fa-2x"></i> Cart
 						<div class="cartItems" style="padding-bottom: 10px;" ng-if="rsAddedCartItemList && rsAddedCartItemList.length > 0">
 							<div class="row" style="margin: 5px 0px;"
 								ng-repeat="cartItem in rsAddedCartItemList">
 								<div class="col-md-3">
-									<img ng-src="{{cartItem.imageSrc}}" width="80"
+									<img ng-src="{{cartItem.divBlob}}" width="80"
 										height="80">
 								</div>
 								<div class="col-md-3">
@@ -61,7 +60,7 @@
 							</div>
 							<div style="width: 100%; margin: 10px 0px;">
 								<div class="col-md-12">
-									<button class="btn btn-success width80" ng-click="checkout()">
+									<button class="btn btn-success width80"  ui-sref="checkout">
 										PROCEED TO CHECKOUT &nbsp; <i class="fa fa-play"></i>
 									</button>
 								</div>

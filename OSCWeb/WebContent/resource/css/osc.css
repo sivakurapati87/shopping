@@ -389,7 +389,7 @@ body
 }
 .error{
    color:#d50000;
-   font-size: 10px;
+   font-size: 14px;
  }
  
  .text_center{
@@ -435,4 +435,18 @@ body
 .padding-left
 {
 	padding-left: 20px;
+}
+
+.grid_headerBG{
+	background: #46335f;
+	color: white;
+	font-size: 14px;
+	padding-top: 8px;
+}
+
+.grid_odd{
+	background: #fcfcfc;
+}
+.grid_even{
+	background: #e1d8ec;
 }

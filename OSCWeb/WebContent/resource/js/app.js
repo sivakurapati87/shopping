@@ -73,6 +73,30 @@ App.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         		controller : "AllItemsController"
             }
         }
+	}).state('checkout', {
+		url: "/checkout",
+		views: {
+			'header':{
+				templateUrl: 'views/header.html',
+        		controller : "HeaderController"
+			},
+            'content': {
+            	templateUrl: 'views/checkout.html',
+        		controller : "CheckoutController"
+            }
+        }
+	}).state('proceedToCheckout', {
+		url: "/proceedToCheckout",
+		views: {
+			'header':{
+				templateUrl: 'views/header.html',
+        		controller : "HeaderController"
+			},
+            'content': {
+            	templateUrl: 'views/proceedToCheckout.html',
+        		controller : "ProceedToCheckoutController"
+            }
+        }
 	})
 	
 }]);
