@@ -2,6 +2,7 @@ package com.osc.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -17,6 +18,7 @@ public class Customer extends BaseEntity {
 	private String gender;
 	private Date dateOfBirth;
 	private Long pincode;
+	@Column(length=512)
 	private String address;
 	private String city;
 	private String state;

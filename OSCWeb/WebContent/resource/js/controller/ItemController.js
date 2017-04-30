@@ -57,7 +57,7 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
   				}
   					
   				
-  				
+  				$scope.customerItem.minQuantityToPurchase  = $scope.itemObj.minQuantityToPurchase;
   				$scope.customerItem.quantity  = $scope.itemObj.minQuantityToPurchase;
   			}
   			$scope.selectedPositions = $scope.itemObj.itemCroppedDimensionJsonList;

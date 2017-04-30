@@ -3,6 +3,7 @@ package com.osc.util;
 import com.osc.entity.BaseEntity;
 import com.osc.entity.Category;
 import com.osc.entity.CategoryDivision;
+import com.osc.entity.Customer;
 import com.osc.entity.Item;
 import com.osc.entity.ItemCroppedDimension;
 import com.osc.entity.ItemFieldName;
@@ -12,6 +13,7 @@ import com.osc.entity.User;
 import com.osc.json.BaseJson;
 import com.osc.json.CategoryDivisionJson;
 import com.osc.json.CategoryJson;
+import com.osc.json.CustomerJson;
 import com.osc.json.ItemCroppedDimensionJson;
 import com.osc.json.ItemFieldNameJson;
 import com.osc.json.ItemFieldValueJson;
@@ -79,6 +81,20 @@ public class TransformEntityToJson {
 	public static void getCategoryJson(CategoryJson categoryJson, Category category) {
 		categoryJson.setName(category.getName());
 		getBaseJson(categoryJson, category);
+	}
+	
+	public static void getCustomerJson(CustomerJson customerJson,Customer customer) {
+		customerJson.setAddress(customer.getAddress());
+		customerJson.setCity(customer.getCity());
+		customerJson.setFirstName(customer.getFirstName());
+		customerJson.setLastName(customer.getLastName());
+		customerJson.setEmailId(customer.getEmailId());
+		customerJson.setGender(customer.getGender());
+		customerJson.setPincode(customer.getPincode());
+		customerJson.setState(customer.getState());
+		customerJson.setPhoneNumber(customer.getPhoneNumber());
+		customerJson.setLastName(customer.getLastName());
+		getBaseJson(customerJson, customer);
 	}
 
 	public static void getItemFieldNameJson(ItemFieldNameJson itemFieldNameJson, ItemFieldName itemFieldName) {

@@ -4,13 +4,13 @@ App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$s
 	
 	
 	
-	$scope.checkoutAction = function()
+	$scope.getHashCodeAction = function()
 	{
 		$scope.customerJson = {totalPurchase:210,firstName:'siva',emailId:'kssrao87@gmail.com',phoneNumber:9603631480};
 		
 		var response = $http.post(constants.localhost_port+constants.service_context+"/CustomerController/getHashKeyWithTransactionNumber",$scope.customerJson);
   		response.success(function(data) {
-  			alert(JSON.stringify(data));
+//  			alert(JSON.stringify(data));
   			$scope.customerJson = data;
   		});
   		response.error(function() {
@@ -19,5 +19,9 @@ App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$s
           });
 	}
 	
-	$scope.checkoutAction();
+	$scope.checkoutAction = function(){
+		$('#payuFormId').submit();		
+	}
+	
+	$scope.getHashCodeAction();
 }]);

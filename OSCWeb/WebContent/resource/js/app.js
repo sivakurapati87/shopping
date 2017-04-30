@@ -97,6 +97,18 @@ App.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         		controller : "ProceedToCheckoutController"
             }
         }
+	}).state('customerAddressInfo', {
+		url: "/customerAddressInfo",
+		views: {
+			'header':{
+				templateUrl: 'views/header.html',
+        		controller : "HeaderController"
+			},
+            'content': {
+            	templateUrl: 'views/customerAddressInfo.html',
+        		controller : "CustomerAddressInfoController"
+            }
+        }
 	})
 	
 }]);

@@ -5,6 +5,7 @@ import java.util.Date;
 import com.osc.entity.BaseEntity;
 import com.osc.entity.Category;
 import com.osc.entity.CategoryDivision;
+import com.osc.entity.Customer;
 import com.osc.entity.Item;
 import com.osc.entity.ItemCroppedDimension;
 import com.osc.entity.ItemFieldName;
@@ -14,6 +15,7 @@ import com.osc.entity.User;
 import com.osc.json.BaseJson;
 import com.osc.json.CategoryDivisionJson;
 import com.osc.json.CategoryJson;
+import com.osc.json.CustomerJson;
 import com.osc.json.ItemCroppedDimensionJson;
 import com.osc.json.ItemFieldNameJson;
 import com.osc.json.ItemFieldValueJson;
@@ -145,5 +147,17 @@ public class TransformJsonToEntity {
 			e.printStackTrace();
 		}
 	}
-
+	public static void getCustomer(Customer customer,CustomerJson customerJson) {
+		customer.setAddress(customerJson.getAddress());
+		customer.setCity(customerJson.getCity());
+		customer.setFirstName(customerJson.getFirstName());
+		customer.setLastName(customerJson.getLastName());
+		customer.setEmailId(customerJson.getEmailId());
+		customer.setGender(customerJson.getGender());
+		customer.setPincode(customerJson.getPincode());
+		customer.setState(customerJson.getState());
+		customer.setPhoneNumber(customerJson.getPhoneNumber());
+		customer.setLastName(customerJson.getLastName());
+		getBaseEntity(customerJson, customer);
+	}
 }

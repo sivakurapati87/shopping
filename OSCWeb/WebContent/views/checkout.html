@@ -1,5 +1,15 @@
+<div class="row">
+<div class="col-md-1"></div>
+<div class="col-md-11">
+<h2>Please place order by click on payumoney</h2>
+</div>
+</div>
+<div class="row">
+<div class="col-md-1"></div>
+<div class="col-md-11">
+
 <form action="https://secure.payu.in/_payment" method="post"
-					name="payuForm">
+					name="payuForm" id="payuFormId">
 					<input type="hidden" name="phone"
 						value="{{customerJson.phoneNumber}}" /> <input
 						type="hidden" name="service_provider" value="payu_paisa" /> <input
@@ -30,10 +40,15 @@
 						value="http://localhost:8080/OSCWeb/" />
 					<input type="hidden" name="udf3" value="" /> <input type="hidden"
 						name="key" value="4XJHz7g1" />
-						<br>
-						<input type="submit" value="Pay Now">
-						
+					<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" ng-click="checkoutAction()" title="click here to pay">
+						<img src="resource/images/payumoney.png" alt="submit">
+					</button>
 				
 				
-
-				</form>
+				
+				
+</form>
+</div>
+</div>
