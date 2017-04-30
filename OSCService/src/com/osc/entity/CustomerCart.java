@@ -1,24 +1,26 @@
-package com.osc.json;
+package com.osc.entity;
 
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-/**
- * 
- * @author siva kurapati
- *
- */
-public class CustomerCartJson extends BaseJson {
+@Entity
+@Table(name = "CustomerCart")
+public class CustomerCart extends BaseEntity {
 	private Long itemId;
 	private Double total;
 	private Float quantity;
 	private Long customerId;
-	private String divBlob;
 	private String divBlobPath;
 	private Double deliveryCharges;
 	private Double subTotal;
 	private String txnId;
-	private List<ItemWithCustomerPhtoJson> custPhotoJsonList;
+	@ManyToOne
+	@JoinColumn(name = "itemId", insertable = false, updatable = false)
+	private Item item;
 
+	
 	public Double getDeliveryCharges() {
 		return deliveryCharges;
 	}
@@ -67,20 +69,12 @@ public class CustomerCartJson extends BaseJson {
 		this.customerId = customerId;
 	}
 
-	public List<ItemWithCustomerPhtoJson> getCustPhotoJsonList() {
-		return custPhotoJsonList;
+	public Item getItem() {
+		return item;
 	}
 
-	public void setCustPhotoJsonList(List<ItemWithCustomerPhtoJson> custPhotoJsonList) {
-		this.custPhotoJsonList = custPhotoJsonList;
-	}
-
-	public String getDivBlob() {
-		return divBlob;
-	}
-
-	public void setDivBlob(String divBlob) {
-		this.divBlob = divBlob;
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 	public String getDivBlobPath() {
@@ -98,5 +92,4 @@ public class CustomerCartJson extends BaseJson {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-
 }

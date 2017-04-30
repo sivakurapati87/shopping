@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osc.json.CategoryJson;
+import com.osc.json.CustomerCartJson;
 import com.osc.json.CustomerJson;
 import com.osc.service.CustomerService;
 import com.osc.util.HashCodeGenerator;
@@ -46,12 +47,32 @@ public class CustomerController {
 
 
 	@RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
-	public ResponseEntity<?> saveOrUpdate(@RequestBody CustomerJson customerJson, HttpServletRequest request) {
+	public ResponseEntity<CustomerJson> saveOrUpdate(@RequestBody CustomerJson customerJson, HttpServletRequest request) {
 //		if (Util.getLoginUserId(request) != null) {
 		try {
 			customerJson.setCreatedBy(Util.getLoginUserId(request));
 			customerJson.setUpdatedBy(Util.getLoginUserId(request));
 			customerService.saveOrUpdate(customerJson);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<CustomerJson>(customerJson,HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<CustomerJson>(customerJson,HttpStatus.OK);
+//		} else {
+//			LOG.error("User must login");
+//			return new ResponseEntity(HttpStatus.FORBIDDEN);
+//		}
+	}
+
+	
+	@RequestMapping(value = "/saveCustomerOrders", method = RequestMethod.POST)
+	public ResponseEntity<?> saveCustomerOrders(@RequestBody CustomerCartJson customerCartJson, HttpServletRequest request) {
+//		if (Util.getLoginUserId(request) != null) {
+		try {
+//			customerJson.setCreatedBy(Util.getLoginUserId(request));
+//			customerJson.setUpdatedBy(Util.getLoginUserId(request));
+			customerService.saveCustomerOrders(customerCartJson);
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOG.error(e.getMessage(), e);

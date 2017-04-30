@@ -8,44 +8,48 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "itemWithCustomerPhto")
 public class ItemWithCustomerPhto extends BaseEntity {
-	private Long customerId;
-	private Long itemId;
-	private Long croppedId;
+//	private Long customerId;
+//	private Long itemId;
+//	private Long croppedId;
 	private String uploadedImagePath;
 	private Boolean isUploadedFrame;
+	private Long customerCartId;
 	@ManyToOne
-	@JoinColumn(name = "customerId", insertable = false, updatable = false)
-	private Customer customer;
-	@ManyToOne
-	@JoinColumn(name = "itemId", insertable = false, updatable = false)
-	private Item item;
-	@ManyToOne
-	@JoinColumn(name = "croppedId", insertable = false, updatable = false)
-	private ItemCroppedDimension itemCroppedDimension;
-
-	public Long getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(Long customerId) {
-		this.customerId = customerId;
-	}
-
-	public Long getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
-	}
-
-	public Long getCroppedId() {
-		return croppedId;
-	}
-
-	public void setCroppedId(Long croppedId) {
-		this.croppedId = croppedId;
-	}
+	@JoinColumn(name="customerCartId",insertable=false,updatable=false)
+	private CustomerCart customerCart;
+//	@ManyToOne
+//	@JoinColumn(name = "customerId", insertable = false, updatable = false)
+//	private Customer customer;
+//	@ManyToOne
+//	@JoinColumn(name = "itemId", insertable = false, updatable = false)
+//	private Item item;
+//	@ManyToOne
+//	@JoinColumn(name = "croppedId", insertable = false, updatable = false)
+//	private ItemCroppedDimension itemCroppedDimension;
+//
+//	public Long getCustomerId() {
+//		return customerId;
+//	}
+//
+//	public void setCustomerId(Long customerId) {
+//		this.customerId = customerId;
+//	}
+//
+//	public Long getItemId() {
+//		return itemId;
+//	}
+//
+//	public void setItemId(Long itemId) {
+//		this.itemId = itemId;
+//	}
+//
+//	public Long getCroppedId() {
+//		return croppedId;
+//	}
+//
+//	public void setCroppedId(Long croppedId) {
+//		this.croppedId = croppedId;
+//	}
 
 	public String getUploadedImagePath() {
 		return uploadedImagePath;
@@ -63,28 +67,44 @@ public class ItemWithCustomerPhto extends BaseEntity {
 		this.isUploadedFrame = isUploadedFrame;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public CustomerCart getCustomerCart() {
+		return customerCart;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomerCart(CustomerCart customerCart) {
+		this.customerCart = customerCart;
 	}
 
-	public Item getItem() {
-		return item;
+	public Long getCustomerCartId() {
+		return customerCartId;
 	}
 
-	public void setItem(Item item) {
-		this.item = item;
+	public void setCustomerCartId(Long customerCartId) {
+		this.customerCartId = customerCartId;
 	}
 
-	public ItemCroppedDimension getItemCroppedDimension() {
-		return itemCroppedDimension;
-	}
-
-	public void setItemCroppedDimension(ItemCroppedDimension itemCroppedDimension) {
-		this.itemCroppedDimension = itemCroppedDimension;
-	}
+//	public Customer getCustomer() {
+//		return customer;
+//	}
+//
+//	public void setCustomer(Customer customer) {
+//		this.customer = customer;
+//	}
+//
+//	public Item getItem() {
+//		return item;
+//	}
+//
+//	public void setItem(Item item) {
+//		this.item = item;
+//	}
+//
+//	public ItemCroppedDimension getItemCroppedDimension() {
+//		return itemCroppedDimension;
+//	}
+//
+//	public void setItemCroppedDimension(ItemCroppedDimension itemCroppedDimension) {
+//		this.itemCroppedDimension = itemCroppedDimension;
+//	}
 
 }

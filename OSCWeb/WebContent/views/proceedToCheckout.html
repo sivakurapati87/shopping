@@ -24,7 +24,7 @@
 			</div>
 			<div class="col-md-2">{{product.name}}</div>
 			<div class="col-md-2">{{product.mrp}}</div>
-			<div class="col-md-2"><input type="text" ng-model="product.quantity" ng-blur="onChangeItemQuantity(product)">
+			<div class="col-md-2"><input type="text" style="width: 60px;text-align: right;" ng-model="product.quantity" ng-blur="onChangeItemQuantity(product)">
 			<br> <label
 						ng-if="product.errorMsg" class="error">Min Quantity to purchase is
 						{{product.minQuantityToPurchase}}</label>
@@ -33,7 +33,7 @@
 			<div class="col-md-2">Rs. {{product.total}}</div>
 			<div class="col-md-2">
 				<a class="removeCategory actionIcons" title="Remove"
-					ng-click="deleteItem(product.id)"><i class="fa fa-trash-o"
+					ng-click="deleteItem(product.itemId)"><i class="fa fa-trash-o"
 					style="font-size: 12px;"></i></a>
 			</div>
 		</div>
@@ -41,7 +41,7 @@
 	</div>
 	<div class="col-md-1"></div>
 </div>
-<div class="row">
+<div class="row" ng-if="rsAddedCartItemList.length !=0">
 	<div class="col-md-1"></div>
 	<div class="col-md-10">
 		<div class="row">
@@ -56,7 +56,7 @@
 	<div class="col-md-1"></div>
 </div>
 
-<div class="row">
+<div class="row" ng-if="rsAddedCartItemList.length !=0">
 	<div class="col-md-1"></div>
 	<div class="col-md-10">
 		<div class="row">
@@ -70,7 +70,7 @@
 	</div>
 	<div class="col-md-1"></div>
 </div>
-<div class="row">
+<div class="row" ng-if="rsAddedCartItemList.length !=0">
 	<div class="col-md-1"></div>
 	<div class="col-md-10" style="text-align: right;">
 		<button type="button" class="btn btn-success"

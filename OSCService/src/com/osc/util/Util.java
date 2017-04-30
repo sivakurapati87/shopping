@@ -22,6 +22,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
@@ -260,11 +261,11 @@ public class Util {
 		}
 		return strValue;
 	}
-	
+
 	public static Boolean getBooleanValueOfObj(Object obj) {
 		Boolean boolValue = false;
 		if (obj != null) {
-			boolValue = (Boolean)obj;
+			boolValue = (Boolean) obj;
 		}
 		return boolValue;
 	}
@@ -341,31 +342,64 @@ public class Util {
 		}
 		return longArray;
 	}
-	public static void doSearchAction(PageJson pageJson,StringBuilder sb,Map<String,Object> params){
-		if(pageJson.getSearchName() != null && pageJson.getSearchName().trim().length()>0){
-			if(pageJson.getSearchOperator().equalsIgnoreCase("like")){
-				sb.append(" and i."+pageJson.getSearchName()+" like ?1");
-				params.put("1", "%"+pageJson.getSearchValue()+"%");
-			}if(pageJson.getSearchOperator().equalsIgnoreCase("gt")){
-				sb.append(" and i."+pageJson.getSearchName()+" > ?2");
+
+	public static void doSearchAction(PageJson pageJson, StringBuilder sb, Map<String, Object> params) {
+		if (pageJson.getSearchName() != null && pageJson.getSearchName().trim().length() > 0) {
+			if (pageJson.getSearchOperator().equalsIgnoreCase("like")) {
+				sb.append(" and i." + pageJson.getSearchName() + " like ?1");
+				params.put("1", "%" + pageJson.getSearchValue() + "%");
+			}
+			if (pageJson.getSearchOperator().equalsIgnoreCase("gt")) {
+				sb.append(" and i." + pageJson.getSearchName() + " > ?2");
 				params.put("2", Double.parseDouble(pageJson.getSearchValue()));
-			}if(pageJson.getSearchOperator().equalsIgnoreCase("ge")){
-				sb.append(" and i."+pageJson.getSearchName()+" >= ?3");
+			}
+			if (pageJson.getSearchOperator().equalsIgnoreCase("ge")) {
+				sb.append(" and i." + pageJson.getSearchName() + " >= ?3");
 				params.put("3", Double.parseDouble(pageJson.getSearchValue()));
-			}if(pageJson.getSearchOperator().equalsIgnoreCase("lt")){
-				sb.append(" and i."+pageJson.getSearchName()+" < ?4");
+			}
+			if (pageJson.getSearchOperator().equalsIgnoreCase("lt")) {
+				sb.append(" and i." + pageJson.getSearchName() + " < ?4");
 				params.put("4", Double.parseDouble(pageJson.getSearchValue()));
-			}if(pageJson.getSearchOperator().equalsIgnoreCase("le")){
-				sb.append(" and i."+pageJson.getSearchName()+" <= ?5");
+			}
+			if (pageJson.getSearchOperator().equalsIgnoreCase("le")) {
+				sb.append(" and i." + pageJson.getSearchName() + " <= ?5");
 				params.put("5", Double.parseDouble(pageJson.getSearchValue()));
-			}if(pageJson.getSearchOperator().equalsIgnoreCase("eq")){
-				sb.append(" and i."+pageJson.getSearchName()+" = ?6");
+			}
+			if (pageJson.getSearchOperator().equalsIgnoreCase("eq")) {
+				sb.append(" and i." + pageJson.getSearchName() + " = ?6");
 				params.put("6", Double.parseDouble(pageJson.getSearchValue()));
 			}
-			if(pageJson.getSearchOperator().equalsIgnoreCase("equals")){
-				sb.append(" and i."+pageJson.getSearchName()+" = ?6");
+			if (pageJson.getSearchOperator().equalsIgnoreCase("equals")) {
+				sb.append(" and i." + pageJson.getSearchName() + " = ?6");
 				params.put("6", pageJson.getSearchValue());
 			}
 		}
+	}
+
+	public static String saveImage(byte[] bytes) {
+		try {
+
+			File folders = new File(Constants.General.main_image_loc);
+			if (!folders.exists()) {
+				folders.mkdirs();
+			}
+
+			String imageSourceLocation = Constants.General.main_image_loc + Util.generateRandomAlphaNumericValues() + ".txt";
+			File f = new File(imageSourceLocation);
+			if (!f.exists()) {
+				f.createNewFile();
+			} else {
+				while (f.exists()) {
+					imageSourceLocation = Constants.General.main_image_loc + Util.generateRandomAlphaNumericValues() + ".txt";
+					f = new File(imageSourceLocation);
+				}
+				f.createNewFile();
+			}
+			FileUtils.writeByteArrayToFile(new File(imageSourceLocation), bytes);
+			return imageSourceLocation;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

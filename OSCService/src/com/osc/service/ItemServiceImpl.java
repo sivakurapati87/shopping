@@ -1,6 +1,5 @@
 package com.osc.service;
 
-import java.io.File;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +41,7 @@ public class ItemServiceImpl implements ItemService {
 			Item item = null;
 			if (itemJson.getSubCategoryIds() != null) {
 
-				File folders = new File(Constants.General.main_image_loc);
+/*				File folders = new File(Constants.General.main_image_loc);
 				if (!folders.exists()) {
 					folders.mkdirs();
 				}
@@ -60,8 +58,8 @@ public class ItemServiceImpl implements ItemService {
 					f.createNewFile();
 				}
 				FileUtils.writeByteArrayToFile(new File(imageSourceLocation), itemJson.getImageSrc().getBytes());
-
-				itemJson.setImageSourceLocation(imageSourceLocation);
+*/
+				itemJson.setImageSourceLocation(Util.saveImage(itemJson.getImageSrc().getBytes()));
 
 				if (itemJson.getId() != null) {
 					item = (Item) itemDao.getById(Item.class, itemJson.getId());

@@ -1,10 +1,13 @@
 package com.osc.service;
 
+import com.osc.json.CustomerCartJson;
 import com.osc.json.CustomerJson;
 
 public interface CustomerService {
-	public void saveOrUpdate(CustomerJson customerJson);
-
+	public CustomerJson saveOrUpdate(CustomerJson customerJson);
+	
+	public void saveCustomerOrders(CustomerCartJson customerCartJson);
+	
 //	public List<CategoryJson> getAllCategories();
 	
 	public CustomerJson getCustomerInfoByEmail(String email);

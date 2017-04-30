@@ -10,8 +10,9 @@ App.controller('CustomerAddressInfoController', ['$scope','$http','$rootScope','
 		
 		var response = $http.post(constants.localhost_port+constants.service_context+"/CustomerController/getHashKeyWithTransactionNumber",$scope.rsCustomerJson);
   		response.success(function(data) {
-  			alert(JSON.stringify(data));
+//  			alert(JSON.stringify(data));
   			$scope.rsCustomerJson = data;
+
   		});
   		response.error(function() {
         	  console.error('Could not Perform well');
@@ -24,6 +25,7 @@ App.controller('CustomerAddressInfoController', ['$scope','$http','$rootScope','
 		var response = $http.post(constants.localhost_port+constants.service_context+"/CustomerController/saveOrUpdate",$rootScope.rsCustomerJson);
 		response.success(function(data) {
 			$scope.categoryObj = {};
+  			$scope.rsCustomerJson.totalPurchase = $rootScope.totalAmount;
 			$state.go("checkout");
 		});
 		response.error(function() {

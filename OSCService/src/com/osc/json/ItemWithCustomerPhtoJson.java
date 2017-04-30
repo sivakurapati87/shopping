@@ -1,6 +1,5 @@
 package com.osc.json;
 
-
 public class ItemWithCustomerPhtoJson extends BaseJson {
 	private Long customerId;
 	private Long itemId;
@@ -42,7 +41,7 @@ public class ItemWithCustomerPhtoJson extends BaseJson {
 	}
 
 	public Boolean getIsUploadedFrame() {
-		return isUploadedFrame;
+		return isUploadedFrame != null ? isUploadedFrame : false;
 	}
 
 	public void setIsUploadedFrame(Boolean isUploadedFrame) {

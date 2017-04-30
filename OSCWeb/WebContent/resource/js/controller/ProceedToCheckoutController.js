@@ -3,16 +3,16 @@
 App.controller('ProceedToCheckoutController', ['$scope','$http','$rootScope','$state','$stateParams','$timeout', function($scope,$http,$rootScope,$state,$stateParams,$timeout) {
 	
 //	customerItem = {};
-	$rootScope.shippingCharges = 75.00;
+	$rootScope.shippingCharges = constants.DELIVERY_CHARGES;
 	
 	 //find the sum of all the items
    $scope.totalCost = function(){
  	  if($rootScope.rsAddedCartItemList){
- 		  $scope.totalAmount = 0;
+ 		 $rootScope.totalAmount = 0;
  	  angular.forEach($rootScope.rsAddedCartItemList, function(obj, key) {
- 		$scope.totalAmount = parseFloat($scope.totalAmount)+parseFloat(obj.total)+parseFloat($rootScope.shippingCharges);
+ 		 $rootScope.totalAmount = parseFloat($rootScope.totalAmount)+parseFloat(obj.total)+parseFloat($rootScope.shippingCharges);
 		}); 
- 	$scope.totalAmount = Math.round($scope.totalAmount * 100) / 100;
+ 	 $rootScope.totalAmount = Math.round($rootScope.totalAmount * 100) / 100;
  	  return $scope.totalAmount;
  	  }
    };
@@ -21,12 +21,19 @@ App.controller('ProceedToCheckoutController', ['$scope','$http','$rootScope','$s
    $scope.onChangeItemQuantity = function(customerItem){
 	   customerItem.errorMsg = false;
 		if(customerItem.quantity && customerItem.minQuantityToPurchase && parseInt(customerItem.quantity) >= parseInt(customerItem.minQuantityToPurchase)){
-			customerItem.total = parseFloat(customerItem.mrp * customerItem.quantity).toFixed(2);
+			customerItem.total = parseFloat(customerItem.eachQuantityMrp * customerItem.quantity).toFixed(2);
 		}else{
 			customerItem.errorMsg = true;
 		}
 	}
 	
+   $scope.deleteItem = function(productId){
+	   for(var i=0;i<$rootScope.rsAddedCartItemList.length;i++){
+		   if(productId == $rootScope.rsAddedCartItemList[i].itemId){
+			   $rootScope.rsAddedCartItemList.splice(i,1);   
+		   }
+	   }
+   }
 
 	/*$scope.checkoutAction = function()
 	{

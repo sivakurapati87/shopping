@@ -14,8 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.osc.dao.CustomerDao;
 import com.osc.entity.Category;
 import com.osc.entity.Customer;
+import com.osc.entity.CustomerCart;
+import com.osc.entity.ItemWithCustomerPhto;
 import com.osc.json.CategoryJson;
+import com.osc.json.CustomerCartJson;
 import com.osc.json.CustomerJson;
+import com.osc.json.ItemWithCustomerPhtoJson;
 import com.osc.util.TransformEntityToJson;
 import com.osc.util.TransformJsonToEntity;
 import com.osc.util.Util;
@@ -27,21 +31,45 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerDao customerDao;
 
-	public void saveOrUpdate(CustomerJson customerJson) {
+	public CustomerJson saveOrUpdate(CustomerJson customerJson) {
 		try {
 			Customer customer = null;
 			if (customerJson.getId() != null) {
-				customer = (Customer) customerDao.getById(Category.class, customerJson.getId());
+				customer = (Customer) customerDao.getById(Customer.class, customerJson.getId());
 			} else {
 				customer = new Customer();
 			}
-			TransformJsonToEntity.getCustomer(customer,customerJson);
+			TransformJsonToEntity.getCustomer(customer, customerJson);
 			customerDao.saveOrUpdate(customer);
+			customerJson.setId(customer.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOG.error(e.getMessage(), e);
 		}
+		return customerJson;
+	}
 
+	public void saveCustomerOrders(CustomerCartJson customerCartJson) {
+		try {
+			CustomerCart customerCart = new CustomerCart();
+			customerCartJson.setDivBlobPath(Util.saveImage(customerCartJson.getDivBlob().getBytes()));
+			TransformJsonToEntity.getCustomerCart(customerCart, customerCartJson);
+			customerDao.saveOrUpdate(customerCart);
+
+			if (customerCartJson.getCustPhotoJsonList() != null) {
+				for(ItemWithCustomerPhtoJson itemWithCustomerPhtoJson:customerCartJson.getCustPhotoJsonList()){
+					ItemWithCustomerPhto itemWithCustomerPhto = new ItemWithCustomerPhto();
+					itemWithCustomerPhto.setCustomerCartId(customerCart.getId());
+					itemWithCustomerPhtoJson.setUploadedImagePath(Util.saveImage(itemWithCustomerPhtoJson.getImageBlob().getBytes()));
+					TransformJsonToEntity.getItemWithCustomerPhto(itemWithCustomerPhto, itemWithCustomerPhtoJson);
+					customerDao.saveOrUpdate(itemWithCustomerPhto);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
 	}
 
 	public List<CategoryJson> getAllCategories() {
@@ -70,14 +98,14 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustomerJson getCustomerInfoByEmail(String email) {
 		CustomerJson customerJson = null;
 		try {
-			Map<String, Object> paramMap = new HashMap<String,Object>();
+			Map<String, Object> paramMap = new HashMap<String, Object>();
 			StringBuilder sb = new StringBuilder("select c from Customer c where c.isDeleted = false and c.emailId like ?1");
-			paramMap.put("1", email+"%");
+			paramMap.put("1", email + "%");
 			Customer customer = (Customer) customerDao.findByQuery(sb.toString(), paramMap);
 
 			if (customer != null) {
 				customerJson = new CustomerJson();
-				TransformEntityToJson.getCustomerJson(customerJson,customer);
+				TransformEntityToJson.getCustomerJson(customerJson, customer);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

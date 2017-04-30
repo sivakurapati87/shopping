@@ -6,20 +6,24 @@ import com.osc.entity.BaseEntity;
 import com.osc.entity.Category;
 import com.osc.entity.CategoryDivision;
 import com.osc.entity.Customer;
+import com.osc.entity.CustomerCart;
 import com.osc.entity.Item;
 import com.osc.entity.ItemCroppedDimension;
 import com.osc.entity.ItemFieldName;
 import com.osc.entity.ItemFieldValue;
+import com.osc.entity.ItemWithCustomerPhto;
 import com.osc.entity.SubCategory;
 import com.osc.entity.User;
 import com.osc.json.BaseJson;
 import com.osc.json.CategoryDivisionJson;
 import com.osc.json.CategoryJson;
+import com.osc.json.CustomerCartJson;
 import com.osc.json.CustomerJson;
 import com.osc.json.ItemCroppedDimensionJson;
 import com.osc.json.ItemFieldNameJson;
 import com.osc.json.ItemFieldValueJson;
 import com.osc.json.ItemJson;
+import com.osc.json.ItemWithCustomerPhtoJson;
 import com.osc.json.SubCategoryJson;
 import com.osc.json.UserJson;
 
@@ -160,4 +164,22 @@ public class TransformJsonToEntity {
 		customer.setLastName(customerJson.getLastName());
 		getBaseEntity(customerJson, customer);
 	}
+	
+	public static void getCustomerCart(CustomerCart customerCart,CustomerCartJson customerCartJson) {
+		customerCart.setCustomerId(customerCartJson.getCustomerId());
+		customerCart.setDivBlobPath(customerCartJson.getDivBlobPath());
+		customerCart.setItemId(customerCartJson.getItemId());
+		customerCart.setQuantity(customerCartJson.getQuantity());
+		customerCart.setSubTotal(customerCartJson.getSubTotal());
+		customerCart.setDeliveryCharges(customerCartJson.getDeliveryCharges());
+		customerCart.setTotal(customerCart.getSubTotal()+customerCart.getDeliveryCharges());
+		customerCart.setTxnId(customerCartJson.getTxnId());
+		getBaseEntity(customerCartJson,customerCart);
+	}
+	public static void getItemWithCustomerPhto(ItemWithCustomerPhto itemWithCustomerPhto,ItemWithCustomerPhtoJson itemWithCustomerPhtoJson) {
+		itemWithCustomerPhto.setIsUploadedFrame(itemWithCustomerPhtoJson.getIsUploadedFrame());
+		itemWithCustomerPhto.setUploadedImagePath(itemWithCustomerPhtoJson.getUploadedImagePath());
+		getBaseEntity(itemWithCustomerPhtoJson,itemWithCustomerPhto);
+	}
+	
 }

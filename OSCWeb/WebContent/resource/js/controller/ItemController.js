@@ -46,7 +46,10 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
   			$scope.itemObj = data;
   			$scope.customerItem.itemId = data.id;
   			if($scope.itemObj && $scope.itemObj.discount && $scope.itemObj.discount != 0){
+  				var mrp = $scope.itemObj.mrp; 
   				$scope.itemObj.mrp = $scope.itemObj.mrp - ($scope.itemObj.mrp * $scope.itemObj.discount) / 100;
+  				$scope.customerItem.discountPrice =  parseFloat((mrp) - ($scope.itemObj.mrp)).toFixed(2);
+  			}
   				$scope.itemObj.mrp = parseFloat($scope.itemObj.mrp).toFixed(2);
   				$scope.customerItem.mrp =$scope.itemObj.mrp;
   				$scope.customerItem.name =data.name;
@@ -55,11 +58,12 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
   				if($scope.itemObj.minQuantityToPurchase){
   					$scope.itemObj.mrp = parseFloat($scope.itemObj.mrp / $scope.itemObj.minQuantityToPurchase).toFixed(2);//This is for each quantity 
   				}
-  					
+  				
+  				$scope.customerItem.eachQuantityMrp = $scope.itemObj.mrp;
+  				
   				
   				$scope.customerItem.minQuantityToPurchase  = $scope.itemObj.minQuantityToPurchase;
   				$scope.customerItem.quantity  = $scope.itemObj.minQuantityToPurchase;
-  			}
   			$scope.selectedPositions = $scope.itemObj.itemCroppedDimensionJsonList;
   			$scope.specificationList =$scope.itemObj.itemFieldValueJsonList;
   			/*alert(JSON.stringify($scope.selectedPositions));
@@ -117,7 +121,7 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
 				}
 			}
 		angular.forEach($rootScope.rsAddedCartItemList, function(obj, key) {
-			if(obj.id == $scope.customerItem.itemId)
+			if(obj.itemId == $scope.customerItem.itemId)
 			{
 				isItemExists = true;
 			}
@@ -125,7 +129,7 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
 		if(!isItemExists){
 			$scope.getallimages();
 			$timeout(function() {//wait for some time to redirect to another page
-				alert(JSON.stringify($scope.customerItem.divBlob));
+//				alert(JSON.stringify($scope.customerItem.divBlob));
 				$rootScope.rsAddedCartItemList.push($scope.customerItem);	
 			 }, 400);
 	        

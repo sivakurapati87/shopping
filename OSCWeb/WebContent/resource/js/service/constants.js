@@ -4,6 +4,7 @@ var constants = {
 	// contexts
 	service_context : 'OSCService',
 	records_per_page :5,
+	DELIVERY_CHARGES : 75.0,
 
 	// constants
 	SubModuleController : 'SubModuleController',
