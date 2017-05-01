@@ -4,6 +4,7 @@ public class Constants {
 	public static class General {
 		public static final String LOGIN_USER = "login_user";
 		public static final String ID = "id";
+		public static final String NULL = "null";
 		public static final Integer MAX_HOME_RECORDS= 4;
 		
 		public static final Double  DELIVERY_CHARGES = 75.0d;

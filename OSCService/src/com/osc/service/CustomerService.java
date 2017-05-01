@@ -1,5 +1,8 @@
 package com.osc.service;
 
+import java.util.Date;
+import java.util.List;
+
 import com.osc.json.CustomerCartJson;
 import com.osc.json.CustomerJson;
 
@@ -8,7 +11,9 @@ public interface CustomerService {
 	
 	public void saveCustomerOrders(CustomerCartJson customerCartJson);
 	
-//	public List<CategoryJson> getAllCategories();
+	public List<CustomerCartJson> getAllCustomerOrders(Date fromDate,Date toDate,String status);
+	
+	public void changeCartStatus(String status,Long cartId);
 	
 	public CustomerJson getCustomerInfoByEmail(String email);
 	

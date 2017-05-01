@@ -293,6 +293,18 @@ public class Util {
 		}
 		return dblValue;
 	}
+	
+	public static Float getFloatValueOfObj(Object obj) {
+		Float fltValue = 0f;
+		if (obj != null) {
+			if (obj instanceof BigInteger) {
+				fltValue = ((BigInteger) obj).floatValue();
+			} else {
+				fltValue = (Float) obj;
+			}
+		}
+		return fltValue;
+	}
 
 	public static String generateRandomAlphaNumericValues() {
 		String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -401,5 +413,20 @@ public class Util {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+
+	public static String concatenateTwoStringsWithSpace(Object str1, Object str2) {
+		String strValue = null;
+		if (str1 != null && str2 != null) {
+			strValue = str1 + " " + str2;
+		}
+		if (str1 != null && str2 == null) {
+			strValue = (String)str1;
+		}
+		if (str1 == null && str2 != null) {
+			strValue = (String)str2;
+		}
+		return strValue;
 	}
 }

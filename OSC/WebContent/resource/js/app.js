@@ -17,6 +17,10 @@ App.run(['$rootScope','$state','$http', function ($rootScope,$state,$http) {
     });
 }]);
 
+App.config(['$compileProvider', function ($compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(|blob|):/);
+}]);
+
 App.directive('validNumber', function() {
     return {
       require: '?ngModel',
@@ -192,6 +196,18 @@ App.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	        		controller : "SubCategoryController"
 	            }
 	        }
+	}).state('customer_orders', {
+		url: "/customer_orders",
+		views: {
+			'leftMenu':{
+				templateUrl: 'views/leftmenu.html',
+        		controller : "LeftMenuController"
+			},
+            'content': {
+            	templateUrl: 'views/customer_orders.html',
+        		controller : "CustomerOrdersController"
+            }
+        }
 	})
 }]);
 

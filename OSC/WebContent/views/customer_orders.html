@@ -1,0 +1,164 @@
+<div class="container-fluid" style="background: white; width: 100%;">
+	<br>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="input-group">
+				<input type="text" class="form-control" ng-model="cartObj.fromDate"
+					datepicker-popup="dd-MMM-yyyy" is-open="Opened"
+					ng-click="Opened=true" placeholder="From Date"> <span
+					class="input-group-btn">
+					<button type="button" class="btn btn-default"
+						ng-click="Opened=true;$event.stopPropagation();">
+						<i class="glyphicon glyphicon-calendar"></i>
+					</button>
+				</span>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="input-group">
+				<input type="text" class="form-control" ng-model="cartObj.toDate"
+					datepicker-popup="dd-MMM-yyyy" is-open="toOpened"
+					ng-click="toOpened=true" placeholder="From Date"> <span
+					class="input-group-btn">
+					<button type="button" class="btn btn-default"
+						ng-click="toOpened=true;$event.stopPropagation();">
+						<i class="glyphicon glyphicon-calendar"></i>
+					</button>
+				</span>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<select ng-model="cartObj.status" style="width: 110px">
+				<option value="none">--None--</option>
+				<option value="InProgress">InProgress</option>
+				<option value="Delivered">Delivered</option>
+			</select>
+		</div>
+		<div class="col-md-4">
+			<button class="btn btn-success" type="button">Search</button>
+		</div>
+	</div>
+	<br>
+	<div class="row grid_headerBG">
+		<div class="col-md-2">Customer Selected Image</div>
+		<div class="col-md-2">Customer Info</div>
+		<div class="col-md-1">Item Name</div>
+		<div class="col-md-1">Quantity</div>
+		<div class="col-md-1">Total</div>
+		<div class="col-md-2">Txn Id</div>
+		<div class="col-md-1">Delivery Charges</div>
+		<div class="col-md-1">Status</div>
+		<div class="col-md-1">Cust Images</div>
+	</div>
+	<div class="row" ng-repeat="order in ordersList" style="padding: 1px"
+		ng-class-odd="'grid_odd'" ng-class-even="'grid_even'">
+		<div class="col-md-2">
+			<img ng-src="{{order.divBlob}}" style="width: 100px; height: 100px;">
+		</div>
+		<div class="col-md-2">
+			<label>{{order.fullName}}</label><br> <label>{{order.emailId}}</label><br>
+			<label>{{order.phoneNumber}}</label><br> <label>{{order.address}}</label><br>
+			<label>{{order.city}}</label><br> <label>{{order.pincode}}</label><br>
+			<label>{{order.state}}</label><br>
+		</div>
+		<div class="col-md-1">
+			<label>{{order.itemName}}</label>
+		</div>
+		<div class="col-md-1">
+			<label>{{order.quantity}}</label>
+		</div>
+		<div class="col-md-1">
+			<label>{{order.total}}</label>
+		</div>
+		<div class="col-md-2">
+			<label>{{order.txnId}}</label>
+		</div>
+		<div class="col-md-1">
+			<label>{{order.deliveryCharges}}</label>
+		</div>
+		<div class="col-md-1">
+			<a title="Change Status" ng-click="changeStatus(order)">{{order.status?order.status:'none'}}</a>
+		</div>
+		<div class="col-md-1">
+			<div class="row" ng-repeat="custImages in order.custPhotoJsonList">
+				<div class="col-md-12">
+					<a ng-click="addToCartAction(custImages.imageBlob)">View</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<!-- Trigger the modal with a button -->
+		<button type="button" id="addToCartPopup" class="btn btn-info btn-lg"
+			style="display: none;" data-toggle="modal"
+			data-target="#addToCartPopupId">Open Modal</button>
+
+		<!-- Modal -->
+		<div class="modal fade" id="addToCartPopupId" role="dialog">
+			<div class="modal-dialog" align="center">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12">
+								<img ng-src="{{customerImage}}"
+									style="width: 100%; height: 100% px;">
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-12">
+								<button type="button" class="btn btn-success"
+									ng-click="closeDialog()">Close</button>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<!-- Trigger the modal with a button -->
+		<button type="button" id="changeStatusPopup"
+			class="btn btn-info btn-lg" style="display: none;"
+			data-toggle="modal" data-target="#changeStatusPopupId">Open
+			Modal</button>
+
+		<!-- Modal -->
+		<div class="modal fade" id="changeStatusPopupId" role="dialog">
+			<div class="modal-dialog" align="center">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12">
+								<select ng-model="status" style="width: 180px">
+									<option value="none">--None--</option>
+									<option value="InProgress">InProgress</option>
+									<option value="Delivered">Delivered</option>
+								</select>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-12">
+							<button type="button" class="btn btn-success"
+									ng-click="changeStatusAction()">Ok</button>
+								<button type="button" class="btn btn-warning"
+									ng-click="closeStatusDialog()">Close</button>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>

@@ -7,6 +7,7 @@ public class ItemWithCustomerPhtoJson extends BaseJson {
 	private String uploadedImagePath;
 	private Boolean isUploadedFrame;
 	private String imageBlob;
+	private Long customerCartId;
 
 	public Long getCustomerId() {
 		return customerId;
@@ -54,5 +55,13 @@ public class ItemWithCustomerPhtoJson extends BaseJson {
 
 	public void setImageBlob(String imageBlob) {
 		this.imageBlob = imageBlob;
+	}
+
+	public Long getCustomerCartId() {
+		return customerCartId;
+	}
+
+	public void setCustomerCartId(Long customerCartId) {
+		this.customerCartId = customerCartId;
 	}
 }

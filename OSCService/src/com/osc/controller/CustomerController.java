@@ -1,5 +1,7 @@
 package com.osc.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.osc.json.CategoryJson;
@@ -84,6 +87,46 @@ public class CustomerController {
 //			return new ResponseEntity(HttpStatus.FORBIDDEN);
 //		}
 	}
+
+	@RequestMapping(value = "/getAllCustomerOrders", method = RequestMethod.GET)
+	public ResponseEntity<List<CustomerCartJson>> getAllCustomerOrders(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,
+			@RequestParam("status")String status, HttpServletRequest request) {
+		if (Util.getLoginUserId(request) != null) {
+			List<CustomerCartJson> list = null;
+		try {
+			list = customerService.getAllCustomerOrders(Util.convertDiffferentFormatString(fromDate), Util.convertDiffferentFormatString(toDate), status);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<List<CustomerCartJson>>(list,HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<List<CustomerCartJson>>(list,HttpStatus.OK);
+		} else {
+			LOG.error("User must login");
+			return new ResponseEntity(HttpStatus.FORBIDDEN);
+		}
+	}
+	
+
+	@RequestMapping(value = "/changeCartStatus", method = RequestMethod.GET)
+	public ResponseEntity<?> changeCartStatus(@RequestParam("cartId")Long cartId,
+			@RequestParam("status")String status, HttpServletRequest request) {
+		if (Util.getLoginUserId(request) != null) {
+		try {
+			customerService.changeCartStatus(status, cartId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<Object>(HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<Object>(HttpStatus.OK);
+		} else {
+			LOG.error("User must login");
+			return new ResponseEntity(HttpStatus.FORBIDDEN);
+		}
+	}
+	
+	
 
 	
 	@RequestMapping(value="getCustomerInfoByEmail",method=RequestMethod.POST)
