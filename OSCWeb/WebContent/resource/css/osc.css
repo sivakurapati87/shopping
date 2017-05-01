@@ -450,3 +450,24 @@ body
 .grid_even{
 	background: #e1d8ec;
 }
+
+#loadMore {
+    padding: 10px;
+    width:200px;
+    text-align: center;
+    background-color: #33739E;
+    color: #fff;
+    border-width: 0 1px 1px 0;
+    border-style: solid;
+    border-color: #fff;
+    box-shadow: 0 1px 1px #ccc;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
+}
+#loadMore:hover {
+    background-color: #fff;
+    text-decoration:none;
+    color: #33739E;
+}

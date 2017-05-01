@@ -171,6 +171,7 @@ public class TransformJsonToEntity {
 		customerCart.setItemId(customerCartJson.getItemId());
 		customerCart.setQuantity(customerCartJson.getQuantity());
 		customerCart.setSubTotal(customerCartJson.getSubTotal());
+		customerCart.setProvidedNames(customerCartJson.getProvidedNames());
 		customerCart.setDeliveryCharges(customerCartJson.getDeliveryCharges());
 		customerCart.setTotal(customerCart.getSubTotal()+customerCart.getDeliveryCharges());
 		customerCart.setTxnId(customerCartJson.getTxnId());

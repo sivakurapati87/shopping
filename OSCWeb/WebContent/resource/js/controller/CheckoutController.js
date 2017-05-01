@@ -24,6 +24,7 @@ App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$s
 		for(var i=0;i<$rootScope.rsAddedCartItemList.length;i++){
 			$scope.obj = {itemId:$rootScope.rsAddedCartItemList[i].itemId,subTotal:$rootScope.rsAddedCartItemList[i].total,quantity:$rootScope.rsAddedCartItemList[i].quantity,
 					deliveryCharges:constants.DELIVERY_CHARGES,
+					providedNames:$rootScope.rsAddedCartItemList[i].providedNames,
 					customerId: $rootScope.rsCustomerJson.id,divBlob:$rootScope.rsAddedCartItemList[i].divBlob,
 					custPhotoJsonList:$rootScope.rsAddedCartItemList[i].custPhotoJsonList,txnId:$scope.customerJson.txnId};
 		}	

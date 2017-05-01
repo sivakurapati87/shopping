@@ -37,18 +37,20 @@ App.controller('CustomerAddressInfoController', ['$scope','$http','$rootScope','
 	
 	$scope.onChangeEmail = function(){
 //		alert($rootScope.rsCustomerJson.emailId);
+		if($rootScope.rsCustomerJson.emailId && $rootScope.rsCustomerJson.emailId.length!=0){
 		var obj = {email:$rootScope.rsCustomerJson.emailId};
 		var response = $http.post(constants.localhost_port+constants.service_context+"/CustomerController/getCustomerInfoByEmail",obj);
   		response.success(function(data) {
-  			alert(JSON.stringify(data));
+//  			alert(JSON.stringify(data));
   			if(data){
   			$rootScope.rsCustomerJson = data;
-  			alert(JSON.stringify($rootScope.rsCustomerJson));
+//  			alert(JSON.stringify($rootScope.rsCustomerJson));
   			}
   		});
   		response.error(function() {
         	  console.error('Could not Perform well');
 //        	  $state.go("login");
           });
+		}
 	}
 }]);

@@ -17,6 +17,7 @@ public class CustomerCartJson extends BaseJson {
 	private Double deliveryCharges;
 	private Double subTotal;
 	private String txnId;
+	private String providedNames;
 	private List<ItemWithCustomerPhtoJson> custPhotoJsonList;
 
 	public Double getDeliveryCharges() {
@@ -97,6 +98,14 @@ public class CustomerCartJson extends BaseJson {
 
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
+	}
+
+	public String getProvidedNames() {
+		return providedNames;
+	}
+
+	public void setProvidedNames(String providedNames) {
+		this.providedNames = providedNames;
 	}
 
 }

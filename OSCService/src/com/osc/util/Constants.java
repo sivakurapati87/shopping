@@ -8,7 +8,7 @@ public class Constants {
 		
 		public static final Double  DELIVERY_CHARGES = 75.0d;
 		
-		public static final Integer MAX_ITEMS_RECORDS = 20;
+		public static final Integer MAX_ITEMS_RECORDS = 12;
 		public static final String ALGO = "AES";
 		public static final byte[] KEYVALUE = new byte[] { 'T', 'h', 'e', 'B', 'e', 's', 't', 'S', 'e', 'c', 'r', 'e', 't', 'K', 'e', 'y' };
 		

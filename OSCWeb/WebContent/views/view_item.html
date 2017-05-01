@@ -362,6 +362,16 @@ $("#getallimages").click(function(){
 
 				</div>
 			</div>
+						<br>
+			<div class="row border_bottom" ng-if="itemObj.isNameFieldExists">
+				<div class="col-md-3">
+					<b> Name on Image </b>
+				</div>
+				<div class="col-md-9">
+					<span><input type="text" ng-model="customerItem.providedNames" style="width: 260px;height:36px;"> </span>
+
+				</div>
+			</div>
 			<br>
 			<div class="row border_bottom">
 				<div class="col-md-12" style="padding-left: 100px;">

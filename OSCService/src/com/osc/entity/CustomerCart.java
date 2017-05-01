@@ -16,6 +16,7 @@ public class CustomerCart extends BaseEntity {
 	private Double deliveryCharges;
 	private Double subTotal;
 	private String txnId;
+	private String providedNames;
 	@ManyToOne
 	@JoinColumn(name = "itemId", insertable = false, updatable = false)
 	private Item item;
@@ -91,5 +92,13 @@ public class CustomerCart extends BaseEntity {
 
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
+	}
+
+	public String getProvidedNames() {
+		return providedNames;
+	}
+
+	public void setProvidedNames(String providedNames) {
+		this.providedNames = providedNames;
 	}
 }

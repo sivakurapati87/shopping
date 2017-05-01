@@ -121,6 +121,24 @@ public class ItemController {
 		// }
 	}
 
+	@RequestMapping("getNoOfProductsBySubCategory")
+	public ResponseEntity<Long> getNoOfProductsBySubCategory(@RequestParam("subCategoryId") Long subCategoryId, HttpServletRequest request) {
+		// if (Util.getLoginUserId(request) != null) {
+		Long noOfRecords = null;
+		try {
+			noOfRecords = itemService.getNoOfProductsBySubCategory(subCategoryId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<Long>(noOfRecords, HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<Long>(noOfRecords, HttpStatus.OK);
+		// } else {
+		// LOG.error("User must login");
+		// return new ResponseEntity(HttpStatus.FORBIDDEN);
+		// }
+	}
+
 	@RequestMapping("deleteItemById/{id}")
 	public ResponseEntity<ItemJson> deleteItemById(@PathVariable("id") Long id, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {

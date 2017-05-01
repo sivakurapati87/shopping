@@ -36,7 +36,9 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
 
 	}
 	
-
+	if(!$rootScope.generatedId){
+		$rootScope.generatedId = 1;
+	}
 	
 	
 	$scope.getItemInfo = function(){
@@ -52,6 +54,7 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
   			}
   				$scope.itemObj.mrp = parseFloat($scope.itemObj.mrp).toFixed(2);
   				$scope.customerItem.mrp =$scope.itemObj.mrp;
+  				$scope.customerItem.id = ($rootScope.generatedId)+1;
   				$scope.customerItem.name =data.name;
   				$scope.customerItem.total = $scope.itemObj.mrp;
   				$scope.customerItem.itemFieldValueJsonList = data.itemFieldValueJsonList;
@@ -121,7 +124,7 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
 				}
 			}
 		angular.forEach($rootScope.rsAddedCartItemList, function(obj, key) {
-			if(obj.itemId == $scope.customerItem.itemId)
+			if(obj.id == $scope.customerItem.id)
 			{
 				isItemExists = true;
 			}

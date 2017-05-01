@@ -398,6 +398,21 @@ public class ItemServiceImpl implements ItemService {
 		return noOfRecords;
 	}
 
+	public Long getNoOfProductsBySubCategory(Long subCategoryId) {
+		Long noOfRecords = null;
+		try {
+			StringBuilder sb = new StringBuilder("select count(i) from SubCategoryItem i where i.subCategoryId =" + subCategoryId);
+//			Util.doSearchAction(pageJson, sb, params);
+			noOfRecords = (Long) itemDao.findByQuery(sb.toString(), null);
+			return noOfRecords;
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+		return noOfRecords;
+	}
+
+	
 	@SuppressWarnings("unchecked")
 	public void deleteItemById(Long id, Long userId) {
 		try {

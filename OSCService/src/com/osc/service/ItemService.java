@@ -20,5 +20,7 @@ public interface ItemService {
 	public void deleteItemById(Long id,Long userId);
 	
 	public List<ItemJson> getItemsBySubCategoryId(Long subCategoryId,Integer firstResult);
+	
+	public Long getNoOfProductsBySubCategory(Long subCategoryId);
 
 }

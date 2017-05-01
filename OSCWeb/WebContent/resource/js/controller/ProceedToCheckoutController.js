@@ -29,7 +29,7 @@ App.controller('ProceedToCheckoutController', ['$scope','$http','$rootScope','$s
 	
    $scope.deleteItem = function(productId){
 	   for(var i=0;i<$rootScope.rsAddedCartItemList.length;i++){
-		   if(productId == $rootScope.rsAddedCartItemList[i].itemId){
+		   if(productId == $rootScope.rsAddedCartItemList[i].id){
 			   $rootScope.rsAddedCartItemList.splice(i,1);   
 		   }
 	   }
