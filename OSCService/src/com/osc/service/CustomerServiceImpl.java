@@ -107,6 +107,7 @@ public class CustomerServiceImpl implements CustomerService {
 				sb.append(" and c.status = ?3");
 				params.put("3", status);
 			}
+			sb.append(" order by c.createdOn DESC");
 			List<?> customerCartList = customerDao.findByQuery(sb.toString(), params, null, null);
 			if (customerCartList != null && customerCartList.size() > 0) {
 				customerCartJsonList = new ArrayList<CustomerCartJson>();

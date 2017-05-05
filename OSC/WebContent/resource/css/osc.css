@@ -1,28 +1,24 @@
 input[type='text']{
 	width: 260px;
 	height:36px;
-	background: #eef3ec;
 	font-family:  Tahoma, Geneva, sans-serif;
 	font-size: 14px !important;
 }
 input[type='email']{
 	width: 260px;
 	height:36px;
-	background: #eef3ec;
 	 font-family:  Tahoma, Geneva, sans-serif; 
 	font-size: 14px !important;
 }
 input[type='password']{
 	width: 260px;
 	height:36px;
-	background: #eef3ec;
 	 font-family:  Tahoma, Geneva, sans-serif; 
 	font-size: 14px !important;
 }
 select{
 	width: 260px;
 	height:36px;
-	background: #eef3ec;
 	 font-family:  Tahoma, Geneva, sans-serif; 
 	font-size: 16px !important;
 }
@@ -79,7 +75,7 @@ select{
 	font-weight: 100 !important;
 }
 .grid_headerBG{
-	background: #46335f;
+	background: #5963dd;
 	color: white;
 	font-size: 14px;
 	padding-top: 8px;
@@ -93,7 +89,6 @@ select{
 .selectBox{
 	width: 260px;
 	height:40px;
-	background: #eef3ec;
 	/* font-family:  Tahoma, Geneva, sans-serif; */
 	font-size: 14px !important;
 }
@@ -176,7 +171,7 @@ body {
 .top-nav>.open>a:hover,
 .top-nav>.open>a:focus {
     color: #fff;
-    background-color: #000;
+    background-color: #5963dd;
 }
 
 .top-nav>.open>.dropdown-menu {
@@ -222,6 +217,28 @@ ul.alert-dropdown {
 
 /* Side Navigation */
 
+.navbar-inverse .navbar-nav>li>a {
+    color: #ffffc6;
+}
+.top-nav>li>a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    line-height: 20px;
+    color: #5963dd;
+}
+.navbar-inverse {
+    background-color: #222;
+    border-color: #eae0e0;
+}
+.navbar-brand {
+    float: left;
+    height: 50px;
+    padding: 15px 15px;
+    font-size: 18px;
+    line-height: 20px;
+    color: #5963dd!important;
+}
+
 @media(min-width:768px) {
     .side-nav {
         position: fixed;
@@ -232,7 +249,7 @@ ul.alert-dropdown {
         border: none;
         border-radius: 0;
         overflow-y: auto;
-        background-color: #5f586f;
+        background-color: #5963dd;
         bottom: 0;
         overflow-x: hidden;
         padding-bottom: 40px;
@@ -367,12 +384,12 @@ ul.alert-dropdown {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    background: #684d8c;
+    background: #5963dd;
     color:white;
 }
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
     color: #fff;
-    background-color: #838a8c;
+    background-color: #9197ec;
 }
 
 
