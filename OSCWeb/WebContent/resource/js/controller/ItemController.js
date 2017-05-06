@@ -124,10 +124,10 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
 				}
 			}
 		angular.forEach($rootScope.rsAddedCartItemList, function(obj, key) {
-			if(obj.id == $scope.customerItem.id)
-			{
-				isItemExists = true;
-			}
+//			if(obj.id == $scope.customerItem.id)
+//			{
+//				isItemExists = true;
+//			}
 		});
 		if(!isItemExists){
 			$scope.getallimages();

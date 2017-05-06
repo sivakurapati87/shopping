@@ -1,9 +1,116 @@
+<div class="row ">
+	<div class="col-md-1"></div>
+	<div class="col-md-10">
+		<div class="row grid_headerBG" style="height: 36px">
+			<div class="col-md-3">Your Design</div>
+			<div class="col-md-3">Item Desc</div>
+			<div class="col-md-2">Unit Price</div>
+			<div class="col-md-2">Quantity</div>
+			<div class="col-md-2">Subtotal</div>
+		</div>
+	</div>
+	<div class="col-md-1"></div>
+</div>
+
 <div class="row">
-<div class="col-md-1"></div>
-<div class="col-md-11">
-<h2>Please place order by click on payumoney</h2>
+	<div class="col-md-1"></div>
+	<div class="col-md-10">
+		<div class="row" ng-repeat="product in rsAddedCartItemList"
+			style="padding: 1px" ng-class-odd="'grid_odd'"
+			ng-class-even="'grid_even'">
+			<div class="col-md-3">
+				<img ng-src="{{product.divBlob}}" width="160" height="160">
+			</div>
+			<div class="col-md-3">{{product.name}}</div>
+			<div class="col-md-2">{{product.mrp}}</div>
+			<div class="col-md-2">
+				<input type="text" style="width: 60px; text-align: right;"
+					ng-model="product.quantity" readonly="readonly"> <br>
+				<label ng-if="product.errorMsg" class="error">Min Quantity
+					to purchase is {{product.minQuantityToPurchase}}</label>
+
+			</div>
+			<div class="col-md-2">Rs. {{product.total}}</div>
+		</div>
+
+	</div>
+	<div class="col-md-1"></div>
 </div>
+<div class="row" ng-if="rsAddedCartItemList.length !=0">
+	<div class="col-md-1"></div>
+	<div class="col-md-10">
+		<div class="row">
+			<div class="col-md-9" style="text-align: right;">
+				<b> Shipping amount :</b>
+			</div>
+			<div class="col-md-2" style="text-align: right;">Rs.
+				{{shippingCharges}}</div>
+			<div class="col-md-3"></div>
+		</div>
+	</div>
+	<div class="col-md-1"></div>
 </div>
+<div class="row" ng-if="rsAddedCartItemList.length !=0">
+	<div class="col-md-1"></div>
+	<div class="col-md-10">
+		<div class="row">
+			<div class="col-md-9" style="text-align: right;">
+				<b> Total :</b>
+			</div>
+			<div class="col-md-2" style="text-align: right;">Rs.
+				{{totalCost()}}</div>
+			<div class="col-md-3"></div>
+		</div>
+	</div>
+	<div class="col-md-1"></div>
+</div>
+
+<br>
+<br>
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-md-10"  style="border:1px solid #fceece;">
+		<div class="row">
+			<div class="col-md-4" style="text-align: right;">
+				<label>Custer Address :</label>
+			</div>
+		<div class="col-md-8">
+			<label>{{rsCustomerJson.firstName}}
+				{{rsCustomerJson.lastName}}</label><br> <label>{{rsCustomerJson.emailId}}</label><br>
+			<label>{{rsCustomerJson.phoneNumber}}</label><br> <label>{{rsCustomerJson.address}}</label><br>
+			<label>{{rsCustomerJson.city}}</label><br> <label>{{rsCustomerJson.pincode}}</label><br>
+			<label>{{rsCustomerJson.state}}</label><br>
+		</div>
+	</div>
+	</div>
+	<div class="col-md-1"></div>
+
+</div>
+
+<br>
+<br>
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-md-10"  style="border:1px solid #fceece;">
+		<div class="row">
+			<div class="col-md-4" style="text-align: right;">
+				<label>Promo Code (If you have promocode apply here) :</label>
+			</div>
+		<div class="col-md-8">
+			 <input type="text" ng-model="promoCode"> <button type="button" class="btn btn-success" ng-click="applyPromoCode()">Apply</button>
+			<br>
+			<label ng-if="!success" class="errMsg">{{msg}}</label>
+			<label ng-if="success" class="success">{{msg}}</label>
+		</div>
+	</div>
+	</div>
+	<div class="col-md-1"></div>
+
+</div>
+
+
+
+
 <div class="row">
 <div class="col-md-1"></div>
 <div class="col-md-11">
@@ -42,9 +149,7 @@
 						name="key" value="4XJHz7g1" />
 					<br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" ng-click="checkoutAction()" title="click here to pay">
-						<img src="resource/images/payumoney.png" alt="submit">
-					</button>
+						<img src="resource/images/payumoney.png" alt="submit" ng-click="checkoutAction()" style="cursor: pointer;">
 				
 				
 				

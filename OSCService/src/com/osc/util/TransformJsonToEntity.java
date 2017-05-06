@@ -12,6 +12,7 @@ import com.osc.entity.ItemCroppedDimension;
 import com.osc.entity.ItemFieldName;
 import com.osc.entity.ItemFieldValue;
 import com.osc.entity.ItemWithCustomerPhto;
+import com.osc.entity.PromoCode;
 import com.osc.entity.SubCategory;
 import com.osc.entity.User;
 import com.osc.json.BaseJson;
@@ -24,6 +25,7 @@ import com.osc.json.ItemFieldNameJson;
 import com.osc.json.ItemFieldValueJson;
 import com.osc.json.ItemJson;
 import com.osc.json.ItemWithCustomerPhtoJson;
+import com.osc.json.PromoCodeJson;
 import com.osc.json.SubCategoryJson;
 import com.osc.json.UserJson;
 
@@ -181,6 +183,14 @@ public class TransformJsonToEntity {
 		itemWithCustomerPhto.setIsUploadedFrame(itemWithCustomerPhtoJson.getIsUploadedFrame());
 		itemWithCustomerPhto.setUploadedImagePath(itemWithCustomerPhtoJson.getUploadedImagePath());
 		getBaseEntity(itemWithCustomerPhtoJson,itemWithCustomerPhto);
+	}
+	
+	public static void getPromoCode(PromoCode promoCode,PromoCodeJson promoCodeJson) {
+		promoCode.setCode(promoCodeJson.getCode());
+		promoCode.setApplyOnAmount(promoCodeJson.getApplyOnAmount());
+		promoCode.setAmountToReduce(promoCodeJson.getAmountToReduce());
+		promoCode.setPromoImagePath(promoCodeJson.getPromoImagePath());
+		getBaseEntity(promoCodeJson,promoCode);
 	}
 	
 }

@@ -90,17 +90,36 @@ public class CustomerController {
 
 	@RequestMapping(value = "/getAllCustomerOrders", method = RequestMethod.GET)
 	public ResponseEntity<List<CustomerCartJson>> getAllCustomerOrders(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,
-			@RequestParam("status")String status, HttpServletRequest request) {
+			@RequestParam("status")String status,@RequestParam("pageFrom")Integer pageFrom,@RequestParam("pageTo") Integer pageTo, HttpServletRequest request) {
 		if (Util.getLoginUserId(request) != null) {
 			List<CustomerCartJson> list = null;
 		try {
-			list = customerService.getAllCustomerOrders(Util.convertDiffferentFormatString(fromDate), Util.convertDiffferentFormatString(toDate), status);
+			list = customerService.getAllCustomerOrders(Util.convertDiffferentFormatString(fromDate), Util.convertDiffferentFormatString(toDate), status,pageFrom,pageTo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOG.error(e.getMessage(), e);
 			return new ResponseEntity<List<CustomerCartJson>>(list,HttpStatus.EXPECTATION_FAILED);
 		}
 		return new ResponseEntity<List<CustomerCartJson>>(list,HttpStatus.OK);
+		} else {
+			LOG.error("User must login");
+			return new ResponseEntity(HttpStatus.FORBIDDEN);
+		}
+	}
+	
+	@RequestMapping(value = "findNoOfProducts", method = RequestMethod.GET)
+	public ResponseEntity<Long> findNoOfProducts(HttpServletRequest request, @RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,
+			@RequestParam("status")String status) {
+		if (Util.getLoginUserId(request) != null) {
+			Long noOfRecords = null;
+			try {
+				noOfRecords = customerService.findNoOfProducts(Util.convertDiffferentFormatString(fromDate), Util.convertDiffferentFormatString(toDate), status);
+			} catch (Exception e) {
+				e.printStackTrace();
+				LOG.error(e.getMessage(), e);
+				return new ResponseEntity<Long>(noOfRecords, HttpStatus.EXPECTATION_FAILED);
+			}
+			return new ResponseEntity<Long>(noOfRecords, HttpStatus.OK);
 		} else {
 			LOG.error("User must login");
 			return new ResponseEntity(HttpStatus.FORBIDDEN);

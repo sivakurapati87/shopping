@@ -17,5 +17,20 @@ public class Constants {
 		
 		public static final String UNIQUE_SubCategories = "unique";
 		public static final String MULTIPLE_SubCategories = "multiple";
+		
+		public static final String LESSMOUNT_ERR = "your order must be more than or equal to ";
+		public static final String INVALID_PROMOCODE_ERR = "Invalid Promo Code";
+		
+		public static final String ALREADY_APPLIED_ERR = "You are already applied to this Promo Code";
+		
+		public static final String PROMOCODE_APPLIED_SUCC = "Promo Code Applied Successfully";
+		
+		public static final String SUCCESS = "success";
+		
+		public static final String MSG = "msg";
+		
+		public static final String AMOUNT_TO_REDUCE = "amountToReduce";
+		
+		public static final String PROMOCODE_ID = "promoCodeId";
 	}
 }

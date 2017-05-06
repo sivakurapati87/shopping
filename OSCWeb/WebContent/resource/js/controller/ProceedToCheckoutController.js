@@ -10,8 +10,9 @@ App.controller('ProceedToCheckoutController', ['$scope','$http','$rootScope','$s
  	  if($rootScope.rsAddedCartItemList){
  		 $rootScope.totalAmount = 0;
  	  angular.forEach($rootScope.rsAddedCartItemList, function(obj, key) {
- 		 $rootScope.totalAmount = parseFloat($rootScope.totalAmount)+parseFloat(obj.total)+parseFloat($rootScope.shippingCharges);
-		}); 
+ 		 $rootScope.totalAmount = parseFloat($rootScope.totalAmount)+parseFloat(obj.total);
+		});
+ 	 $rootScope.totalAmount = $rootScope.totalAmount+parseFloat($rootScope.shippingCharges);
  	 $rootScope.totalAmount = Math.round($rootScope.totalAmount * 100) / 100;
  	  return $scope.totalAmount;
  	  }

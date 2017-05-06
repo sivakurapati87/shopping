@@ -28,6 +28,8 @@ public class CustomerCartJson extends BaseJson {
 	private String address;
 	private String city;
 	private String state;
+	
+	private Long promoCodeId;
 
 	private List<ItemWithCustomerPhtoJson> custPhotoJsonList;
 
@@ -189,6 +191,14 @@ public class CustomerCartJson extends BaseJson {
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
+	}
+
+	public Long getPromoCodeId() {
+		return promoCodeId;
+	}
+
+	public void setPromoCodeId(Long promoCodeId) {
+		this.promoCodeId = promoCodeId;
 	}
 
 }

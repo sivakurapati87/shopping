@@ -1,6 +1,80 @@
 <div class="container-fluid" style="background: white; width: 100%;">
 	<br>
 	<div class="row">
+		<div class="col-md-2">
+			<label style="padding-left: 78px;">{{paginationValue}}</label>
+		</div>
+		<div class="col-md-2">
+			<label>No. of Records : {{maxRecords}}</label>
+		</div>
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="input-group">
+						<input type="text" class="form-control"
+							ng-model="cartObj.fromDate" datepicker-popup="dd-MMM-yyyy"
+							is-open="Opened" ng-click="Opened=true" placeholder="From Date">
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="Opened=true;$event.stopPropagation();">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="input-group">
+						<input type="text" class="form-control" ng-model="cartObj.toDate"
+							datepicker-popup="dd-MMM-yyyy" is-open="toOpened"
+							ng-click="toOpened=true" placeholder="From Date"> <span
+							class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="toOpened=true;$event.stopPropagation();">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+
+
+					</div>
+				</div>
+				<div class="col-md-3">
+					<select ng-model="cartObj.status" style="width: 110px">
+						<option value="none">--None--</option>
+						<option value="InProgress">InProgress</option>
+						<option value="Dispatched">Dispatched</option>
+						<option value="Delivered">Delivered</option>
+					</select>
+				</div>
+				<div class="col-md-1">
+					<button class="btn btn-success" type="button"
+						ng-click="getAllCustomerOrders()">Go</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2" style="padding-top: 12px;">
+			<div class="row">
+				<div class="col-md-3 cursor_pointer" ng-click="pagination('start')"
+					title="First">
+					<i class="fa fa-fast-backward" aria-hidden="true"></i>
+				</div>
+				<div class="col-md-3 cursor_pointer" ng-click="pagination('prev')"
+					title="Previous">
+					<i class="fa fa-backward" aria-hidden="true"></i>
+				</div>
+				<div class="col-md-3 cursor_pointer" ng-click="pagination('next')"
+					title="Next">
+					<i class="fa fa-forward" aria-hidden="true"></i>
+				</div>
+				<div class="col-md-3 cursor_pointer" ng-click="pagination('last')"
+					title="Last">
+					<i class="fa fa-fast-forward" aria-hidden="true"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- <div class="row">
 		<div class="col-md-3">
 			<div class="input-group">
 				<input type="text" class="form-control" ng-model="cartObj.fromDate"
@@ -35,9 +109,10 @@
 			</select>
 		</div>
 		<div class="col-md-4">
-			<button class="btn btn-success" type="button" ng-click="getAllCustomerOrders()">Search</button>
+			<button class="btn btn-success" type="button"
+				ng-click="getAllCustomerOrders()">Search</button>
 		</div>
-	</div>
+	</div> -->
 	<br>
 	<div class="row grid_headerBG">
 		<div class="col-md-2">Customer Selected Image</div>
@@ -141,6 +216,7 @@
 								<select ng-model="status" style="width: 180px">
 									<option value="none">--None--</option>
 									<option value="InProgress">InProgress</option>
+									<option value="Dispatched">Dispatched</option>
 									<option value="Delivered">Delivered</option>
 								</select>
 							</div>
@@ -148,7 +224,7 @@
 						<br>
 						<div class="row">
 							<div class="col-md-12">
-							<button type="button" class="btn btn-success"
+								<button type="button" class="btn btn-success"
 									ng-click="changeStatusAction()">Ok</button>
 								<button type="button" class="btn btn-warning"
 									ng-click="closeStatusDialog()">Close</button>

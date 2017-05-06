@@ -6,12 +6,12 @@ App.controller('CustomerAddressInfoController', ['$scope','$http','$rootScope','
 	
 	$scope.checkoutAction = function()
 	{
-		$scope.rsCustomerJson = {totalPurchase:210,firstName:'siva',emailId:'kssrao87@gmail.com',phoneNumber:9603631480};
+		$rootScope.rsCustomerJson = {totalPurchase:210,firstName:'siva',emailId:'kssrao87@gmail.com',phoneNumber:9603631480};
 		
-		var response = $http.post(constants.localhost_port+constants.service_context+"/CustomerController/getHashKeyWithTransactionNumber",$scope.rsCustomerJson);
+		var response = $http.post(constants.localhost_port+constants.service_context+"/CustomerController/getHashKeyWithTransactionNumber",$rootScope.rsCustomerJson);
   		response.success(function(data) {
 //  			alert(JSON.stringify(data));
-  			$scope.rsCustomerJson = data;
+  			$rootScope.rsCustomerJson = data;
 
   		});
   		response.error(function() {
@@ -25,7 +25,8 @@ App.controller('CustomerAddressInfoController', ['$scope','$http','$rootScope','
 		var response = $http.post(constants.localhost_port+constants.service_context+"/CustomerController/saveOrUpdate",$rootScope.rsCustomerJson);
 		response.success(function(data) {
 			$scope.categoryObj = {};
-  			$scope.rsCustomerJson.totalPurchase = $rootScope.totalAmount;
+			$rootScope.rsCustomerJson = data;
+  			$rootScope.rsCustomerJson.totalPurchase = $rootScope.totalAmount;
 			$state.go("checkout");
 		});
 		response.error(function() {

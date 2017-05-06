@@ -8,6 +8,7 @@ import com.osc.entity.Item;
 import com.osc.entity.ItemCroppedDimension;
 import com.osc.entity.ItemFieldName;
 import com.osc.entity.ItemFieldValue;
+import com.osc.entity.PromoCode;
 import com.osc.entity.SubCategory;
 import com.osc.entity.User;
 import com.osc.json.BaseJson;
@@ -18,6 +19,7 @@ import com.osc.json.ItemCroppedDimensionJson;
 import com.osc.json.ItemFieldNameJson;
 import com.osc.json.ItemFieldValueJson;
 import com.osc.json.ItemJson;
+import com.osc.json.PromoCodeJson;
 import com.osc.json.SubCategoryJson;
 import com.osc.json.UserJson;
 
@@ -30,6 +32,15 @@ public class TransformEntityToJson {
 		userJson.setMobileNumber(user.getMobileNumber());
 		userJson.setUserName(user.getUserName());
 		getBaseJson(userJson, user);
+	}
+	
+	public static void getPromoCodeJson(PromoCode promoCode,PromoCodeJson promoCodeJson) {
+		promoCodeJson.setCode(promoCode.getCode());
+		promoCodeJson.setApplyOnAmount(promoCode.getApplyOnAmount());
+		promoCodeJson.setPromoImagePath(promoCode.getPromoImagePath());
+		promoCodeJson.setAmountToReduce(promoCode.getAmountToReduce());
+		promoCodeJson.setPromoImageBlob(Util.getStringFromLocation(promoCodeJson.getPromoImagePath()));
+		getBaseJson(promoCodeJson, promoCode);
 	}
 
 	public static void getItemJson(Item item, ItemJson itemJson) {

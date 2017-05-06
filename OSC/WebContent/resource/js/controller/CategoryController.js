@@ -62,7 +62,7 @@ App.controller('CategoryController', ['$scope','$http','$rootScope','$state', fu
 		var response = $http.get(constants.localhost_port+constants.service_context+"/CategoryController/deleteCategoryById/"+categoryId);
   		response.success(function(data) {
   			$scope.categoryObj = data;
-  			$scope.displayTable();
+  			$state.go($state.current, {}, {reload: true});
   		});
   		response.error(function() {
         	  console.error('Could not Perform well');

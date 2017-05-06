@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.osc.dao.CustomerDao;
 import com.osc.entity.Category;
 import com.osc.entity.Customer;
+import com.osc.entity.CustomerAppliedPromoCode;
 import com.osc.entity.CustomerCart;
 import com.osc.entity.ItemWithCustomerPhto;
 import com.osc.json.CustomerCartJson;
@@ -55,6 +56,14 @@ public class CustomerServiceImpl implements CustomerService {
 			customerCartJson.setDivBlobPath(Util.saveImage(customerCartJson.getDivBlob().getBytes()));
 			TransformJsonToEntity.getCustomerCart(customerCart, customerCartJson);
 			customerDao.saveOrUpdate(customerCart);
+			
+			if(customerCartJson.getPromoCodeId()!=null){
+				CustomerAppliedPromoCode customerAppliedPromoCode = new CustomerAppliedPromoCode();
+				customerAppliedPromoCode.setCreatedOn(new Date());
+				customerAppliedPromoCode.setCustomerId(customerCartJson.getCustomerId());
+				customerAppliedPromoCode.setPromoId(customerCartJson.getPromoCodeId());
+				customerDao.saveOrUpdate(customerAppliedPromoCode);
+			}
 
 			if (customerCartJson.getCustPhotoJsonList() != null) {
 				for (ItemWithCustomerPhtoJson itemWithCustomerPhtoJson : customerCartJson.getCustPhotoJsonList()) {
@@ -88,7 +97,7 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 	}
 
-	public List<CustomerCartJson> getAllCustomerOrders(Date fromDate, Date toDate, String status) {
+	public List<CustomerCartJson> getAllCustomerOrders(Date fromDate, Date toDate, String status,Integer pageFrom,Integer pageTo) {
 		List<CustomerCartJson> customerCartJsonList = null;
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
@@ -108,7 +117,7 @@ public class CustomerServiceImpl implements CustomerService {
 				params.put("3", status);
 			}
 			sb.append(" order by c.createdOn DESC");
-			List<?> customerCartList = customerDao.findByQuery(sb.toString(), params, null, null);
+			List<?> customerCartList = customerDao.findByQuery(sb.toString(), params, pageFrom, pageTo);
 			if (customerCartList != null && customerCartList.size() > 0) {
 				customerCartJsonList = new ArrayList<CustomerCartJson>();
 				List<Long> cartIds = new ArrayList<Long>();
@@ -203,5 +212,31 @@ public class CustomerServiceImpl implements CustomerService {
 			LOG.error(e.getMessage(), e);
 		}
 	}
+
+	@Override
+	public Long findNoOfProducts(Date fromDate, Date toDate, String status) {
+		Long noOfRecords = null;
+		try {
+			Map<String, Object> params = new HashMap<String, Object>();
+			StringBuilder sb = new StringBuilder("select count(c) from CustomerCart c where c.isDeleted = false");
+			if (fromDate != null) {
+				sb.append(" and c.createdOn >= ?1");
+				params.put("1", fromDate);
+			}
+			if (toDate != null) {
+				sb.append(" and c.createdOn <= ?2");
+				params.put("2", toDate);
+			}
+			if (status != null && !status.equalsIgnoreCase(Constants.General.NULL)) {
+				sb.append(" and c.status = ?3");
+				params.put("3", status);
+			}
+			noOfRecords = (Long) customerDao.findByQuery(sb.toString(), params);
+			return noOfRecords;
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+		return noOfRecords;	}
 
 }

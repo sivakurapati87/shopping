@@ -208,6 +208,18 @@ App.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
         		controller : "CustomerOrdersController"
             }
         }
+	}).state('promocode', {
+		url: "/promocode",
+		views: {
+			'leftMenu':{
+				templateUrl: 'views/leftmenu.html',
+        		controller : "LeftMenuController"
+			},
+            'content': {
+            	templateUrl: 'views/promocode.html',
+        		controller : "PromoCodeController"
+            }
+        }
 	})
 }]);
 

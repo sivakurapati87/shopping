@@ -424,6 +424,15 @@ public class ItemServiceImpl implements ItemService {
 				item.setUpdatedOn(new Date());
 				itemDao.saveOrUpdate(item);
 
+				if (item.getImageSourceLocation() != null && item.getImageSourceLocation().trim().length() > 0) {
+					try {
+						Files.delete(FileSystems.getDefault().getPath(item.getImageSourceLocation()));
+					} catch (Exception e) {
+						e.printStackTrace();
+						LOG.error(e.getMessage(), e);
+					}
+				}
+				
 				Map<String, Object> paramMap = new HashMap<String, Object>();
 				StringBuilder sb = new StringBuilder("select cd from SubCategoryItem cd where cd.itemId = ?1");
 				paramMap.put("1", id);

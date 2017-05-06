@@ -11,7 +11,9 @@ public interface CustomerService {
 	
 	public void saveCustomerOrders(CustomerCartJson customerCartJson);
 	
-	public List<CustomerCartJson> getAllCustomerOrders(Date fromDate,Date toDate,String status);
+	public List<CustomerCartJson> getAllCustomerOrders(Date fromDate,Date toDate,String status,Integer from,Integer To);
+	
+	public Long findNoOfProducts(Date fromDate,Date toDate,String status);
 	
 	public void changeCartStatus(String status,Long cartId);
 	

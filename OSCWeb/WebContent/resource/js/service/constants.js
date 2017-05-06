@@ -6,6 +6,7 @@ var constants = {
 	records_per_page :5,
 	DELIVERY_CHARGES : 75.0,
 
+	
 	// constants
 	SubModuleController : 'SubModuleController',
 	ItemController : 'ItemController',

@@ -1,0 +1,65 @@
+<div class="container-fluid" id="promocodeControllerId" style="background: white; width: 100%;">
+<form ng-submit="saveOrUpdateAction()">
+<br><br>
+		<div class="row">
+			<div class="col-md-6 lblfont16px" style="text-align: end">
+				<label>Promo Code :</label>
+			</div>
+			<div class="col-md-6">
+				<input type="text" class="form-control" required="required"
+					ng-model="promocode.code">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-6 lblfont16px" style="text-align: end">
+				<label>Min Amount To Purchase :</label>
+			</div>
+			<div class="col-md-6">
+				<input type="text" class="form-control" required="required"
+					ng-model="promocode.applyOnAmount">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-6 lblfont16px" style="text-align: end">
+				<label>Amount To Reduce :</label>
+			</div>
+			<div class="col-md-6">
+				<input type="text" class="form-control" required="required"
+					ng-model="promocode.amountToReduce">
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class="row">
+			<div class="col-md-6 lblfont16px" style="text-align: end">
+				<label>Promo Code Image :</label>
+			</div>
+			<div class="col-md-6">
+				
+    <input type='file' ng-model-instant onchange="angular.element(this).scope().imageUpload(this)" />
+			</div>
+		</div>
+		<br> <br>
+		<div class="row">
+			<div class="col-md-6">
+				<button type="submit" class="btn btn-success btnInfo align_right">SUBMIT</button>
+			</div>
+			<div class="col-md-6">
+				<button type="button" class="btn btn-warning btnInfo" ng-click="clear()">CLEAR</button>
+			</div>
+		</div>
+
+</form>
+
+<br>
+<!-- Table -->
+<div class="row">
+	<div class="col-md-12"  style="padding-left: 25px;">
+		<table id="promoCodeTableId"></table>
+
+	</div>
+</div>
+<!-- End Table -->
+</div>
