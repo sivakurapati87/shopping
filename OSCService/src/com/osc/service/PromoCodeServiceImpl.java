@@ -59,7 +59,7 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 		List<PromoCodeJson> promoCodeJsons = null;
 		try {
 			StringBuilder sb = new StringBuilder(
-					"select c.id,c.code,c.applyOnAmount,c.promoImagePath from PromoCode c where c.isDeleted = false order by c.createdOn DESC");
+					"select c.id,c.code,c.applyOnAmount,c.promoImagePath,c.amountToReduce,c.subCategoryId from PromoCode c where c.isDeleted = false order by c.createdOn DESC");
 			List<?> categories = promoCodeDao.findByQuery(sb.toString(), null, null, null);
 			if (categories != null && categories.size() > 0) {
 				promoCodeJsons = new ArrayList<PromoCodeJson>();
@@ -71,6 +71,8 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 					json.setApplyOnAmount(Util.getDoubleValueOfObj(obj[2]));
 					json.setPromoImagePath(Util.getStringValueOfObj(obj[3]));
 					json.setPromoImageBlob(Util.getStringFromLocation(json.getPromoImagePath()));
+					json.setAmountToReduce(Util.getDoubleValueOfObj(obj[4]));
+					json.setSubCategoryId(Util.getIntegerValueOfObj(obj[5]));
 					promoCodeJsons.add(json);
 				}
 			}
@@ -126,7 +128,7 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
 			StringBuilder sb = new StringBuilder(
-					"select c.id,c.code,c.applyOnAmount,c.amountToReduce from PromoCode c where c.isDeleted = false and c.code = ?1 order by c.createdOn DESC");
+					"select c.id,c.code,c.applyOnAmount,c.amountToReduce,c.subCategoryId from PromoCode c where c.isDeleted = false and c.code = ?1 order by c.createdOn DESC");
 			params.put("1", promoCode);
 			List<?> promocodeList = promoCodeDao.findByQuery(sb.toString(), params, null, null);
 			if (promocodeList != null && promocodeList.size() > 0) {
@@ -137,10 +139,32 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 					json.setCode(Util.getStringValueOfObj(obj[1]));
 					json.setApplyOnAmount(Util.getDoubleValueOfObj(obj[2]));
 					json.setAmountToReduce(Util.getDoubleValueOfObj(obj[3]));
+					json.setSubCategoryId(Util.getIntegerValueOfObj(obj[4]));
 				}
-				if (json.getApplyOnAmount() > totalAmount) {
-					map.put(Constants.General.SUCCESS, false);
-					map.put(Constants.General.MSG, Constants.General.LESSMOUNT_ERR + json.getApplyOnAmount());
+				map.put(Constants.General.SUBCATEGORY_ID, json.getSubCategoryId());
+				String subCategoryName = "";
+				if (json.getSubCategoryId() > 0) {
+					List<Long> itemIds = new ArrayList<Long>();
+					sb = new StringBuilder("select s.itemId,s.subCategory.name from SubCategoryItem s where s.subCategoryId = ?1");
+					params.put("1", json.getSubCategoryId());
+					List<?> list = promoCodeDao.findByQuery(sb.toString(), params, null, null);
+					if (list != null && list.size() > 0) {
+						for (Object object : list) {
+							Object[] obj =(Object[]) object;
+							itemIds.add(Util.getIntegerValueOfObj(obj[0]));
+							subCategoryName = Util.getStringValueOfObj(obj[1]);
+						}
+					}
+					map.put(Constants.General.ITEM_IDS, itemIds);
+				}
+					if (json.getApplyOnAmount() > totalAmount) {
+						map.put(Constants.General.SUCCESS, false);
+						if (json.getSubCategoryId().equals(0l)) {
+							map.put(Constants.General.MSG, Constants.General.LESSMOUNT_ERR + json.getApplyOnAmount());
+						} else {
+							map.put(Constants.General.MSG, Constants.General.LESSMOUNT_ERR + json.getApplyOnAmount() + " for the products of " + subCategoryName);
+						}
+//					}
 					return map;
 				}
 				params.clear();

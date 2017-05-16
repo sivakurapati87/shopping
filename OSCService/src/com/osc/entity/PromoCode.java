@@ -10,6 +10,15 @@ public class PromoCode extends BaseEntity {
 	private Double applyOnAmount;
 	private Double amountToReduce;
 	private String promoImagePath;
+	private Long subCategoryId;
+
+	public Long getSubCategoryId() {
+		return subCategoryId;
+	}
+
+	public void setSubCategoryId(Long subCategoryId) {
+		this.subCategoryId = subCategoryId;
+	}
 
 	public String getCode() {
 		return code;

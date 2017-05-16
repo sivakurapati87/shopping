@@ -190,6 +190,7 @@ public class TransformJsonToEntity {
 		promoCode.setApplyOnAmount(promoCodeJson.getApplyOnAmount());
 		promoCode.setAmountToReduce(promoCodeJson.getAmountToReduce());
 		promoCode.setPromoImagePath(promoCodeJson.getPromoImagePath());
+		promoCode.setSubCategoryId(promoCodeJson.getSubCategoryId());
 		getBaseEntity(promoCodeJson,promoCode);
 	}
 	

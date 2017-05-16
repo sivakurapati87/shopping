@@ -7,6 +7,20 @@ App.controller('PromoCodeController', ['$scope','$http','$rootScope','$state', f
 	
 	$scope.promocode = {};
 
+	$scope.getAllSubCategoriesWithCategory = function(){
+  		var response = $http.get(constants.localhost_port+constants.service_context+"/SubCategoryController/getAllSubCategoriesWithCategory");
+  		response.success(function(data) {
+  			$scope.subCategories = data.multiple;
+//  			$scope.uniqueSubCategories = data.unique;
+  			$scope.subCategories.push.apply($scope.subCategories, data.unique);
+  			$scope.getAllPromoCodes();
+  		});
+  		response.error(function() {
+        	  console.error('Could not Perform well');
+        	  $state.go("login");
+          });
+  	}
+	
 	 $scope.imageUpload = function(element){
 	        var reader = new FileReader();
 	        reader.onload = $scope.imageIsLoaded;
@@ -44,13 +58,23 @@ App.controller('PromoCodeController', ['$scope','$http','$rootScope','$state', f
 	var promocodeId = null;
 	
 	$scope.onload = function(){
-		$scope.getAllPromoCodes();
+		$scope.getAllSubCategoriesWithCategory();
 	}
 
 	$scope.getAllPromoCodes = function(){
   		var response = $http.get(constants.localhost_port+constants.service_context+"/PromoCodeController/getAllPromoCodes");
   		response.success(function(successData) {
   			promocodes = successData;
+  			if(promocodes){
+  			for(var i=0;i<promocodes.length;i++){
+  				if(promocodes[i].subCategoryId && $scope.subCategories){
+  					for(var j=0;j<$scope.subCategories.length;j++){
+  						if($scope.subCategories[j].id == promocodes[i].subCategoryId){
+  							promocodes[i].subCategoryName = $scope.subCategories[j].name; 
+  						}
+  					}
+  				}
+  			}}
 //  			alert(JSON.stringify(successData));
   			$scope.displayTable();
   		});
@@ -101,6 +125,10 @@ App.controller('PromoCodeController', ['$scope','$http','$rootScope','$state', f
 	    },{
 	        field: 'amountToReduce',
 	        title: 'Amount To Reduce',
+	        sortable : true
+	    },{
+	        field: 'subCategoryName',
+	        title: 'Sub Category',
 	        sortable : true
 	    },{
 	        field: 'promoImageBlob',

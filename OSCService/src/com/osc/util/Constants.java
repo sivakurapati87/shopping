@@ -32,5 +32,9 @@ public class Constants {
 		public static final String AMOUNT_TO_REDUCE = "amountToReduce";
 		
 		public static final String PROMOCODE_ID = "promoCodeId";
+		
+		public static final String SUBCATEGORY_ID = "subCategoryId";
+		
+		public static final String ITEM_IDS = "itemIds";
 	}
 }

@@ -30,6 +30,18 @@
 					ng-model="promocode.amountToReduce">
 			</div>
 		</div>
+		<br><br>
+		<div class="row">
+		<div class="col-md-6 lblfont16px" style="text-align: end">
+				<label>Apply for Sub-Category :</label>
+		</div>
+		<div class="col-md-6">
+		<select ng-model="promocode.subCategoryId"
+							ng-options="fieldName.id as fieldName.name for fieldName in subCategories">
+							<option value="" disabled selected>Select SubCategory</option>
+						</select>
+		</div>
+		</div>
 		<br>
 		<br>
 		<div class="row">

@@ -35,14 +35,19 @@ App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$s
 					'&promoCode='+$scope.promoCode+'&totalAmount='+$scope.purchasedAmount);
 	  		response.success(function(data) {
 //	  			alert(JSON.stringify(data));
-	  			$scope.msg = data.msg;
+	  			
 	  			$scope.success = data.success;
 	  			if(data.success){
-	  			$scope.isPromoCodeApplied = true;
-	  			$scope.promoCodeId = data.promoCodeId;
-	  			$scope.amountToReduce = data.amountToReduce;
-	  			$scope.promoCodeReducedAmount = ($scope.purchasedAmount * $scope.amountToReduce)/100
-	  			$scope.promoCodeReducedAmount = Math.rount($scope.promoCodeReducedAmount*100)/100;
+	  				$scope.isPromoCodeApplied = true;
+		  			$scope.promoCodeId = data.promoCodeId;
+		  			$scope.amountToReduce = data.amountToReduce;
+	  				if(data.subCategoryId && data.subCategoryId != 0){
+	  					//Do the caculations on for(var i=0;i<$rootScope.rsAddedCartItemList.length;i++){
+	  				}else{
+			  			
+			  			$scope.promoCodeReducedAmount = ($scope.purchasedAmount * $scope.amountToReduce)/100
+			  			$scope.promoCodeReducedAmount = Math.rount($scope.promoCodeReducedAmount*100)/100;
+	  				}
 	  			}
 	  		});
 	  		response.error(function() {

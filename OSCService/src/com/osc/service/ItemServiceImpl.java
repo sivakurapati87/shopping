@@ -487,7 +487,7 @@ public class ItemServiceImpl implements ItemService {
 					if (Util.getIntegerValueOfObj(itemObj[1]) >= 4) {
 						sb = new StringBuilder("select i.item.id,i.item.name,i.item.mrp,i.item.discount,i.item.imageSourceLocation,i.subCategory.name,"
 								+ "i.subCategory.id,i.subCategory.categoryDivision.categoryId from " + "SubCategoryItem i where i.subCategoryId ="
-								+ Util.getIntegerValueOfObj(itemObj[0]));
+								+ Util.getIntegerValueOfObj(itemObj[0])+" order by coalesce(i.item.updatedOn,i.item.createdOn) DESC");
 						items = itemDao.findByQuery(sb.toString(), null, 0, Constants.General.MAX_HOME_RECORDS);
 						if (items != null && items.size() > 0) {
 

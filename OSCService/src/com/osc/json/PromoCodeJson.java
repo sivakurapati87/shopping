@@ -11,6 +11,15 @@ public class PromoCodeJson extends BaseJson {
 	private Double amountToReduce;
 	private String promoImagePath;
 	private String promoImageBlob;
+	private Long subCategoryId;
+
+	public Long getSubCategoryId() {
+		return subCategoryId;
+	}
+
+	public void setSubCategoryId(Long subCategoryId) {
+		this.subCategoryId = subCategoryId;
+	}
 
 	public String getCode() {
 		return code;

@@ -40,6 +40,7 @@ public class TransformEntityToJson {
 		promoCodeJson.setPromoImagePath(promoCode.getPromoImagePath());
 		promoCodeJson.setAmountToReduce(promoCode.getAmountToReduce());
 		promoCodeJson.setPromoImageBlob(Util.getStringFromLocation(promoCodeJson.getPromoImagePath()));
+		promoCodeJson.setSubCategoryId(promoCode.getSubCategoryId());
 		getBaseJson(promoCodeJson, promoCode);
 	}
 
