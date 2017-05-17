@@ -144,6 +144,7 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 				map.put(Constants.General.SUBCATEGORY_ID, json.getSubCategoryId());
 				String subCategoryName = "";
 				if (json.getSubCategoryId() > 0) {
+					params.clear();
 					List<Long> itemIds = new ArrayList<Long>();
 					sb = new StringBuilder("select s.itemId,s.subCategory.name from SubCategoryItem s where s.subCategoryId = ?1");
 					params.put("1", json.getSubCategoryId());

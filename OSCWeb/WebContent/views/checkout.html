@@ -15,7 +15,7 @@
 <div class="row">
 	<div class="col-md-1"></div>
 	<div class="col-md-10">
-		<div class="row" ng-repeat="product in rsAddedCartItemList"
+		<div class="row" ng-repeat="product in addedCartItemList"
 			style="padding: 1px" ng-class-odd="'grid_odd'"
 			ng-class-even="'grid_even'">
 			<div class="col-md-3">
@@ -30,13 +30,13 @@
 					to purchase is {{product.minQuantityToPurchase}}</label>
 
 			</div>
-			<div class="col-md-2">Rs. {{product.total}}</div>
+			<div class="col-md-2">Rs. {{product.total}} <label style="color:#464245;font-size: 10px;text-decoration: line-through;">{{product.withoutPromocodeValue}}</label> </div>
 		</div>
 
 	</div>
 	<div class="col-md-1"></div>
 </div>
-<div class="row" ng-if="rsAddedCartItemList.length !=0">
+<div class="row" ng-if="addedCartItemList.length !=0">
 	<div class="col-md-1"></div>
 	<div class="col-md-10">
 		<div class="row">
@@ -50,7 +50,23 @@
 	</div>
 	<div class="col-md-1"></div>
 </div>
-<div class="row" ng-if="rsAddedCartItemList.length !=0">
+<div class="row" ng-if="promoCodeAmt !=0">
+	<div class="col-md-1"></div>
+	<div class="col-md-10">
+		<div class="row">
+			<div class="col-md-9" style="text-align: right;">
+				<b> Promo Code amount :</b>
+			</div>
+			<div class="col-md-2" style="text-align: right;">Rs.
+				{{promoCodeAmt}}</div>
+			<div class="col-md-3"></div>
+		</div>
+	</div>
+	<div class="col-md-1"></div>
+</div>
+
+
+<div class="row" ng-if="addedCartItemList.length !=0">
 	<div class="col-md-1"></div>
 	<div class="col-md-10">
 		<div class="row">
@@ -94,13 +110,14 @@
 	<div class="col-md-10"  style="border:1px solid #fceece;">
 		<div class="row">
 			<div class="col-md-4" style="text-align: right;">
-				<label>Promo Code (If you have promocode apply here) :</label>
+				<label>Promo Code (If you have promo code apply here) :</label>
 			</div>
 		<div class="col-md-8">
 			 <input type="text" ng-model="promoCode"> <button type="button" class="btn btn-success" ng-click="applyPromoCode()">Apply</button>
 			<br>
-			<label ng-if="!success" class="errMsg">{{msg}}</label>
-			<label ng-if="success" class="success">{{msg}}</label>
+			<label ng-if="successfull == 'no'" class="errMsg">{{msg}}</label>
+			<label ng-if="successfull == 'yes'" class="successMsg">{{msg}}</label>
+			{{success}}
 		</div>
 	</div>
 	</div>

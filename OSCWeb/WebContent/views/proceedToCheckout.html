@@ -24,7 +24,7 @@
 			</div>
 			<div class="col-md-2">{{product.name}}</div>
 			<div class="col-md-2">{{product.mrp}}</div>
-			<div class="col-md-2"><input type="text" style="width: 60px;text-align: right;" ng-model="product.quantity" ng-blur="onChangeItemQuantity(product)">
+			<div class="col-md-2"><input type="text" style="width: 60px;" ng-model="product.quantity" ng-blur="onChangeItemQuantity(product)">
 			<br> <label
 						ng-if="product.errorMsg" class="error">Min Quantity to purchase is
 						{{product.minQuantityToPurchase}}</label>

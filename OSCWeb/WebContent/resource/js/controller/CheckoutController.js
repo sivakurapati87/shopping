@@ -3,12 +3,13 @@
 App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$stateParams','$timeout', function($scope,$http,$rootScope,$state,$stateParams,$timeout) {
 	
 	$scope.isPromoCodeApplied = false;
+	$scope.promoCodeAmt = 0;
 	
 	 //find the sum of all the items
 	   $scope.totalCost = function(){
-	 	  if($rootScope.rsAddedCartItemList){
+	 	  if($scope.addedCartItemList){
 	 		 $rootScope.totalAmount = 0;
-	 	  angular.forEach($rootScope.rsAddedCartItemList, function(obj, key) {
+	 	  angular.forEach($scope.addedCartItemList, function(obj, key) {
 	 		 $rootScope.totalAmount = parseFloat($rootScope.totalAmount)+parseFloat(obj.total);
 			}); 
 	 	 $rootScope.totalAmount = $rootScope.totalAmount+parseFloat($rootScope.shippingCharges);
@@ -26,8 +27,9 @@ App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$s
 		$scope.applyPromoCode = function()
 		{
 			$scope.msg = null;
-			$scope.success = false;
+			$scope.successfull = 'no';
 //			$scope.customerJson = {totalPurchase:210,firstName:$rootScope.rsCustomerJson,emailId:'kssrao87@gmail.com',phoneNumber:9603631480};
+			$scope.promoCodeReducedAmount = 0;
 			if(!$scope.isPromoCodeApplied){
 				$scope.purchasedAmount= $rootScope.totalAmount - parseFloat($rootScope.shippingCharges);
 				$scope.purchasedAmount = Math.round($scope.purchasedAmount * 100) / 100;
@@ -35,18 +37,29 @@ App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$s
 					'&promoCode='+$scope.promoCode+'&totalAmount='+$scope.purchasedAmount);
 	  		response.success(function(data) {
 //	  			alert(JSON.stringify(data));
-	  			
-	  			$scope.success = data.success;
 	  			if(data.success){
+	  				$scope.successfull = 'yes';
 	  				$scope.isPromoCodeApplied = true;
 		  			$scope.promoCodeId = data.promoCodeId;
 		  			$scope.amountToReduce = data.amountToReduce;
+		  			$scope.msg = data.msg;
 	  				if(data.subCategoryId && data.subCategoryId != 0){
-	  					//Do the caculations on for(var i=0;i<$rootScope.rsAddedCartItemList.length;i++){
+	  					//Do the caculations on for(var i=0;i<$scope.addedCartItemList.length;i++){
+	  					for(var i=0;i<$scope.addedCartItemList.length;i++){
+	  						for(var j=0;j<data.itemIds.length;j++){
+	  							if($scope.addedCartItemList[i].itemId == data.itemIds[j]){
+	  								$scope.addedCartItemList[i].withoutPromocodeValue = angular.copy($scope.addedCartItemList[i].total);
+	  								var reducedAmt = parseFloat((Math.round(($scope.addedCartItemList[i].total * $scope.amountToReduce)/100)*100)/100);
+	  								$scope.addedCartItemList[i].total = parseFloat($scope.addedCartItemList[i].total) - parseFloat(reducedAmt);
+	  								$scope.promoCodeAmt = parseFloat($scope.promoCodeAmt)+ parseFloat(reducedAmt);
+	  							}
+	  						}
+	  					}
 	  				}else{
 			  			
 			  			$scope.promoCodeReducedAmount = ($scope.purchasedAmount * $scope.amountToReduce)/100
 			  			$scope.promoCodeReducedAmount = Math.rount($scope.promoCodeReducedAmount*100)/100;
+			  			$scope.promoCodeAmt =angular.copy($scope.promoCodeReducedAmount);
 	  				}
 	  			}
 	  		});
@@ -64,7 +77,7 @@ App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$s
 	$scope.getHashCodeAction = function()
 	{
 //		$scope.customerJson = {totalPurchase:210,firstName:$rootScope.rsCustomerJson,emailId:'kssrao87@gmail.com',phoneNumber:9603631480};
-		
+		$scope.addedCartItemList = angular.copy($rootScope.rsAddedCartItemList);
 		var response = $http.post(constants.localhost_port+constants.service_context+"/CustomerController/getHashKeyWithTransactionNumber",$scope.rsCustomerJson);
   		response.success(function(data) {
 //  			alert(JSON.stringify(data));
@@ -81,13 +94,13 @@ App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$s
 			$scope.getHashCodeAction();
 		}
 		
-		if($rootScope.rsAddedCartItemList){
-		for(var i=0;i<$rootScope.rsAddedCartItemList.length;i++){
-			$scope.obj = {itemId:$rootScope.rsAddedCartItemList[i].itemId,subTotal:$rootScope.rsAddedCartItemList[i].total,quantity:$rootScope.rsAddedCartItemList[i].quantity,
+		if($scope.addedCartItemList){
+		for(var i=0;i<$scope.addedCartItemList.length;i++){
+			$scope.obj = {itemId:$scope.addedCartItemList[i].itemId,subTotal:$scope.addedCartItemList[i].total,quantity:$scope.addedCartItemList[i].quantity,
 					deliveryCharges:constants.DELIVERY_CHARGES,
-					providedNames:$rootScope.rsAddedCartItemList[i].providedNames,
-					customerId: $rootScope.rsCustomerJson.id,divBlob:$rootScope.rsAddedCartItemList[i].divBlob,
-					custPhotoJsonList:$rootScope.rsAddedCartItemList[i].custPhotoJsonList,txnId:$scope.customerJson.txnId};
+					providedNames:$scope.addedCartItemList[i].providedNames,
+					customerId: $rootScope.rsCustomerJson.id,divBlob:$scope.addedCartItemList[i].divBlob,
+					custPhotoJsonList:$scope.addedCartItemList[i].custPhotoJsonList,txnId:$scope.customerJson.txnId};
 		}	
 		
 		var response = $http.post(constants.localhost_port+constants.service_context+"/CustomerController/saveCustomerOrders",$scope.obj);
