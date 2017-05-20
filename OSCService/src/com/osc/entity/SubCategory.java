@@ -18,6 +18,8 @@ public class SubCategory extends BaseEntity{
 	
 	private Boolean showItemsInHomePage;
 	
+	private String subCategoryImagePath;
+	
 	/*@OneToMany(mappedBy = "subCategory", fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	@Where(clause = "isDeleted='false'")
@@ -55,6 +57,12 @@ public class SubCategory extends BaseEntity{
 	}
 	public void setShowItemsInHomePage(Boolean showItemsInHomePage) {
 		this.showItemsInHomePage = showItemsInHomePage;
+	}
+	public String getSubCategoryImagePath() {
+		return subCategoryImagePath;
+	}
+	public void setSubCategoryImagePath(String subCategoryImagePath) {
+		this.subCategoryImagePath = subCategoryImagePath;
 	}
 	
 }

@@ -1,10 +1,33 @@
 <div class="container-fluid" style="width: 100%;text-align: left;" align="center">
-<div class="row div_row_bg padding-top10" >
+<div class="row padding-top10" >
 		<div class="col-md-12">
-			<b>{{itemList[0].subcategory}} Products :</b>
+			<h4>{{itemList[0].subcategory}} Products :</h4>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row subCategoryBox">
+				<section class="container-fluid ">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-3 mainrow" ng-repeat="itemJson in itemList">
+								<div class="mainitem" ng-click="viewProduct(itemJson.id)">
+									<a><img ng-src="{{itemJson.imageSrc}}" class="img_ht_wt"></a>
+									<br>
+									<label>{{itemJson.name}}</label><br> <span><img
+										alt="" src="resource/images/gray-rupee-icon.png">
+										{{itemJson.mrp}}</span> <br> <span
+										ng-if="itemJson.discount && itemJson.discount !=0">Flat
+										{{itemJson.discount}}% Off </span> <br> <span>
+										<button class="btn btn-success" type="button">CUSTOMISE
+											NOW</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+	
+	<!-- <div class="row">
 		<section class="container-fluid">
 			<div class="col-md-12">
 				<div class="row">
@@ -28,7 +51,7 @@
 				</div>
 			</div>
 		</section>
-	</div>
+	</div> -->
 	<div class="row">
 	<div class="col-md-12" align="center">
 	<button class="btn btn-success" type="button" id="loadMore" ng-if="noOfProducts > (firstResult+12)" ng-click="viewMoreProducts()">Load More</button>

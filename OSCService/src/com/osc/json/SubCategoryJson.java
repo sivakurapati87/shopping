@@ -8,6 +8,7 @@ public class SubCategoryJson extends BaseJson {
 	private Boolean isUniqueProduct;
 	private CategoryJson category;
 	private Boolean showItemsInHomePage;
+	private String subCategoryImagePath;
 
 	public String getName() {
 		return name;
@@ -63,6 +64,14 @@ public class SubCategoryJson extends BaseJson {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+	public String getSubCategoryImagePath() {
+		return subCategoryImagePath;
+	}
+
+	public void setSubCategoryImagePath(String subCategoryImagePath) {
+		this.subCategoryImagePath = subCategoryImagePath;
 	}
 
 }
