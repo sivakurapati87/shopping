@@ -103,8 +103,8 @@ body
 }
 
 .bgForSite{
-	background-color: #663300;
-	color: #fff;
+	background-color: #231709;
+	/* color: #fff; */
 }
 .footerHeaderLables{
 	font-size: 26px;
@@ -117,7 +117,7 @@ body
 	font-weight: 400;
 }
 .bgCorosel{
-	background-color: #ffdbb7;
+	background-color: #894727;
 }
 
 .collection-card__meta {
@@ -163,7 +163,7 @@ body
 }
 
 .navbar-default {
-    background-color: #663300;
+    background-color: #5f3f18;
     border-color: #e7e7e7;
 }
 .navbar-default .navbar-nav>li>a{
