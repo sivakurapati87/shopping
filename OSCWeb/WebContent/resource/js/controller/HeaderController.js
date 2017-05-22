@@ -71,6 +71,12 @@ App.controller('HeaderController', ['$scope','$http','$rootScope','$state', func
   	  }
     };
 	
+    $scope.viewAllItems = function(subCategoryId){
+    	if(subCategoryId){
+		$state.go("view_all_items",{id:subCategoryId});
+    	}
+	}
+    
     $scope.searchAction = function(){
     	if($scope.searchName){
     		var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/getPageBySearchValue/"+$scope.searchName);

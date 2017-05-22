@@ -68,7 +68,7 @@ public class PromoCodeController {
 	
 	@RequestMapping("getAllPromoCodeImages")
 	public ResponseEntity<List<String>> getAllPromoCodeImages(HttpServletRequest request) {
-		if (Util.getLoginUserId(request) != null) {
+//		if (Util.getLoginUserId(request) != null) {
 			List<String> promoCodeImageList = null;
 			try {
 				promoCodeImageList = promoCodeService.getAllPromoCodeImages();
@@ -78,10 +78,10 @@ public class PromoCodeController {
 				return new ResponseEntity<List<String>>(promoCodeImageList, HttpStatus.EXPECTATION_FAILED);
 			}
 			return new ResponseEntity<List<String>>(promoCodeImageList, HttpStatus.OK);
-		} else {
-			LOG.error("User must login");
-			return new ResponseEntity(HttpStatus.FORBIDDEN);
-		}
+//		} else {
+//			LOG.error("User must login");
+//			return new ResponseEntity(HttpStatus.FORBIDDEN);
+//		}
 	}
 	
 	@RequestMapping("getPromoCodeById/{id}")
