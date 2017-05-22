@@ -10,6 +10,8 @@ public interface PromoCodeService {
 
 	public List<PromoCodeJson> getAllPromoCodes();
 	
+	public List<String> getAllPromoCodeImages();
+	
 	public PromoCodeJson getPromoCodeById(Long id);
 	
 	public void deletePromoCodeById(Long id,Long userId);

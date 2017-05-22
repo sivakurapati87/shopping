@@ -174,5 +174,43 @@ public class ItemController {
 		// return new ResponseEntity(HttpStatus.FORBIDDEN);
 		// }
 	}
+	
+	
+	@RequestMapping("getAllSearchableWords")
+	public ResponseEntity<List<Map<String,String>>> getAllSearchableWords(HttpServletRequest request) {
+		// if (Util.getLoginUserId(request) != null) {
+		List<Map<String,String>> searchableWordsList = null;
+		try {
+			searchableWordsList = itemService.getAllSearchableWords();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<List<Map<String,String>>>(searchableWordsList, HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<List<Map<String,String>>>(searchableWordsList, HttpStatus.OK);
+		// } else {
+		// LOG.error("User must login");
+		// return new ResponseEntity(HttpStatus.FORBIDDEN);
+		// }
+	}
+	
+	@RequestMapping("getPageBySearchValue/{searchName}")
+	public ResponseEntity<Map<String,Long>> getPageBySearchValue(HttpServletRequest request,@PathVariable("searchName")String searchName) {
+		// if (Util.getLoginUserId(request) != null) {
+		Map<String,Long> map = null;
+		try {
+			map = itemService.getPageBySearchValue(searchName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+			return new ResponseEntity<Map<String,Long>>(map, HttpStatus.EXPECTATION_FAILED);
+		}
+		return new ResponseEntity<Map<String,Long>>(map, HttpStatus.OK);
+		// } else {
+		// LOG.error("User must login");
+		// return new ResponseEntity(HttpStatus.FORBIDDEN);
+		// }
+	}
+
 
 }

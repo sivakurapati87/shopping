@@ -36,5 +36,10 @@ public class Constants {
 		public static final String SUBCATEGORY_ID = "subCategoryId";
 		
 		public static final String ITEM_IDS = "itemIds";
+		
+		public static final String ITEM_ID = "itemId";
+		
+		
+		public static final String NAME = "name";
 	}
 }

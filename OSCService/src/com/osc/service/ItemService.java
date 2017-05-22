@@ -17,6 +17,10 @@ public interface ItemService {
 	
 	public Map<String,List<ItemJson>> getAllHomeProducts();
 	
+	public List<Map<String,String>> getAllSearchableWords();
+	
+	public Map<String,Long> getPageBySearchValue(String searchValue);
+	
 	public void deleteItemById(Long id,Long userId);
 	
 	public List<ItemJson> getItemsBySubCategoryId(Long subCategoryId,Integer firstResult);

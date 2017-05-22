@@ -521,7 +521,61 @@ public class ItemServiceImpl implements ItemService {
 		}
 		return homeProductList;
 	}
+	
+	public List<Map<String,String>> getAllSearchableWords(){
+		List<Map<String,String>> searchableList = null;
+		try {
+			StringBuilder sb = new StringBuilder("select i.item.name,i.subCategory.name from SubCategoryItem i");
+			List<?> items = itemDao.findByQuery(sb.toString(), null, null, null);
+			if (items != null && items.size() > 0) {
+				searchableList = new ArrayList<Map<String,String>>();
+				for (Object object : items) {
+					Object[] obj = (Object[]) object;
+					Map<String,String> map1 = new HashMap<String,String>();
+					map1.put(Constants.General.NAME, Util.getStringValueOfObj(obj[0]));
+					Map<String,String> map2 = new HashMap<String,String>();
+					map2.put(Constants.General.NAME, Util.getStringValueOfObj(obj[1]));
+					searchableList.add(map1);
+					searchableList.add(map2);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+		return searchableList;
+	}
 
+	public Map<String,Long> getPageBySearchValue(String searchValue){
+		Map<String,Long> map = new HashMap<String,Long>();
+		try {
+			Map<String,Object> param =new HashMap<String, Object>();
+			StringBuilder sb = new StringBuilder("select i.id from Item i where i.name = ?1");
+			param.put("1", searchValue);
+			List<?> items = itemDao.findByQuery(sb.toString(), param, null, null);
+			if (items != null && items.size() > 0) {
+				for (Object obj : items) {
+					map.put(Constants.General.ITEM_ID, Util.getIntegerValueOfObj(obj));
+				}
+			}else{
+				param.clear();
+				sb = new StringBuilder("select s.id from SubCategory s where s.name = ?1");
+				param.put("1", searchValue);
+				items = itemDao.findByQuery(sb.toString(), param, null, null);
+				if (items != null && items.size() > 0) {
+					for (Object obj : items) {
+						map.put(Constants.General.SUBCATEGORY_ID, Util.getIntegerValueOfObj(obj));
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+		return map;
+	}
+
+	
 	public List<ItemJson> getItemsBySubCategoryId(Long subCategoryId, Integer firstResult) {
 		List<ItemJson> itemList = null;
 		try {

@@ -12,9 +12,9 @@ App.controller('HeaderController', ['$scope','$http','$rootScope','$state', func
   		var response = $http.get(constants.localhost_port+constants.service_context+"/SubCategoryController/allCategoriesWithSubCategory");
   		response.success(function(data) {
   			if(data){
-  				$rootScope.searchDataList = [];
+  				$scope.getAllSearchableWords();
   			$rootScope.navigationDataList = data;
-  			$.each(data, function (i, val) {
+  			/*$.each(data, function (i, val) {
   			  $.each(val, function(innerKey, innerValue) {
   				  for(var j=0;j<innerValue.length;j++){
   					  var obj = angular.copy(innerValue[j]);
@@ -22,7 +22,22 @@ App.controller('HeaderController', ['$scope','$http','$rootScope','$state', func
   					$rootScope.searchDataList.push(obj);
   				  }
   			  });
-  			});
+  			});*/
+  			}
+  		});
+  		response.error(function() {
+        	  console.error('Could not Perform well');
+        	  $state.go("login");
+          });
+		}
+  	}
+	
+	$scope.getAllSearchableWords = function(){
+		if(!$rootScope.searchDataList){
+  		var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/getAllSearchableWords");
+  		response.success(function(data) {
+  			if(data){
+  				$rootScope.searchDataList = data;
   			}
   		});
   		response.error(function() {
@@ -37,7 +52,7 @@ App.controller('HeaderController', ['$scope','$http','$rootScope','$state', func
 	      if (selected) {
 //	    	  $rootScope.transactionData.customerId = selected.title;
 //	    	  $scope.getCustomerInfoById();
-	      	$scope.subCategoryId = selected.originalObject.id;
+	      	$scope.searchName = selected.title;
 	      } else {
 	        console.log('cleared');
 	      }
@@ -56,9 +71,25 @@ App.controller('HeaderController', ['$scope','$http','$rootScope','$state', func
   	  }
     };
 	
-    $scope.viewAllItems = function(subCategoryId){
-    	if(subCategoryId){
-		$state.go("view_all_items",{id:subCategoryId});
+    $scope.searchAction = function(){
+    	if($scope.searchName){
+    		var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/getPageBySearchValue/"+$scope.searchName);
+      		response.success(function(data) {
+      			if(data){
+      				if(data.subCategoryId && data.subCategoryId > 0){
+      					$state.go("view_all_items",{id:data.subCategoryId});
+      				}
+      				if(data.itemId && data.itemId > 0){
+      					$state.go("view_item",{id:data.itemId});
+      				}
+      			}
+      		});
+      		response.error(function() {
+            	  console.error('Could not Perform well');
+            	  $state.go("login");
+              });
+    		
+		
     	}
 	}
     

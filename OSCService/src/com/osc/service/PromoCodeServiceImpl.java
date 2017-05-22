@@ -82,6 +82,25 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 		}
 		return promoCodeJsons;
 	}
+	
+	public List<String> getAllPromoCodeImages() {
+		List<String> promoCodeImageList = null;
+		try {
+			StringBuilder sb = new StringBuilder(
+					"select c.promoImagePath from PromoCode c where c.isDeleted = false order by c.createdOn DESC");
+			List<?> categories = promoCodeDao.findByQuery(sb.toString(), null, null, null);
+			if (categories != null && categories.size() > 0) {
+				promoCodeImageList = new ArrayList<String>();
+				for (Object obj : categories) {
+					promoCodeImageList.add(Util.getStringFromLocation(Util.getStringValueOfObj(obj)));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.getMessage(), e);
+		}
+		return promoCodeImageList;
+	}
 
 	public PromoCodeJson getPromoCodeById(Long id) {
 		PromoCodeJson promoCodeJson = null;
