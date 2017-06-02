@@ -1,7 +1,9 @@
 'use strict';
 
 App.controller('HomeController', ['$scope','$http','$rootScope','$state', function($scope,$http,$rootScope,$state) {
-
+	
+	$rootScope.stateName ="home";
+	
 	$scope.getAllHomeProducts = function(){
 		if(!$rootScope.homeProductDataList){
   		var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/getAllHomeProducts");

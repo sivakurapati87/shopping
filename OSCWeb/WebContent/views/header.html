@@ -5,9 +5,9 @@
 		</div>
 		<div class="col-md-8 padding_top">
 			<div class="row">
-				<div class="col-md-1"></div>
+				<div class="col-md-5"></div>
 
-				<div class="col-md-8 remove_padding">
+				<div class="col-md-5 remove_padding">
 					<div angucomplete-alt id="searchId" pause="100"
 						selected-object="selectedCategoryDivisionNameAction"
 						local-data="searchDataList" search-fields="name"
@@ -15,17 +15,20 @@
 						initial-value="categoryDivisionObj" input-class="search-control "
 						match-class="highlight"></div>
 				</div>
-				<div class="col-md-3 remove_padding">
-					<button value="Search" ng-click="searchAction()"
+				<div class="col-md-2 remove_padding">
+					<!-- <button value="Search" ng-click="searchAction()"
 						class=" form-control btn  btn-sm height46 lable16"
 						style="background: #13ef18;">
 						<span class="glyphicon glyphicon-search" style="font-size: 18px"></span>
 						<span class="lable18">Search</span>
-					</button>
+					</button> -->
+					<button type="submit" class="searchButton remove_padding" ng-click="searchAction()">
+        				<i class="fa fa-search"></i>
+     				</button>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-3" ng-if="stateName != 'checkout'">
 			<div class="row">
 				<div class="col-md-3"></div>
 				<div class="col-md-9">

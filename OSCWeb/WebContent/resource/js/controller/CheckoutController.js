@@ -1,7 +1,7 @@
 'use strict';
 
 App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$stateParams','$timeout', function($scope,$http,$rootScope,$state,$stateParams,$timeout) {
-	
+	$rootScope.stateName ="checkout";	
 	$scope.isPromoCodeApplied = false;
 	$scope.promoCodeAmt = 0;
 	
