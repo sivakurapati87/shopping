@@ -47,7 +47,7 @@
 				</div>
 				<div class="col-md-1">
 					<button class="btn btn-success" type="button"
-						ng-click="getAllCustomerOrders()">Go</button>
+						ng-click="searchAction()">Go</button>
 				</div>
 			</div>
 		</div>
@@ -122,8 +122,8 @@
 		<div class="col-md-1">Total</div>
 		<div class="col-md-2">Txn Id</div>
 		<div class="col-md-1">Delivery Charges</div>
-		<div class="col-md-1">Status</div>
-		<div class="col-md-1">Cust Images</div>
+		<div class="col-md-1">Status <br> <i style="font-size: 10px;">Upload Date</i></div>
+		<div class="col-md-1">Cust Images <br><i style="font-size: 10px;">Or</i><br>Provided Name</div>
 	</div>
 	<div class="row" ng-repeat="order in ordersList" style="padding: 1px"
 		ng-class-odd="'grid_odd'" ng-class-even="'grid_even'">
@@ -153,6 +153,8 @@
 		</div>
 		<div class="col-md-1">
 			<a title="Change Status" ng-click="changeStatus(order)">{{order.status?order.status:'none'}}</a>
+			<br><br><br>
+			<i style="font-size: 10px;">{{order.createdOn}}</i>
 		</div>
 		<div class="col-md-1">
 			<div class="row" ng-repeat="custImages in order.custPhotoJsonList">
@@ -160,6 +162,7 @@
 					<a ng-click="addToCartAction(custImages.imageBlob)">View</a>
 				</div>
 			</div>
+			<div class="row"><label>{{order.providedNames}}</label></div>
 		</div>
 	</div>
 

@@ -1,6 +1,6 @@
 'use strict';
 
-App.controller('ItemController', ['$scope','$http','$rootScope','$state','$stateParams','$timeout', function($scope,$http,$rootScope,$state,$stateParams,$timeout) {
+App.controller('ItemController', ['$scope','$http','$rootScope','$state','$stateParams','$timeout','$log', function($scope,$http,$rootScope,$state,$stateParams,$timeout,$log) {
 	
 	$scope.customerItem = {};
 	
@@ -10,6 +10,7 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
 	{
 		var ab = $("#imageprew div").children("img").length;
 //		alert(ab);
+//		if(ab !=0){
 		$scope.custPhotoJsonList = [];
 		for(var i=0; i< ab; i++)
 		{
@@ -31,18 +32,21 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
          }
         });
 
-        
+//		}
 		
 
 	}
 	
-	if(!$rootScope.generatedId){
-		$rootScope.generatedId = 1;
-	}
+	
 	
 	
 	$scope.getItemInfo = function(){
 		if($stateParams.id){
+			if(!$rootScope.generatedId){
+				$rootScope.generatedId = 1;
+			}else{
+				$rootScope.generatedId += 1;
+			}
 		var response = $http.get(constants.localhost_port+constants.service_context+"/ItemController/getItemById/"+$stateParams.id);
   		response.success(function(data) {
   			$scope.itemObj = data;
@@ -54,7 +58,7 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
   			}
   				$scope.itemObj.mrp = parseFloat($scope.itemObj.mrp).toFixed(2);
   				$scope.customerItem.mrp =$scope.itemObj.mrp;
-  				$scope.customerItem.id = ($rootScope.generatedId)+1;
+  				$scope.customerItem.id = $rootScope.generatedId;
   				$scope.customerItem.name =data.name;
   				$scope.customerItem.total = $scope.itemObj.mrp;
   				$scope.customerItem.itemFieldValueJsonList = data.itemFieldValueJsonList;
@@ -123,13 +127,13 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
 						}
 				}
 			}
-		angular.forEach($rootScope.rsAddedCartItemList, function(obj, key) {
-//			if(obj.id == $scope.customerItem.id)
-//			{
-//				isItemExists = true;
-//			}
-		});
-		if(!isItemExists){
+//		angular.forEach($rootScope.rsAddedCartItemList, function(obj, key) {
+////			if(obj.id == $scope.customerItem.id)
+////			{
+////				isItemExists = true;
+////			}
+//		});
+//		if(!isItemExists){
 			$scope.getallimages();
 			$timeout(function() {//wait for some time to redirect to another page
 //				alert(JSON.stringify($scope.customerItem.divBlob));
@@ -137,7 +141,7 @@ App.controller('ItemController', ['$scope','$http','$rootScope','$state','$state
 			 }, 400);
 	        
 		}
-		}
+//		}
 		$('#addToCartPopupId').modal('hide');
 	}
 	

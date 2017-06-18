@@ -21,6 +21,8 @@ public class CustomerCartJson extends BaseJson {
 	private String providedNames;
 	private String status;
 
+	private Boolean isReduceAmount;
+	private Double promoCodeReducedAmount;
 	private String fullName;
 	private String emailId;
 	private Long phoneNumber;
@@ -28,7 +30,7 @@ public class CustomerCartJson extends BaseJson {
 	private String address;
 	private String city;
 	private String state;
-	
+
 	private Long promoCodeId;
 
 	private List<ItemWithCustomerPhtoJson> custPhotoJsonList;
@@ -199,6 +201,22 @@ public class CustomerCartJson extends BaseJson {
 
 	public void setPromoCodeId(Long promoCodeId) {
 		this.promoCodeId = promoCodeId;
+	}
+
+	public Boolean getIsReduceAmount() {
+		return isReduceAmount != null ? isReduceAmount : false;
+	}
+
+	public void setIsReduceAmount(Boolean isReduceAmount) {
+		this.isReduceAmount = isReduceAmount;
+	}
+
+	public Double getPromoCodeReducedAmount() {
+		return promoCodeReducedAmount;
+	}
+
+	public void setPromoCodeReducedAmount(Double promoCodeReducedAmount) {
+		this.promoCodeReducedAmount = promoCodeReducedAmount;
 	}
 
 }

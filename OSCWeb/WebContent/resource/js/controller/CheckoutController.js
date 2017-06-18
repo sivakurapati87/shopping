@@ -1,10 +1,10 @@
 'use strict';
 
-App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$stateParams','$timeout', function($scope,$http,$rootScope,$state,$stateParams,$timeout) {
-	$rootScope.stateName ="checkout";	
+App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$stateParams','$timeout','$log', function($scope,$http,$rootScope,$state,$stateParams,$timeout,$log) {
 	$scope.isPromoCodeApplied = false;
 	$scope.promoCodeAmt = 0;
-	
+	$scope.isReduceAmount = false;
+	$scope.addedCartItemList = angular.copy($rootScope.rsAddedCartItemList);
 	 //find the sum of all the items
 	   $scope.totalCost = function(){
 	 	  if($scope.addedCartItemList){
@@ -44,6 +44,7 @@ App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$s
 		  			$scope.amountToReduce = data.amountToReduce;
 		  			$scope.msg = data.msg;
 	  				if(data.subCategoryId && data.subCategoryId != 0){
+	  					$scope.isReduceAmount = true;
 	  					//Do the caculations on for(var i=0;i<$scope.addedCartItemList.length;i++){
 	  					for(var i=0;i<$scope.addedCartItemList.length;i++){
 	  						for(var j=0;j<data.itemIds.length;j++){
@@ -58,9 +59,11 @@ App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$s
 	  				}else{
 			  			
 			  			$scope.promoCodeReducedAmount = ($scope.purchasedAmount * $scope.amountToReduce)/100
-			  			$scope.promoCodeReducedAmount = Math.rount($scope.promoCodeReducedAmount*100)/100;
+			  			$scope.promoCodeReducedAmount = Math.round($scope.promoCodeReducedAmount*100)/100;
 			  			$scope.promoCodeAmt =angular.copy($scope.promoCodeReducedAmount);
 	  				}
+	  			}else{
+	  				$scope.msg = data.msg;
 	  			}
 	  		});
 	  		response.error(function() {
@@ -77,7 +80,7 @@ App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$s
 	$scope.getHashCodeAction = function()
 	{
 //		$scope.customerJson = {totalPurchase:210,firstName:$rootScope.rsCustomerJson,emailId:'kssrao87@gmail.com',phoneNumber:9603631480};
-		$scope.addedCartItemList = angular.copy($rootScope.rsAddedCartItemList);
+		
 		var response = $http.post(constants.localhost_port+constants.service_context+"/CustomerController/getHashKeyWithTransactionNumber",$scope.rsCustomerJson);
   		response.success(function(data) {
 //  			alert(JSON.stringify(data));
@@ -95,15 +98,21 @@ App.controller('CheckoutController', ['$scope','$http','$rootScope','$state','$s
 		}
 		
 		if($scope.addedCartItemList){
+			$scope.listObj =[];
 		for(var i=0;i<$scope.addedCartItemList.length;i++){
+			$log.info($scope.addedCartItemList[i].total);
 			$scope.obj = {itemId:$scope.addedCartItemList[i].itemId,subTotal:$scope.addedCartItemList[i].total,quantity:$scope.addedCartItemList[i].quantity,
 					deliveryCharges:constants.DELIVERY_CHARGES,
 					providedNames:$scope.addedCartItemList[i].providedNames,
 					customerId: $rootScope.rsCustomerJson.id,divBlob:$scope.addedCartItemList[i].divBlob,
+					isReduceAmount:$scope.isReduceAmount,
+					promoCodeId : $scope.promoCodeId,
+					promoCodeReducedAmount : $scope.promoCodeAmt,
 					custPhotoJsonList:$scope.addedCartItemList[i].custPhotoJsonList,txnId:$scope.customerJson.txnId};
+			$scope.listObj.push($scope.obj);
 		}	
 		
-		var response = $http.post(constants.localhost_port+constants.service_context+"/CustomerController/saveCustomerOrders",$scope.obj);
+		var response = $http.post(constants.localhost_port+constants.service_context+"/CustomerController/saveCustomerOrders",$scope.listObj);
   		response.success(function(data) {
 //  			alert(JSON.stringify(data));
 //  			$scope.customerJson = data;

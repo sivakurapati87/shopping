@@ -4,7 +4,7 @@ App.controller('HeaderController', ['$scope','$http','$rootScope','$state', func
 	if(!$rootScope.rsAddedCartItemList){
 	$rootScope.rsAddedCartItemList = [];
 	}
-	
+	$rootScope.stateName = $state.current.name;
 	$rootScope.year = (new Date()).getFullYear();
 
 	$scope.getAllCategoriesWithSubCategory = function(){

@@ -53,7 +53,9 @@ public class CustomerServiceImpl implements CustomerService {
 	public void saveCustomerOrders(CustomerCartJson customerCartJson) {
 		try {
 			CustomerCart customerCart = new CustomerCart();
+			if(customerCartJson.getDivBlob()!=null){
 			customerCartJson.setDivBlobPath(Util.saveImage(customerCartJson.getDivBlob().getBytes()));
+			}
 			TransformJsonToEntity.getCustomerCart(customerCart, customerCartJson);
 			customerDao.saveOrUpdate(customerCart);
 			
@@ -103,13 +105,13 @@ public class CustomerServiceImpl implements CustomerService {
 			Map<String, Object> params = new HashMap<String, Object>();
 			StringBuilder sb = new StringBuilder("select c.id,c.item.name,c.total,c.quantity,c.deliveryCharges,c.txnId,c.status,c.customer.firstName,"
 					+ "c.customer.lastName,c.customer.emailId,c.customer.phoneNumber,c.customer.pincode,"
-					+ "c.customer.address,c.customer.city,c.customer.state,c.divBlobPath" + " from CustomerCart c where c.isDeleted = false ");
+					+ "c.customer.address,c.customer.city,c.customer.state,c.divBlobPath,c.createdOn,c.providedNames" + " from CustomerCart c where c.isDeleted = false ");
 			if (fromDate != null) {
 				sb.append(" and c.createdOn >= ?1");
 				params.put("1", fromDate);
 			}
 			if (toDate != null) {
-				sb.append(" and c.createdOn <= ?2");
+				sb.append(" and date(c.createdOn) <= ?2");
 				params.put("2", toDate);
 			}
 			if (status != null && !status.equalsIgnoreCase(Constants.General.NULL)) {
@@ -139,6 +141,8 @@ public class CustomerServiceImpl implements CustomerService {
 					json.setCity(Util.getStringValueOfObj(obj[13]));
 					json.setState(Util.getStringValueOfObj(obj[14]));
 					json.setDivBlob(Util.getStringFromLocation(Util.getStringValueOfObj(obj[15])));
+					json.setCreatedOn(Util.convertDateToString((Date)obj[16]));
+					json.setProvidedNames(Util.getStringValueOfObj(obj[17]));
 					cartIds.add(json.getId());
 					customerCartJsonList.add(json);
 				}
@@ -220,11 +224,11 @@ public class CustomerServiceImpl implements CustomerService {
 			Map<String, Object> params = new HashMap<String, Object>();
 			StringBuilder sb = new StringBuilder("select count(c) from CustomerCart c where c.isDeleted = false");
 			if (fromDate != null) {
-				sb.append(" and c.createdOn >= ?1");
+				sb.append(" and date(c.createdOn) >= ?1");
 				params.put("1", fromDate);
 			}
 			if (toDate != null) {
-				sb.append(" and c.createdOn <= ?2");
+				sb.append(" and date(c.createdOn) <= ?2");
 				params.put("2", toDate);
 			}
 			if (status != null && !status.equalsIgnoreCase(Constants.General.NULL)) {

@@ -45,7 +45,9 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 			} else {
 				promoCode = new PromoCode();
 			}
+			if(promoCodeJson.getPromoImageBlob()!=null){
 			promoCodeJson.setPromoImagePath(Util.saveImage(promoCodeJson.getPromoImageBlob().getBytes()));
+			}
 			TransformJsonToEntity.getPromoCode(promoCode, promoCodeJson);
 			promoCodeDao.saveOrUpdate(promoCode);
 		} catch (Exception e) {
@@ -92,7 +94,9 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 			if (categories != null && categories.size() > 0) {
 				promoCodeImageList = new ArrayList<String>();
 				for (Object obj : categories) {
+					if(obj!=null){
 					promoCodeImageList.add(Util.getStringFromLocation(Util.getStringValueOfObj(obj)));
+					}
 				}
 			}
 		} catch (Exception e) {

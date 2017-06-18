@@ -110,11 +110,17 @@ body
 	font-size: 26px;
 	font-family: "Unica One","HelveticaNeue","Helvetica Neue",sans-serif;
 	font-weight: 400;
+	color: #a5c1be;
 	text-transform: uppercase; 
 }
 .footerLable{
 	font-family: "Unica One","HelveticaNeue","Helvetica Neue",sans-serif;
+	color: #b1acaf;
 	font-weight: 400;
+}
+.lableFont_16px{
+	color: #c9cac3;
+	font-size: 16px;
 }
 .bgCorosel{
 	background-color: #894727;

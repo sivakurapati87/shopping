@@ -1,11 +1,24 @@
 package com.osc.config;
 
+import java.io.IOException;
+import java.text.DecimalFormat;
+
 
 public class Example {
 	public static void main(String[] args) {
-		String s="sivakurapatiisok now siva";
-		for(int i=0;i<s.length();i=i+3){
-			System.out.println(s.substring(i,(i+3)>s.length()?s.length():(i+3)));
-		}
+		DecimalFormat df = new DecimalFormat("####0.00");
+		System.out.println("Value: " + df.format(2.1532432));
 	}
 }
+
+class X{
+	void display()throws IOException{
+		System.out.println("Super");
+	}
+}
+class Y extends X{
+	 void display()throws IOException{
+		
+	}
+}
+

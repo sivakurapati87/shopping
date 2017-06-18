@@ -1,5 +1,6 @@
 package com.osc.controller;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import com.osc.json.CategoryJson;
 import com.osc.json.CustomerCartJson;
 import com.osc.json.CustomerJson;
 import com.osc.service.CustomerService;
+import com.osc.util.Constants;
 import com.osc.util.HashCodeGenerator;
 import com.osc.util.Util;
 
@@ -70,12 +72,25 @@ public class CustomerController {
 
 	
 	@RequestMapping(value = "/saveCustomerOrders", method = RequestMethod.POST)
-	public ResponseEntity<?> saveCustomerOrders(@RequestBody CustomerCartJson customerCartJson, HttpServletRequest request) {
+	public ResponseEntity<?> saveCustomerOrders(@RequestBody List<CustomerCartJson> customerCartJsonList, HttpServletRequest request) {
 //		if (Util.getLoginUserId(request) != null) {
 		try {
 //			customerJson.setCreatedBy(Util.getLoginUserId(request));
 //			customerJson.setUpdatedBy(Util.getLoginUserId(request));
-			customerService.saveCustomerOrders(customerCartJson);
+			if(customerCartJsonList!=null && customerCartJsonList.size()>0){
+				DecimalFormat df = new DecimalFormat("####0.00");
+				Double deliveryCharges = Double.valueOf((df.format((Constants.General.DELIVERY_CHARGES/customerCartJsonList.size()))));
+				for(CustomerCartJson customerCartJson:customerCartJsonList){
+					if(!customerCartJson.getIsReduceAmount() && customerCartJson.getPromoCodeId()!=null){
+						customerCartJson.setPromoCodeReducedAmount(Double.valueOf(df.format(customerCartJson.getPromoCodeReducedAmount()/customerCartJsonList.size())));
+					}else{
+						customerCartJson.setPromoCodeReducedAmount(0d);
+					}
+					customerCartJson.setDeliveryCharges(deliveryCharges);
+					customerService.saveCustomerOrders(customerCartJson);		
+				}
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOG.error(e.getMessage(), e);
