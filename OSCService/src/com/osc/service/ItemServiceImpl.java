@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -529,14 +531,25 @@ public class ItemServiceImpl implements ItemService {
 			List<?> items = itemDao.findByQuery(sb.toString(), null, null, null);
 			if (items != null && items.size() > 0) {
 				searchableList = new ArrayList<Map<String,String>>();
+				Set<String> searchNames = new TreeSet<String>();
 				for (Object object : items) {
 					Object[] obj = (Object[]) object;
-					Map<String,String> map1 = new HashMap<String,String>();
+					if(obj[0]!=null){
+					searchNames.add(Util.getStringValueOfObj(obj[0]));
+					}if(obj[1]!=null){
+					searchNames.add(Util.getStringValueOfObj(obj[1]));
+					}
+					/*Map<String,String> map1 = new HashMap<String,String>();
 					map1.put(Constants.General.NAME, Util.getStringValueOfObj(obj[0]));
 					Map<String,String> map2 = new HashMap<String,String>();
 					map2.put(Constants.General.NAME, Util.getStringValueOfObj(obj[1]));
 					searchableList.add(map1);
-					searchableList.add(map2);
+					searchableList.add(map2);*/
+				}
+				for(String s:searchNames){
+					Map<String,String> map = new HashMap<String,String>();
+					map.put(Constants.General.NAME, s);
+					searchableList.add(map);
 				}
 			}
 		} catch (Exception e) {
